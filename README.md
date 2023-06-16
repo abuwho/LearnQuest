@@ -1,19 +1,18 @@
-# InnoOpenCourseWare
-Welcome to InnoOpenCourseWare, an open-source project aimed at creating a comprehensive collection of educational resources for various subjects. This project encourages collaboration and contributions from the community to help make quality education accessible to all.
+# LearnQuest
+Welcome to LearnQuest, an open-source project aimed at creating a comprehensive collection of educational resources for various subjects. This project encourages collaboration and contributions from the community to help make quality education accessible to all.
 
 ### Introduction
-InnoOpenCourseWare aims to provide a platform for sharing educational materials, including lecture notes, assignments, and projects. The project's goal is to foster collaboration and knowledge exchange, enabling students and educators to access a wide range of high-quality resources.
+LearnQuest aims to provide a platform for sharing educational materials, including lecture notes, assignments, and projects. The project's goal is to foster collaboration and knowledge exchange, enabling students and educators to access a wide range of high-quality resources.
 
 ### Contributing
-
-We welcome contributions from anyone interested in improving InnoOpenCourseWare. By contributing, you help make education accessible to a broader audience. To contribute, follow the guidelines below.
+We welcome contributions from anyone interested in improving LearnQuest. By contributing, you help make education accessible to a broader audience. To contribute, follow the guidelines below.
 How to Contribute
 
 1. Fork the repository on GitHub.
 
-2. Clone your forked repository locally:
+2. Clone your forked repository locally: 
 ```
-git clone https://github.com/your-username/InnoOpenCourseWare.git
+git clone https://github.com/your-username/LearnQuest.git
 ```
 3. Create a new branch for your feature or bug fix:
 ```
