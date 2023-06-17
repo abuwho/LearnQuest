@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%7=f(kxc3@wr8hr@o*2&1&446o7)tduqi^3_i_u7a7g)5&e7sg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
+    'authentication',
+    'rest_framework',
+    'knox',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +70,17 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "knox.auth.TokenAuthentication",
+    ]
+}
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
@@ -121,3 +136,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'authentication.User'
