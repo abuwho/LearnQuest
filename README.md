@@ -4,6 +4,7 @@ Welcome to LearnQuest, an open-source project aimed at creating a comprehensive 
 ### Introduction
 LearnQuest aims to provide a platform for sharing educational materials, including lecture notes, assignments, and projects. The project's goal is to foster collaboration and knowledge exchange, enabling students and educators to access a wide range of high-quality resources.
 
+
 ### Contributing
 Contribute to the project by following some rules: 
 - Make changes on a separate branch (*e.g.* `feature/<feature-name>`): 
@@ -24,6 +25,10 @@ Contribute to the project by following some rules:
     git push origin feature/<feature-name>
     ```
 - Open a pull request on the main repository's `main` branch.
+
+### Instructions
+
+- Both backend and frontend should have a `README.md` file in the directory, which will include important notes and instructions about that scope of the project. 
 
 ### License 
 To be added soon
