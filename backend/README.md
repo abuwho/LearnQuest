@@ -1,6 +1,6 @@
 # LearnQuest - Backend
 
-Welcome to the backend part of our LearnQuest! This README.md file provides instructions on how to install and run the backend server for the project. 
+Welcome to the backend part of LearnQuest! This README.md file provides instructions on how to install and run the backend server for the project. 
 
 ## Installation
 
