@@ -3,7 +3,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import permission_classes,api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from courses.models import Course
+from courses.models import Course, Lesson
 
 
 # Get all courses
