@@ -3,7 +3,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import permission_classes,api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from courses.models import Course, Lesson
+from courses.models import Course, Category, Lesson, Review
 
 
 # Get all courses
@@ -20,6 +20,22 @@ def get_all_courses(request):
         return Response(
             {}, status=400
         )
+    
+# Get all courses by category /courses/<category>
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_all_courses_by_category(request, category):
+    data = request.data
+    try:
+        courses = Course.objects.filter(category=category)
+        return Response({
+            "courses": courses,
+        }, status=200)
+    except Exception as e:
+        return Response(
+            {}, status=400
+        )
+
 
 # Get one course by id /course/<id>
 @api_view(["GET"])
@@ -69,3 +85,34 @@ def get_lesson_by_id(request, id, lesson_id):
             {}, status=400
         )
     
+
+# Get all reviews in a course /course/<id>/reviews
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_reviews_by_course_id(request, id):
+    data = request.data
+    try:
+        course = Course.objects.get(id=id)
+        reviews = course.reviews.all()
+        return Response({
+            "reviews": reviews,
+        }, status=200)
+    except Exception as e:
+        return Response(
+            {}, status=400
+        )
+
+# Get review by id /course/<id>/reviews/<id>
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_review_by_id(request, id, review_id):
+    data = request.data
+    try:
+        review = Review.objects.get(id=review_id)
+        return Response({
+            "review": review,
+        }, status=200)
+    except Exception as e:
+        return Response(
+            {}, status=400
+        )
