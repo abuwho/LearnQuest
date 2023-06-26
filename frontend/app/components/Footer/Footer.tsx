@@ -47,13 +47,12 @@ const products: ProductType[] = [
     {
         id: 3,
         section: "More",
-        link: ['Badges &', 'Certificates', 'How we work?']
+        link: ['Badges', 'Certificates', 'How we work?']
     }
 ]
 
 const footer = () => {
     return (
-
         <div className="mx-auto max-w-2xl sm:pt-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="my-12 grid grid-cols-1 gap-y-10 sm:grid-cols-6 lg:grid-cols-12">
 
@@ -98,12 +97,7 @@ const footer = () => {
             {/* All Rights Reserved */}
 
             <div className='py-10 md:flex items-center justify-between border-t border-t-gray-blue'>
-<<<<<<< HEAD
-                <h4 className='text-dark-red opacity-75 text-sm text-center md:text-start font-normal'>©️ LearnQuest 2023. All rights reserved. </h4>
-
-=======
                 <h4 className='text-dark-red opacity-75 text-sm text-center md:text-start font-normal'>@2023. LearnQuest. All rights reserved</h4>
->>>>>>> b468359 (updated footer.tsx)
                 <div className="flex gap-5 mt-5 md:mt-0 justify-center md:justify-start">
                     <h4 className='text-dark-red opacity-75 text-sm font-normal'><Link href="/" target="_blank">Privacy policy</Link></h4>
                     <div className="h-5 bg-dark-red opacity-25 w-0.5"></div>
