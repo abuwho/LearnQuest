@@ -36,18 +36,18 @@ const products: ProductType[] = [
     {
         id: 1,
         section: "Company",
-        link: ['About', 'Careers', 'Mobile', 'Blog', 'How we work?'],
+        link: ['About', 'Careers', 'Blog'],
     },
     {
         id: 2,
         section: "Contact",
-        link: ['Help/FAQ', 'Press', 'Affiliates', 'Hotel owners', 'Partners']
+        link: ['Help/FAQ', 'Partners', 'Mobile']
     }
     ,
     {
         id: 3,
         section: "More",
-        link: ['Airline fees', 'Airlines', 'Low fare tips', 'Badges &', 'Certificates']
+        link: ['Badges &', 'Certificates', 'How we work?']
     }
 ]
 
@@ -98,8 +98,12 @@ const footer = () => {
             {/* All Rights Reserved */}
 
             <div className='py-10 md:flex items-center justify-between border-t border-t-gray-blue'>
+<<<<<<< HEAD
                 <h4 className='text-dark-red opacity-75 text-sm text-center md:text-start font-normal'>©️ LearnQuest 2023. All rights reserved. </h4>
 
+=======
+                <h4 className='text-dark-red opacity-75 text-sm text-center md:text-start font-normal'>@2023. LearnQuest. All rights reserved</h4>
+>>>>>>> b468359 (updated footer.tsx)
                 <div className="flex gap-5 mt-5 md:mt-0 justify-center md:justify-start">
                     <h4 className='text-dark-red opacity-75 text-sm font-normal'><Link href="/" target="_blank">Privacy policy</Link></h4>
                     <div className="h-5 bg-dark-red opacity-25 w-0.5"></div>
