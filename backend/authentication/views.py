@@ -53,12 +53,15 @@ def sign_up(request):
 @permission_classes([AllowAny])
 def log_in(request):
     data = request.data
-    serialized = AuthSerializer(data=data)
+    serialized = AuthLoginSerializer(data=data)
     try:
         serialized.is_valid(raise_exception=True)
+        # username = serialized.data.get("username")
         email = serialized.data.get("email")
         password = serialized.data.get("password")
         user = authenticate(username=email, password=password)
+        print(f'email: {email}, password: {password}')
+        print(user)
         if user is None:
             raise ValueError("Either user does not exist or the credentials are incorrect")
         else:

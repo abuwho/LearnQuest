@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     'courses',
     'rest_framework',
     'knox',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # corsheaders
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -139,3 +141,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authentication.User'
 COURSE_MODEL = 'course.Course'
+
+CORS_ORIGIN_ALLOW_ALL = True  # Set to False in production and specify the allowed origin(s)

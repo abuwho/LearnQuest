@@ -1,10 +1,22 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, SetStateAction, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 
 
 const Signin = () => {
     let [isOpen, setIsOpen] = useState(false)
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleEmailChange = (event: { target: { value: SetStateAction<string> } }) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePasswordChange = (event: { target: { value: SetStateAction<string> } }) => {
+        setPassword(event.target.value);
+    };
+
 
     const closeModal = () => {
         setIsOpen(false)
@@ -13,6 +25,42 @@ const Signin = () => {
     const openModal = () => {
         setIsOpen(true)
     }
+
+    const loginHandler = async (event: { preventDefault: () => void }) => {
+        event.preventDefault(); // Prevent the form from submitting and refreshing the page
+        
+        try {
+            // Create a request body with the user's email and password
+            const requestBody = {
+                email: email,
+                password: password
+            };
+
+            // Send a POST request to the backend API endpoint
+            const response = await fetch('http://127.0.0.1:8000/auth/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+            });
+
+            console.log(response);
+
+            // Check if the registration was successful
+            if (response.ok) {
+            // Registration successful, redirect to a success page or perform any other desired action
+            console.log('Sign in successful');
+            } else {
+            // Registration failed, show an error message or handle it differently
+            console.error('Sign in failed');
+            }
+        } catch (error) {
+            console.error('Error occurred during sign in:', error);
+        }
+        
+      };
+      
 
     return (
         <>
@@ -63,7 +111,7 @@ const Signin = () => {
                                                     Sign in to your account
                                                 </h2>
                                             </div>
-                                            <form className="mt-8 space-y-6" action="#" method="POST">
+                                            <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={loginHandler}>
                                                 <input type="hidden" name="remember" defaultValue="true" />
                                                 <div className="-space-y-px rounded-md shadow-sm">
                                                     <div>
@@ -78,6 +126,7 @@ const Signin = () => {
                                                             required
                                                             className="relative block w-full appearance-none rounded-none rounded-t-md border border-grey500 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                                             placeholder="Email address"
+                                                            onChange={handleEmailChange}
                                                         />
                                                     </div>
                                                     <div>
@@ -92,6 +141,7 @@ const Signin = () => {
                                                             required
                                                             className="relative block w-full appearance-none rounded-none rounded-b-md border border-grey500 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                                             placeholder="Password"
+                                                            onChange={handlePasswordChange}
                                                         />
                                                     </div>
                                                 </div>
