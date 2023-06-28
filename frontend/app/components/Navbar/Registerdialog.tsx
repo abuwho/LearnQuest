@@ -8,6 +8,7 @@ const Register = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string> } }) => {
         setEmail(event.target.value);
@@ -28,13 +29,13 @@ const Register = () => {
 
     
     const handleRegistration = async (event: { preventDefault: () => void }) => {
-        event.preventDefault(); // Prevent default submission
-
+        event.preventDefault(); // Prevent the form from submitting and refreshing the page
+        
         try {
             // Create a request body with the user's email and password
             const requestBody = {
-            email: email,
-            password: password
+                email: email,
+                password: password
             };
 
             // Send a POST request to the backend API endpoint
@@ -50,17 +51,30 @@ const Register = () => {
 
             // Check if the registration was successful
             if (response.ok) {
-            // Registration successful, redirect to a success page or perform any other desired action
-            console.log('Registration successful');
+                // Sign in successful, redirect to a success page or perform any other desired action
+                window.location.reload();
+                setIsLoggedIn(true);
+                console.log('Sign up successful');
+                const data = response.json();
+                console.log(data);
+                data.then(function(result: any) {
+                    console.log(result);
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('username', result.username);
+                    localStorage.setItem('email', result.email);
+                    closeModal();
+                }, function(err: any) {
+                    console.log(err);
+                });
+
             } else {
-            // Registration failed, show an error message or handle it differently
-            console.error('Registration failed');
+            // Sign up failed, show an error message or handle it differently
+            console.error('Sign up failed');
             }
         } catch (error) {
-            console.error('Error occurred during registration:', error);
+            console.error('Error occurred during sign up: ', error);
         }
     };
-      
 
     return (
         <>
@@ -111,7 +125,7 @@ const Register = () => {
                                                     Register your account
                                                 </h2>
                                             </div>
-                                            <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={handleRegistration}>
+                                            <form className="mt-8 space-y-6" action="/auth/signup" method="POST" onSubmit={handleRegistration}>
                                                 <input type="hidden" name="remember" defaultValue="true" />
                                                 <div className="-space-y-px rounded-md shadow-sm">
                                                     <div id='password'>
