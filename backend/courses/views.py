@@ -116,3 +116,19 @@ def get_review_by_id(request, id, review_id):
         return Response(
             {}, status=400
         )
+
+
+# Get courses that a user has enrolled in only if they are authenticated /courses/my
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_courses_by_user(request):
+    data = request.data
+    try:
+        courses = Course.objects.filter(user=request.user)
+        return Response({
+            "courses": courses,
+        }, status=200)
+    except Exception as e:
+        return Response(
+            {}, status=400
+        )

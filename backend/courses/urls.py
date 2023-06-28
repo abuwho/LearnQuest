@@ -17,4 +17,6 @@ urlpatterns = [
     path("<int:id>/reviews", views.get_reviews_by_course_id, name="get_reviews_by_course_id"),
     # path to get a review by id
     path("<int:id>/reviews/<int:review_id>", views.get_review_by_id, name="get_review_by_id"),
+    # path to get courses that a user has enrolled in only if they are authenticated
+    path("my", views.get_courses_by_user, name="get_courses_by_user"),
 ]

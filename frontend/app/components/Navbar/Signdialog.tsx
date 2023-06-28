@@ -8,6 +8,7 @@ const Signin = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string> } }) => {
         setEmail(event.target.value);
@@ -49,16 +50,28 @@ const Signin = () => {
 
             // Check if the registration was successful
             if (response.ok) {
-            // Registration successful, redirect to a success page or perform any other desired action
-            console.log('Sign in successful');
+                window.location.reload();
+                setIsLoggedIn(true);
+                console.log('Sign in successful');
+                const data = response.json();
+                console.log(data);
+                data.then(function(result: any) {
+                    console.log(result);
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('username', result.username);
+                    localStorage.setItem('email', result.email);
+                    closeModal();
+                }, function(err: any) {
+                    console.log(err);
+                });
+
             } else {
-            // Registration failed, show an error message or handle it differently
+            // Sign in failed, show an error message or handle it differently
             console.error('Sign in failed');
             }
         } catch (error) {
             console.error('Error occurred during sign in:', error);
         }
-        
       };
       
 
@@ -111,7 +124,7 @@ const Signin = () => {
                                                     Sign in to your account
                                                 </h2>
                                             </div>
-                                            <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={loginHandler}>
+                                            <form className="mt-8 space-y-6" action="/auth/login" method="POST" onSubmit={loginHandler}>
                                                 <input type="hidden" name="remember" defaultValue="true" />
                                                 <div className="-space-y-px rounded-md shadow-sm">
                                                     <div>

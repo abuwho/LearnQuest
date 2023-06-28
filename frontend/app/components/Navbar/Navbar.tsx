@@ -6,6 +6,8 @@ import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import Signdialog from "./Signdialog";
 import Registerdialog from "./Registerdialog";
+import Userinfodialog from './Userinfodialog';
+
 
 interface NavigationItem {
     name: string;
@@ -47,6 +49,8 @@ const Navbar = () => {
     const handleLinkClick = (href: string) => {
         setCurrentLink(href);
     };
+
+    const token = localStorage.getItem('token');
 
     return (
         <Disclosure as="nav" className="navbar">
@@ -97,13 +101,12 @@ const Navbar = () => {
 
                         {/* SIGNIN DIALOG */}
 
-                        <Signdialog />
+                        { !token ? <Signdialog /> : null }
 
 
                         {/* REGISTER DIALOG */}
 
-                        <Registerdialog />
-
+                        { !token ? <Registerdialog /> : <Userinfodialog /> }
 
                         {/* DRAWER FOR MOBILE VIEW */}
 
