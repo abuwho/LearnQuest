@@ -15,7 +15,7 @@ class Course(models.Model):
     end_date = models.DateTimeField(auto_now_add=True)
     instructor = models.ForeignKey("authentication.User", on_delete=models.CASCADE, null=True, blank=True)
     is_active = models.BooleanField(default=True)
-
+    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True, blank=True)
     def __str__(self):
         return self.name
     
@@ -26,6 +26,8 @@ class Lesson(models.Model):
     name = models.CharField(max_length=150, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
+    # content= models.TextField(null=False, blank=False)
+    # video_link= models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
         return self.name
@@ -36,7 +38,7 @@ class Review(models.Model):
     id = models.UUIDField(unique=True, primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey("authentication.User", on_delete=models.CASCADE, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
-    review = models.TextField(null=False, blank=False)
+    comment = models.TextField(null=False, blank=False)
     rating = models.IntegerField(null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
 
