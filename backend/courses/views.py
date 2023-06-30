@@ -151,8 +151,6 @@ def get_reviews_by_course_id(request, id):
     serializer = ReviewSerializer(reviews, many=True)
     return Response(serializer.data)
 
-# Get review by id /course/<id>/reviews/<id>
-
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
