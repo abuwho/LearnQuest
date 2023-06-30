@@ -3,8 +3,10 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    # Create, update, delete courses
+    path("", views.CRUD_courses, name="CRUD_courses"),
     # path to get all courses
-    path("", views.get_all_courses, name="get_all_courses"),
+    path("all", views.get_courses, name="get_courses"),
     # path to get all courses by category as a string
     path("category/<str:category>", views.get_all_courses_by_category, name="get_all_courses_by_category"),
     # path to get a course by id
@@ -18,5 +20,5 @@ urlpatterns = [
     # path to get a review by id
     path("<int:id>/reviews/<int:review_id>", views.get_review_by_id, name="get_review_by_id"),
     # path to get courses that a user has enrolled in only if they are authenticated
-    path("my", views.get_courses_by_user, name="get_courses_by_user"),
+    path("my", views.get_my_courses, name="get_my_courses"),
 ]
