@@ -21,12 +21,12 @@ Please follow the steps below to install and set up the backend:
 3. Create a virtual environment (`venv`) to isolate project dependencies and activate the virtual environment: (OPTIONAL)
 
    ```
-   python3 -m venv venv
+   python -m venv venv
    ```
     - Activating the virtual environment
         - For Windows
             ```
-            source venv/Scripts/Activate
+            venv/Scripts/Activate
             ```
 
         - For macOS and Linux:
