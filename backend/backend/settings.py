@@ -143,3 +143,14 @@ AUTH_USER_MODEL = 'authentication.User'
 COURSE_MODEL = 'course.Course'
 
 CORS_ORIGIN_ALLOW_ALL = True  # Set to False in production and specify the allowed origin(s)
+
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': "Authorization",
+            'in': "Header"
+        }
+    },
+}
