@@ -65,6 +65,7 @@ def get_course_by_id(request, id):
             )
 
 
+# Create, update, delete a lesson
 @swagger_auto_schema(methods=["POST", "PUT", "DELETE"], request_body=LessonSerializer,
                      responses={201: LessonSerializer(), 400: {}, 403: "Forbidden", })
 @api_view(["POST", "PUT", "DELETE"])
@@ -160,22 +161,6 @@ def get_review_by_id(request, id, review_id):
     return Response(serializer.data)
 
 
-# Get courses that a user has enrolled in only if they are authenticated /courses/my
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def get_courses_by_user(request):
-    data = request.data
-    try:
-        courses = Course.objects.filter(user=request.user)
-        return Response({
-            "courses": courses,
-        }, status=200)
-    except Exception as e:
-        return Response(
-            {}, status=400
-        )
-
-
 @swagger_auto_schema(methods=['GET'],
                      responses={200: CourseSerializer(), 400: {}})
 @api_view(["GET"])
@@ -191,9 +176,7 @@ def get_my_courses(request):
                 {}, status=status.HTTP_400_BAD_REQUEST
             )
 
-# Post a course if the user is an instructor /courses
-
-
+# Post a course 
 @swagger_auto_schema(methods=["POST", "PUT", "DELETE"], request_body=CourseSerializer,
                      responses={201: CourseSerializer(), 400: {}, 403: "Forbidden", })
 @api_view(["POST", "PUT", "DELETE"])
@@ -243,3 +226,55 @@ def get_courses(request):
         return Response(serializer.data)
     else:
         return Response({"message": "Invalid request method."}, status=405)
+
+
+# Create, update, delete a review
+@swagger_auto_schema(methods=["POST", "PUT", "DELETE"], request_body=ReviewSerializer,
+                        responses={201: ReviewSerializer(), 400: {}, 403: "Forbidden", })
+@api_view(["POST", "PUT", "DELETE"])
+@permission_classes([IsAuthenticated])
+def CRUD_review(request):
+    if request.method == "POST":
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            course_id = serializer.validated_data.get("course")
+            course = get_object_or_404(Course, id=course_id)
+
+            # Check if the user is a student
+            if request.user.role == "student":
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=201)
+            else:
+                return Response({"message": "Only students can create reviews."}, status=403)
+        return Response(serializer.errors, status=400)
+
+    elif request.method == "PUT" or request.method == "DELETE":
+        review_id = request.data.get("id")
+        review = get_object_or_404(Review, id=review_id)
+        course = review.course
+
+        # Check if the user is a student and the owner of the review
+        if not request.user.role == "student" or review.user != request.user:
+            return Response({"message": "You don't have permission to perform this action."}, status=403)
+
+        if request.method == "PUT":
+            serializer = ReviewSerializer(review, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=400)
+
+        elif request.method == "DELETE":
+            review.delete()
+            return Response({"message": "Review deleted successfully."}, status=204)
+
+    return Response({"message": "Invalid request method."}, status=405)
+
+
+# Get all reviews for a course /course/<id>/reviews/all
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_reviews_by_course_id(request, id):
+    reviews = Review.objects.filter(course=id)
+    serializer = ReviewSerializer(reviews, many=True)
+    return Response(serializer.data)
