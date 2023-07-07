@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer
 from django.contrib.auth import authenticate, login
-from .utils import send_reset_email, verify_code
+from .utils import send_reset_email, validate_code
 from knox.models import AuthToken
 
 
@@ -87,7 +87,7 @@ def forgot_password(request):
     try:
         serialized.is_valid(raise_exception=True)
         email = serialized.data.get("email")
-        user = User.object.get(email = email)
+        user = User.objects.get(email = email)
         if user is None:
             return Response({}, status= 404)
         send_reset_email(user)
@@ -97,15 +97,13 @@ def forgot_password(request):
             {"error": str(e)}, status=400
         )
         
-@swagger_auto_schema(methods=['POST'],
-                     responses={201: ForgotPasswordSerializer, 400: {}})
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def verify_code(request, code):
     try:
-        user = verify_code(code)
+        user = validate_code(code)
         if user is None:
-            return Response({"invalid code"}, status = 400)
+            return Response({"error": "invalid code"}, status = 400)
         else:
             return Response({"email": user.email}, status = 200)
     except Exception as e:
@@ -129,6 +127,7 @@ def set_new_password(request):
             return Response({}, status= 404)
         else:
             user.set_password(password)
+            user.save()
             return Response({}, status = 200)
     except Exception as e:
         return Response(
