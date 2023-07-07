@@ -18,6 +18,5 @@ class AuthSerializer(serializers.Serializer):
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 
-
 class SetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required = True)
