@@ -84,7 +84,7 @@ const Userinfodialog = () => {
 
                                                 <div className="flex items-center justify-center">
                                                     <div className="flex items-center">
-                                                        <Link href='/user/courses'>
+                                                        <Link href='/mycourses'>
                                                             🎓 My Courses 🎓
                                                         </Link>
                                                     </div>

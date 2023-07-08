@@ -1,6 +1,6 @@
 "use client"
 import Slider from "react-slick";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from '@heroicons/react/24/solid'
@@ -84,43 +84,54 @@ const postData: DataType[] = [
 // CAROUSEL SETTINGS
 
 
-export default class MultipleItems extends Component {
-
-    render() {
-        const settings = {
-            dots: false,
-            infinite: true,
-            slidesToShow: 3,
-            // centerMode: true,
-            slidesToScroll: 2,
-            arrows: false,
-            autoplay: false,
-            speed: 500,
-            cssEase: "linear",
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
+export default function MultipleItems() {
+    type Course = {
+        id:string
+        instructor:string
+        description:string
+        students: string[]
+    }
+    const settings = {
+        dots: false,
+        infinite: true,
+        slidesToShow: 3,
+        // centerMode: true,
+        slidesToScroll: 2,
+        arrows: false,
+        autoplay: false,
+        speed: 500,
+        cssEase: "linear",
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: false
                 }
-            ]
-        };
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: false
+                }
+            }
+        ]
+    };
+    const [courses, setCourses] = useState<Course[]>([])
+    useEffect(()=>{
+        const fetchCourses = async () => {
+            const data = await fetch('http://127.0.0.1:8000/courses/all');
+            console.log(data,'uououo')
+        }
+        fetchCourses()
+    },[])
+    return (
 
-
-        return (
             <div id="courses">
                 <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
 
@@ -185,7 +196,5 @@ export default class MultipleItems extends Component {
                     </Slider>
                 </div>
             </div>
-
-        );
-    }
+    )
 }
