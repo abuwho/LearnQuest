@@ -6,7 +6,7 @@ class DisplayCartSerializer(serializers.ModelSerializer):
     courses = serializers.SerializerMethodField(read_only = True) 
     class Meta:
         model = Cart
-        fields = ["total_price", "item_count", "courses", "created_at", "updated_at"]
+        fields = ["id","total_price", "item_count", "courses", "created_at", "updated_at"]
         
     def get_total_price(self, instance):
         return instance.total_price
