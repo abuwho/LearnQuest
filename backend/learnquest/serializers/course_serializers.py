@@ -33,7 +33,7 @@ class AuthorizedViewCourseSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only  = True)
     class Meta:
         model = Course
-        fields = ["id", "rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
+        fields = ["id", "rating", "title", "instructor", "image", "price", "reviews","description", "created_at", "updated_at", "sections"]
         
     def get_rating(self, instance):
         return instance.rating
