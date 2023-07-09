@@ -1,5 +1,5 @@
-from serializers_import import *
-from lesson_serializers import EnrolledViewLessonSerializer, UnenrolledViewLessonSerializer
+from .serializers_import import *
+from .lesson_serializers import EnrolledViewLessonSerializer, UnenrolledViewLessonSerializer
 class RequestCreateSectionSerializer(serializers.Serializer):
     title = serializers.CharField()
     course_id = serializers.UUIDField()

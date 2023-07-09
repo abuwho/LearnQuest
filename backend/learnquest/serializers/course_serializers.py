@@ -1,6 +1,17 @@
-from serializers_import import *
-from section_serializers import EnrolledViewSectionSerializer, UnenrolledViewSectionSerializer
+from .serializers_import import *
+from .section_serializers import EnrolledViewSectionSerializer, UnenrolledViewSectionSerializer
+from .review_serializers import ViewReviewSerializer
 from authentication.serializer import DisplayUserSerializer
+
+
+class CartDisplayCourseSerializer(serializers.ModelSerializer):
+    instructor = serializers.SerializerMethodField(read_only = True)
+    class Meta:
+        model = Course
+        fields = [ "title", "instructor", "image", "price", "description", "created_at", "updated_at"]
+        
+    def get_instructor(self, instance):
+        return DisplayUserSerializer(instance= instance.instructor).data
 
 class UnauthorizedViewCourseSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField(read_only = True)
@@ -19,6 +30,7 @@ class UnauthorizedViewCourseSerializer(serializers.ModelSerializer):
 class AuthorizedViewCourseSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField(read_only = True)
     sections = serializers.SerializerMethodField(read_only = True)
+    reviews = serializers.SerializerMethodField(read_only  = True)
     class Meta:
         model = Course
         fields = ["rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
@@ -28,6 +40,9 @@ class AuthorizedViewCourseSerializer(serializers.ModelSerializer):
     
     def get_sections(self, instance):
         return EnrolledViewSectionSerializer(instance= instance.sections, many = True).data
+    
+    def get_reviews(self, instance):
+        return ViewReviewSerializer(instance= instance.reviews, many = True).data
     
     
 class InstructorViewCourseSerializer(serializers.ModelSerializer):
@@ -44,7 +59,10 @@ class InstructorViewCourseSerializer(serializers.ModelSerializer):
         return instance.rating
     
 class RequestCreateCourseSerializer(serializers.Serializer):
-    pass
+    title = serializers.CharField()
+    price = serializers.FloatField(required = False)
+    description =  serializers.CharField(allow_null=True, required= False)
+    image = serializers.ImageField(required= False)
 
 
 class ResponseCreateCourseSerializer(serializers.ModelSerializer):

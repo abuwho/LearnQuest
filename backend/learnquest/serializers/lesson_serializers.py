@@ -1,4 +1,4 @@
-from serializers_import import *
+from .serializers_import import *
 
 class EnrolledViewLessonSerializer(serializers.ModelSerializer):
     duration = serializers.SerializerMethodField(read_only = True)
