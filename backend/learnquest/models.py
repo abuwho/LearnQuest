@@ -32,7 +32,9 @@ class Course(models.Model):
     
     @property
     def rating(self) -> float:
-        ratings = [review.rating for review in self.reviews]
+        ratings = [review.rating for review in self.reviews.all()]
+        if len(ratings) == 0:
+            return 0
         return sum(ratings) / len(ratings)
     
     

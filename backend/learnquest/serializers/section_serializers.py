@@ -22,7 +22,7 @@ class EnrolledViewSectionSerializer(serializers.ModelSerializer):
     duration = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Section
-        fields = ["duration", "lessons", "course", "title", "created_at", "updated_at"]
+        fields = ["id", "duration", "lessons", "course", "title", "created_at", "updated_at"]
         
     def get_lessons(self,instance):
         lessons = instance.lessons
@@ -35,7 +35,7 @@ class UnenrolledViewSectionSerializer(serializers.Serializer):
     duration = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Section
-        fields = ["duration", "lessons", "course", "title", "created_at", "updated_at"]
+        fields = ["id", "duration", "lessons", "course", "title", "created_at", "updated_at"]
         
     def get_lessons(self,instance):
         lessons = instance.lessons

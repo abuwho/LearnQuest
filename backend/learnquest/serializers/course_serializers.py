@@ -8,7 +8,7 @@ class CartDisplayCourseSerializer(serializers.ModelSerializer):
     instructor = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Course
-        fields = [ "title", "instructor", "image", "price", "description", "created_at", "updated_at"]
+        fields = ["id", "title", "instructor", "image", "price", "description", "created_at", "updated_at"]
         
     def get_instructor(self, instance):
         return DisplayUserSerializer(instance= instance.instructor).data
@@ -19,7 +19,7 @@ class UnauthorizedViewCourseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Course
-        fields = ["rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
+        fields = ["id", "rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
         
     def get_rating(self, instance):
         return instance.rating
@@ -33,7 +33,7 @@ class AuthorizedViewCourseSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only  = True)
     class Meta:
         model = Course
-        fields = ["rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
+        fields = ["id", "rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
         
     def get_rating(self, instance):
         return instance.rating
@@ -50,7 +50,7 @@ class InstructorViewCourseSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Course
-        fields = ["rating", "title", "instructor", "students", "image", "price", "description", "created_at", "updated_at", "sections"]
+        fields = ["id","rating", "title", "instructor", "students", "image", "price", "description", "created_at", "updated_at", "sections"]
         
     def get_students(self, instance):
         return DisplayUserSerializer(instance= instance.students, many = True).data
@@ -69,7 +69,7 @@ class ResponseCreateCourseSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Course
-        fields = ["rating", "title", "instructor", "students", "image", "price", "description", "created_at", "updated_at"]
+        fields = ["id","rating", "title", "instructor", "students", "image", "price", "description", "created_at", "updated_at"]
         
     def get_rating(self, instance):
         return instance.rating
@@ -85,7 +85,7 @@ class ResponseUpdateCourseSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Course
-        fields = ["rating", "title", "instructor", "students", "image", "price", "description", "created_at", "updated_at"]
+        fields = ["id", "rating", "title", "instructor", "students", "image", "price", "description", "created_at", "updated_at"]
         
     def get_rating(self, instance):
         return instance.rating
