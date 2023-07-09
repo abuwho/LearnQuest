@@ -4,11 +4,11 @@ from rest_framework.decorators import permission_classes,api_view
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer
+from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer, ProfileSerializer
 from django.contrib.auth import authenticate, login
 from .utils import send_reset_email, validate_code
 from knox.models import AuthToken
-
+from learnquest.models import Profile
 
 User = get_user_model()
 
@@ -45,6 +45,15 @@ def sign_up(request):
         return Response(
             {}, status=400
         )
+        
+@swagger_auto_schema(methods=['GET'],
+                     responses={201: ProfileSerializer(), 400: {}})
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_current_user(request):
+    user = request.user
+    profile= Profile.objects.get(user= user)
+    return Response(ProfileSerializer(profile).data, status=201)
 
 
 @swagger_auto_schema(methods=['POST'], request_body=AuthLoginSerializer,

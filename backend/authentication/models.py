@@ -17,7 +17,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(q('The Email must be set'))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email, username=str(random.randint(1, 999999)) , **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -55,11 +55,6 @@ class User(AbstractBaseUser, PermissionsMixin):
                                       choices=[("Active", "Active"), ("Blocked", "Blocked"), ("Admin", "Admin")],
                                       default="Active"
                                       )
-    google_user = models.BooleanField(default=False)
-    apple_user = models.BooleanField(default=False)
-    image = models.FileField(upload_to="profilePictures", default=None)
-    location = models.CharField(max_length=200, blank=True)
-    phoneNumber = models.CharField(max_length=20, blank=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = CustomUserManager()

@@ -10,9 +10,11 @@ drf-yasg==1.21.6
 inflection==0.5.1
 Markdown==3.4.3
 packaging==23.1
+Pillow==10.0.0
 pycparser==2.21
 pytz==2023.3
 PyYAML==6.0
 sqlparse==0.4.4
 tzdata==2023.3
 uritemplate==4.1.1
+youtube-dl==2021.12.17
