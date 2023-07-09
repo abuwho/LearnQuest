@@ -53,7 +53,6 @@ class Section(models.Model):
     @property
     def duration(self):
         return sum([lesson.duration for lesson in self.lessons])
-             
 
 class Lesson(models.Model):
     id = models.UUIDField(unique=True, primary_key=True,

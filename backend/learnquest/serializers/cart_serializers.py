@@ -1,5 +1,6 @@
 from .serializers_import import *
 from .course_serializers import CartDisplayCourseSerializer
+
 class DisplayCartSerializer(serializers.ModelSerializer):
     total_price = serializers.SerializerMethodField(read_only = True)
     item_count= serializers.SerializerMethodField(read_only = True)
