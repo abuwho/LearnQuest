@@ -122,15 +122,6 @@ DATABASES = {
     }
 }
 
-# import config from dotenv
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    import dotenv
-    dotenv.load_dotenv(dotenv_file)
-
-# 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
