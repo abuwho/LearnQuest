@@ -159,11 +159,12 @@ class Cart(models.Model):
     
     @property
     def item_count(self):
-        return len(self.courses)
+        return self.courses.count()
     
     @property
     def total_price(self):
-        return sum([course.price for course in self.courses.all()])
+        course_prices = list(self.courses.values_list('price', flat=True))
+        return sum(course_prices)
 
 
 class CartCourse(models.Model):

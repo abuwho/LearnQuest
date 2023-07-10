@@ -32,9 +32,9 @@ def create_section(request):
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
 
-@swagger_auto_schema(methods=['POST'], request_body=RequestUpdateSectionSerializer,
+@swagger_auto_schema(methods=['PUT'], request_body=RequestUpdateSectionSerializer,
                      responses={200: ResponseUpdateSectionSerializer(), 400: {}})
-@api_view(["POST"])
+@api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_section(request):
     data = request.data
@@ -44,6 +44,7 @@ def update_section(request):
 
         user = request.user
         title = serialized.data.get("title")
+
         section = serialized.data.get("section")
 
         section_object = Section.objects.get(id=section)
@@ -51,8 +52,9 @@ def update_section(request):
         if user != section_object.course.instructor:
             raise ValueError("The current user cannot update the section title")
 
-        section_object.title = title
-        section_object.save()
+        if title is not None:    
+            section_object.title = title
+            section_object.save()
 
         return Response(ResponseUpdateSectionSerializer(section_object).data, status=200)
     except Exception as e:

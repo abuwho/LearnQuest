@@ -17,11 +17,9 @@ class DisplayCartSerializer(serializers.ModelSerializer):
     
     def get_courses(self, instance):
         return CartDisplayCourseSerializer(instance=instance.courses, many = True).data
-    
-    
 
 class AddToCartSerializer(serializers.Serializer):
     course = serializers.UUIDField()
-    cart = serializers.UUIDField()
-    
-    
+
+class RemoveFromCartSerializer(serializers.Serializer):
+    course = serializers.UUIDField()
