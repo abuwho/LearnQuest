@@ -95,17 +95,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'UWGc7rVEotx4x4$R',
-#         'HOST': 'db.xkqvhmyaxzqzsattcrrr.supabase.co',
-#         'PORT': '5432', 
-#     }
-# }
-
 
 from decouple import config
 
@@ -121,15 +110,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-# import config from dotenv
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    import dotenv
-    dotenv.load_dotenv(dotenv_file)
-
-# 
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

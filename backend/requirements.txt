@@ -11,7 +11,10 @@ inflection==0.5.1
 Markdown==3.4.3
 packaging==23.1
 Pillow==10.0.0
+psycopg2==2.9.6
 pycparser==2.21
+python-decouple==3.8
+python-dotenv==1.0.0
 pytube==15.0.0
 pytz==2023.3
 PyYAML==6.0
