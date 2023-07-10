@@ -41,8 +41,11 @@ class AuthorizedViewCourseSerializer(serializers.ModelSerializer):
     def get_sections(self, instance):
         return EnrolledViewSectionSerializer(instance= instance.sections, many = True).data
     
+
     def get_reviews(self, instance):
         return ViewReviewSerializer(instance= instance.reviews, many = True).data
+    
+    
     
     
 class InstructorViewCourseSerializer(serializers.ModelSerializer):

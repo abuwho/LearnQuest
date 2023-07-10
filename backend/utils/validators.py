@@ -1,5 +1,5 @@
-import youtube_dl
 import re
+from pytube import YouTube
 
 
 class LinkValidator:
@@ -19,10 +19,14 @@ class YoutubeValidator(LinkValidator):
         return match is not None
         
     
-    def get_duration(self) -> int:
-        ydl_opts = {'quiet': True}
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(self.link, download=False)
-            duration = info.get('duration')
+    # get duration of YouTube video using pytube
+    def get_duration(self) -> int: 
+        try:
+            video = YouTube(self.link)
+            duration = video.length
             return duration
-    
+        except Exception as e:
+            print(f"Error occurred: {str(e)}\nReturning duration = 0")
+            return 0
+
+        

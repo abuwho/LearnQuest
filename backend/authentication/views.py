@@ -1,13 +1,14 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import permission_classes,api_view
+from rest_framework.decorators import permission_classes,api_view, parser_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer, ProfileSerializer
+from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer, ProfileSerializer, ProfileUpdateSerializer
 from django.contrib.auth import authenticate, login
 from .utils import send_reset_email, validate_code
 from knox.models import AuthToken
+from rest_framework.parsers import FormParser, MultiPartParser
 from learnquest.models import Profile
 
 User = get_user_model()
@@ -54,6 +55,41 @@ def get_current_user(request):
     user = request.user
     profile= Profile.objects.get(user= user)
     return Response(ProfileSerializer(profile).data, status=201)
+
+
+@swagger_auto_schema(methods=['PUT'], request_body=ProfileUpdateSerializer, responses={201: ProfileSerializer(), 400: {}})
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+@parser_classes([FormParser, MultiPartParser])
+def update_profile(request):
+    data = request.data
+    serialized = ProfileUpdateSerializer(data=data)
+    try:
+        serialized.is_valid(raise_exception=True)
+        profile = request.user.profile
+        if "profile_picture" in serialized.validated_data:
+            profile.profile_picture = serialized.validated_data.get("profile_picture")
+        if "bio" in  serialized.validated_data:
+            profile.bio = serialized.validated_data.get("bio")
+        if "twitter" in serialized.validated_data:
+            profile.twitter = serialized.validated_data.get("twitter")
+        if "linkedIn" in serialized.validated_data:
+            profile.linkedIn = serialized.validated_data.get("linkedIn")
+        if "location" in serialized.validated_data:
+            profile.location = serialized.validated_data.get("location")
+        if "phoneNumber" in serialized.validated_data:
+            profile.phoneNumber = serialized.validated_data.get("phoneNumber")
+        if "first_name" in serialized.validated_data:
+            profile.user.firstname = serialized.validated_data.get("first_name")
+        if "last_name" in serialized.validated_data:
+            profile.user.lastname = serialized.validated_data.get("last_name")
+        profile.user.save()
+        profile.save()
+        return Response(ProfileSerializer(profile).data, status=201)
+    except Exception as e:
+        return Response(
+            {"error": str(e)}, status=400
+        )
 
 
 @swagger_auto_schema(methods=['POST'], request_body=AuthLoginSerializer,

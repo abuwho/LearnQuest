@@ -13,6 +13,7 @@ from learnquest.serializers.review_serializers import *
 from learnquest.serializers.section_serializers import *
 from .application_views import *
 from .cart_views import *
-from .courses_views import *
+from .course_views import *
+from .lesson_views import *
 from .review_views import *
 from .section_views import *
