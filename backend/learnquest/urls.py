@@ -19,6 +19,7 @@ urlpatterns = [
     path("cart/add", views.add_course_to_cart, name="add-course-to-cart"),
     path("cart/get", views.get_cart, name="get-cart"),
     path("cart/remove", views.delete_course_from_cart, name="delete-course-from-cart"),
+    path("cart/checkout", views.checkout, name= "checkout"), 
     path("courses/create_lesson", views.create_lesson, name="create-lesson"),
     path("courses/update_lesson", views.update_lesson, name="update-lesson"),
     path("courses/delete_lesson", views.delete_lesson, name="delete-lesson"),

@@ -66,3 +66,26 @@ def delete_course_from_cart(request):
         return Response(DisplayCartSerializer(cart).data, 201)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
+    
+@swagger_auto_schema(methods=['POST'],
+                     responses={201: DisplayCartSerializer(), 400: {}, 500 : {}})
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def checkout(request):
+    try:
+        user = request.user
+        cart = user.cart
+        wallet = user.wallet
+
+        if wallet.balance < cart.total_price:
+            return Response({"message":"Insufficient Fund"}, status= 401)
+
+        cartcourses = CartCourse.objects.filter(cart = cart).all()
+        for cartcourse in cartcourses:
+            CourseEnrollment.objects.create(student= user, course = cartcourse.course)
+            wallet.balance -= cartcourse.course.price
+            cartcourse.delete()
+        wallet.save()
+        return Response(DisplayCartSerializer(cart).data, 201)
+    except Exception as e:
+        return Response({"message": "Something went wrong", "error": str(e)}, status=500)
