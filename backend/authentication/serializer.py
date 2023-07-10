@@ -29,6 +29,9 @@ class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
         fields ="__all__"
+        
+class TopUpSerializer(serializers.Serializer):
+    amount = serializers.FloatField(required = True)
 
     
 class ProfileSerializer(serializers.ModelSerializer):

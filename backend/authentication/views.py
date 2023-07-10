@@ -4,7 +4,7 @@ from rest_framework.decorators import permission_classes,api_view, parser_classe
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer, ProfileSerializer, ProfileUpdateSerializer
+from .serializer import AuthLoginSerializer, AuthSerializer, ForgotPasswordSerializer, ProfileSerializer, ProfileUpdateSerializer,TopUpSerializer 
 from django.contrib.auth import authenticate, login
 from .utils import send_reset_email, validate_code
 from knox.models import AuthToken
@@ -89,6 +89,27 @@ def update_profile(request):
     except Exception as e:
         return Response(
             {"error": str(e)}, status=400
+        )
+@swagger_auto_schema(methods=['POST'],request_body=TopUpSerializer,
+                     responses={201: ProfileSerializer(), 400: {}})
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def topup(request):
+    data = request.data
+    serialized = TopUpSerializer(data = data)
+    try:
+        serialized.is_valid(raise_exception=True)
+        amount = serialized.validated_data.get("amount")
+        if amount < 0:
+            return Response({"message":"Amount should be positive", "error": ""}, status = 400)
+        wallet = request.user.wallet
+        wallet.balance += amount
+        wallet.save()
+        profile = Profile.objects.get(user = request.user)
+        return Response(ProfileSerializer(profile).data, status = 200)
+    except Exception as e:
+        return Response(
+            {"message": "Something went wrong","error": str(e)}, status=400
         )
 
 
