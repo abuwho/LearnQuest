@@ -12,5 +12,8 @@ urlpatterns = [
     path("courses/created", views.get_created_courses, name="get-created-courses"),
     path("courses/create_section", views.create_section, name="create-section"),
     path("courses/update_section", views.update_section, name="update-section"),
-    path("courses/delete_section", views.delete_section, name="delete-section")
+    path("courses/delete_section", views.delete_section, name="delete-section"),
+    path("cart/add", views.add_course_to_cart, name="add-course-to-cart"),
+    path("cart/get", views.get_cart, name="get-cart"),
+    path("cart/remove", views.delete_course_from_cart, name="delete-course-from-cart")
 ]

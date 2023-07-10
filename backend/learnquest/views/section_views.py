@@ -32,9 +32,9 @@ def create_section(request):
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
 
-@swagger_auto_schema(methods=['POST'], request_body=RequestUpdateSectionSerializer,
+@swagger_auto_schema(methods=['PUT'], request_body=RequestUpdateSectionSerializer,
                      responses={200: ResponseUpdateSectionSerializer(), 400: {}})
-@api_view(["POST"])
+@api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_section(request):
     data = request.data
