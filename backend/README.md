@@ -30,6 +30,17 @@ Please follow the steps below to install and set up the backend using Docker:
 
 Congratulations! You have successfully installed the backend server for the LearnQuest project. 
 
+
+## How to create a superuser from Docker desktop
+1. Please go to the "containers" tab and find the running container.
+2. Enter the following commands as in the picture:
+```
+python manage.my createsuperuser
+```
+![Create Superuser](/backend/docs/images/create-superuser-from-docker-terminal.png)
+3. Go to http://127.0.0.1:8080/admin to access the admin panel
+
+
 ## Additional Notes
 
 - Make sure to keep your dependencies up to date by periodically running `pip install -r requirements.txt` to install the latest versions of the packages.
