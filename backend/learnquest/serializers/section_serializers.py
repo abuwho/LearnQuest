@@ -31,8 +31,11 @@ class EnrolledViewSectionSerializer(serializers.ModelSerializer):
     def get_lessons(self,instance):
         lessons = instance.lessons
         return EnrolledViewLessonSerializer(instance=lessons, many = True).data
+    
+    def get_duration(self, instance):
+        return instance.duration
 
-class UnenrolledViewSectionSerializer(serializers.Serializer):
+class UnenrolledViewSectionSerializer(serializers.ModelSerializer):
     lessons = serializers.SerializerMethodField(read_only = True)
     duration = serializers.SerializerMethodField(read_only = True)
     class Meta:
@@ -42,6 +45,9 @@ class UnenrolledViewSectionSerializer(serializers.Serializer):
     def get_lessons(self,instance):
         lessons = instance.lessons
         return UnenrolledViewLessonSerializer(instance=lessons, many = True).data
+    
+    def get_duration(self, instance):
+        return instance.duration
 
 class RequestDeleteSectionSerializer(serializers.Serializer):
     section = serializers.UUIDField()

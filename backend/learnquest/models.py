@@ -24,7 +24,7 @@ class Course(models.Model):
     title = models.CharField(max_length=1024, blank=False, null=False)
     instructor = models.ForeignKey("authentication.User", on_delete = models.CASCADE, related_name = "presiding_courses", null = False, blank = False)
     students = models.ManyToManyField("authentication.User", related_name="enrolled_courses", through='CourseEnrollment')
-    image = models.ImageField(upload_to="courses/", default= "default_course.jpg")
+    image = models.ImageField(upload_to="courses/", default= "default_course.jpg", null = True, blank = True)
     price = models.FloatField(default=0.00) 
     description = models.TextField(blank = True, null= True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -52,7 +52,7 @@ class Section(models.Model):
     
     @property
     def duration(self):
-        return sum([lesson.duration for lesson in self.lessons])
+        return sum([lesson.duration for lesson in self.lessons.all()])
 
 class Lesson(models.Model):
     id = models.UUIDField(unique=True, primary_key=True,
@@ -163,7 +163,7 @@ class Cart(models.Model):
     
     @property
     def total_price(self):
-        return sum([course.price for course in self.courses])
+        return sum([course.price for course in self.courses.all()])
 
 
 class CartCourse(models.Model):

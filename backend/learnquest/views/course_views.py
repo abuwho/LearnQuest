@@ -22,10 +22,12 @@ def create_course(request):
     serialized = RequestCreateCourseSerializer(data=data)
     try:
         serialized.is_valid(raise_exception=True)
+        if (request.user.role != "instructor"):
+            return Response({"message": "Unauthorized: You are not an instructor"}, status=401)
         course = Course(title=serialized.validated_data.get("title"), instructor=request.user,
                         price=serialized.validated_data.get("price"),
                         description=serialized.validated_data.get("description"),
-                        image=serialized.validated_data.get("image"))
+                        image=serialized.validated_data.get("image") if serialized.validated_data.get("image") else "default_course.jpg")
         course.save()
         return Response(ResponseCreateCourseSerializer(course).data, status=201)
     except Exception as e:
@@ -79,7 +81,6 @@ def delete_course(request, course_id):
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
     
 
-
 # Get all enrolled courses
 @swagger_auto_schema(method='GET', responses={200: AuthorizedViewCourseSerializer(many=True)})
 @api_view(['GET'])
@@ -124,9 +125,10 @@ def preview_course(request, course_id):
 def full_view_course(request, course_id):
     try:
         course = Course.objects.get(id=course_id)
-        if course not in request.user.enrolled_courses.all():
+        if course not in request.user.enrolled_courses.all() and request.user != course.instructor:
             return Response({"message": "Unauthorized: You are not enrolled in this course"}, status=401)
         serialized = AuthorizedViewCourseSerializer(course)
         return Response(serialized.data, status=200)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
+

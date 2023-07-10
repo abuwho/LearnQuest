@@ -82,3 +82,21 @@ def delete_section(request):
         return Response({}, 200)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
+
+
+# Get all lessons in a section
+@swagger_auto_schema(method='GET', responses={200: EnrolledViewSectionSerializer(many=True)})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_lessons_in_section(request, section_id):
+    try:
+        section = Section.objects.get(id=section_id)
+        course = section.course
+        if course.instructor != request.user and request.user not in course.students.all():
+            return Response({"message": "Unauthorized: You are not enrolled in the course"}, status=401)
+        lessons = section.lessons
+        serialized = EnrolledViewSectionSerializer(section)
+        print(serialized)
+        return Response(serialized.data, status=200)
+    except Exception as e:
+        return Response({"message": "Invalid Request", "error": str(e)}, status=400)
