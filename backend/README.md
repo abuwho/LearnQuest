@@ -26,7 +26,7 @@ Please follow the steps below to install and set up the backend using Docker:
    docker run -p 8080:8080 learnquest-backend
    ```
 
-4. Open the api endpoints on [localhost://8080](http://localhost:8080) or [127.0.0.1](http://127.0.0.1:8080)
+4. Open the api endpoints on [localhost://8080](http://localhost:8080) or [http://127.0.0.1:8080](http://127.0.0.1:8080)
 
 Congratulations! You have successfully installed the backend server for the LearnQuest project. 
 
