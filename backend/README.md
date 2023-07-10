@@ -17,13 +17,23 @@ Please follow the steps below to install and set up the backend using Docker:
    ```
    cd LearnQuest/backend
    ```
+3. Create `.env` file:
+   ```
+   touch .env
+   ```
 
-3. Run the following commands with Docker: 
+4. Add the following credentials in the .env file: 
+   ```
+   DATABASE_HOST=
+   DATABASE_PASSWORD=
+   ```
+
+4. Run the following commands with Docker: 
    ```
    docker build -t learnquest-backend .
    ```
    ```
-   docker run -p 8080:8080 learnquest-backend
+   docker run --env-file .env -p 8080:8080 learnquest-backend
    ```
 
 4. Open the api endpoints on [localhost://8080](http://localhost:8080) or [http://127.0.0.1:8080](http://127.0.0.1:8080)
