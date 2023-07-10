@@ -1,0 +1,31 @@
+name: Create .env File for the backend
+
+on:
+  push:
+    branches-ignore:
+      - '*'
+
+jobs:
+  create-env-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create .env file
+        run: |
+          echo "DATABASE_HOST=${{ secrets.DATABASE_HOST }}" >> backend/.env
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> backend/.env
+        env:
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+
+      - name: Commit changes
+        run: |
+          cd backend
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .env
+          git commit -m "Add .env file"
+          git push
