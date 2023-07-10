@@ -9,4 +9,5 @@ urlpatterns = [
     path("forgot_password/", views.forgot_password, name="forgot_password"),
     path("verify_forgot_password_code/<int:code>", views.verify_code, name="verify_forgot_password_code"),
     path("set_new_password/", views.set_new_password, name="set_new_password"),
+    path("update_profile/", views.update_profile, name="update_profile"),
 ]
