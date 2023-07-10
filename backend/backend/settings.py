@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,12 +95,40 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'UWGc7rVEotx4x4$R',
+#         'HOST': 'db.xkqvhmyaxzqzsattcrrr.supabase.co',
+#         'PORT': '5432', 
+#     }
+# }
+
+
+from decouple import config
+
+config._load('.env')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': config('DATABASE_HOST'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'PORT': '5432',
     }
 }
+
+# import config from dotenv
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    import dotenv
+    dotenv.load_dotenv(dotenv_file)
+
+# 
 
 
 # Password validation
