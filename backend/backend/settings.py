@@ -95,17 +95,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'UWGc7rVEotx4x4$R',
-#         'HOST': 'db.xkqvhmyaxzqzsattcrrr.supabase.co',
-#         'PORT': '5432', 
-#     }
-# }
-
 
 from decouple import config
 
