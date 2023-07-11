@@ -1,9 +1,30 @@
+"use client"
 import Slider from "react-slick";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from '@heroicons/react/24/solid'
-export default function Mycourses () {
+import { get } from "http";
+import getAllCourses from "../utils/getAllCourses";
+export default function Mycourses() {
+
+    const [token, setToken] = useState<string | null>()
+    const [courses, setCourses] = useState<any[]>([])
+    const userId = 'e2f1851f-32e2-4003-b4b8-12ae0f8a22f2'
+    useEffect(() => {
+        if (!window) return
+        setToken(localStorage.getItem('token'))
+    }, [])
+    const getCourses = async() => {
+        if(!token) return
+        const fetchedCourses = (await getAllCourses(token)).filter((course)=> {return course.instructor===userId})
+        console.log('courses for user',fetchedCourses)
+        setCourses(fetchedCourses)
+    }
+    useEffect(() => {
+        if(!token) return
+        getCourses()
+    }, [token])
     const settings = {
         dots: false,
         infinite: true,
@@ -35,17 +56,17 @@ export default function Mycourses () {
             }
         ]
     };
-    return(
-<div id="courses">
-                <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
+    return (
+        <div id="courses">
+            <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
 
-                    <div className="sm:flex justify-between items-center">
-                        <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">My courses.</h3>
-                    </div>
+                <div className="sm:flex justify-between items-center">
+                    <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">My courses.</h3>
+                </div>
 
 
-                    {/* <Slider {...settings}>
-                        {postData.map((items, i) => (
+                <Slider {...settings}>
+                        {courses.map((items, i) => (
                             <div key={i}>
 
                                 <div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
@@ -57,17 +78,13 @@ export default function Mycourses () {
                                     </div>
 
                                     <div className="px-3">
-                                        <h4 className='text-2xl font-bold pt-6 text-black'>{items.heading}</h4>
-                                        <h4 className='text-2xl font-bold pt-1 text-black'>{items.heading2}</h4>
-
-                                        <div>
-                                            <h3 className='text-base font-normal pt-6 opacity-75'>{items.name}</h3>
-                                        </div>
+                                        <h4 className='text-2xl font-bold pt-6 text-black'>{items.title}</h4>
 
                                         <div className="flex justify-between items-center py-6">
                                             <div className="flex gap-4">
                                                 <h3 className="text-red text-22xl font-medium">{items.rating}</h3>
                                                 <div className="flex">
+
                                                     <StarIcon className="h-5 w-5 text-gold" />
                                                     <StarIcon className="h-5 w-5 text-gold" />
                                                     <StarIcon className="h-5 w-5 text-gold" />
@@ -85,20 +102,20 @@ export default function Mycourses () {
                                         <div className="flex justify-between pt-6">
                                             <div className="flex gap-4">
                                                 <Image src={'/assets/courses/book-open.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
-                                                <h3 className="text-base font-medium text-black opacity-75">{items.classes} classes</h3>
+                                                <h3 className="text-base font-medium text-black opacity-75">{items.sections.length} Sections</h3>
                                             </div>
                                             <div className="flex gap-4">
                                                 <Image src={'/assets/courses/users.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
-                                                <h3 className="text-base font-medium text-black opacity-75">{items.students} students</h3>
+                                                <h3 className="text-base font-medium text-black opacity-75">{items.students.length} students</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                    </Slider> */}
-                </div>
+                    </Slider>
             </div>
+        </div>
 
     )
 }

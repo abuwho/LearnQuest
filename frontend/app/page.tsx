@@ -4,13 +4,11 @@ import Courses from './components/Courses/index';
 import Mentor from './components/Mentor/index';
 import Testimonials from './components/Testimonials/index';
 import Newsletter from './components/Newsletter/Newsletter';
-import { ChakraProvider } from '@chakra-ui/react'
 
 
 export default function Home() {
   return (
 
-    <ChakraProvider>
       <main>
         <Banner />
         <Companies />
@@ -20,6 +18,5 @@ export default function Home() {
         <Newsletter />
       </main>
 
-    </ChakraProvider>
   )
 }
