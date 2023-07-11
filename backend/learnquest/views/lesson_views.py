@@ -18,7 +18,7 @@ def create_lesson(request):
         
         lesson = Lesson(title=serialized.validated_data.get("title"), section=section,
                         type=serialized.validated_data.get("type"), pdf=serialized.validated_data.get("pdf"),
-                        video_url=serialized.validated_data.get("video_url"))
+                        video_url=serialized.validated_data.get("video_url"), summary=serialized.validated_data.get("summary"))
         lesson.save()
         return Response(ResponseCreateLessonSerializer(lesson).data, status=201)
     
@@ -51,6 +51,8 @@ def update_lesson(request):
             lesson.pdf = serialized.validated_data.get("pdf")
         if serialized.validated_data.get("video_url") is not None:
             lesson.video_url = serialized.validated_data.get("video_url")
+        if serialized.validated_data.get("summary") is not None:
+            lesson.summary = serialized.validated_data.get("summary")
         lesson.save()
         return Response(ResponseUpdateLessonSerializer(lesson).data, status=200)
 

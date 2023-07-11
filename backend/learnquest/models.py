@@ -62,6 +62,7 @@ class Lesson(models.Model):
     type = models.CharField(max_length=256, choices=[ ("link", "link"), ("pdf", "pdf")], default="link")
     pdf = models.FileField(upload_to='uploads/', null = True, blank = True)
     video_url = models.URLField(null = True, blank = True) 
+    summary = models.TextField(null = False, blank = False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -4,7 +4,7 @@ class EnrolledViewLessonSerializer(serializers.ModelSerializer):
     duration = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Lesson
-        fields = ["id", "title", "duration", "section", "type", "pdf", "video_url", "created_at", "updated_at"]
+        fields = ["id", "title", "duration", "section", "type", "pdf", "video_url", "summary",  "created_at", "updated_at"]
         
     def get_duration(self, instance):
         return instance.duration
@@ -26,6 +26,8 @@ class RequestCreateLessonSerializer(serializers.Serializer):
     type = serializers.CharField()
     pdf = serializers.FileField(required = False)
     video_url = serializers.URLField(required = False)
+    summary = serializers.CharField(required = False)
+
 
 class ResponseCreateLessonSerializer(serializers.ModelSerializer):
     duration = serializers.SerializerMethodField(read_only = True)
@@ -44,6 +46,7 @@ class RequestUpdateLessonSerializer(serializers.Serializer):
     type = serializers.CharField()
     pdf = serializers.FileField(required = False)
     video_url = serializers.URLField(required = False)
+    summary = serializers.CharField(required = False)
     
 
 class ResponseUpdateLessonSerializer(serializers.ModelSerializer):
