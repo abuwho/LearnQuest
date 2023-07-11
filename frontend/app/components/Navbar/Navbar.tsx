@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
@@ -45,13 +45,14 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const [currentLink, setCurrentLink] = useState('/');
-
+    const [token, setToken] = useState<string| null>()
     const handleLinkClick = (href: string) => {
         setCurrentLink(href);
     };
-
-    const token = localStorage.getItem('token');
-
+    useEffect(() => {
+        if(!window)return
+        setToken(localStorage.getItem('token'));
+    }, [])
     return (
         <Disclosure as="nav" className="navbar">
             <>
@@ -101,12 +102,12 @@ const Navbar = () => {
 
                         {/* SIGNIN DIALOG */}
 
-                        { !token ? <Signdialog /> : null }
+                        {!token ? <Signdialog /> : null}
 
 
                         {/* REGISTER DIALOG */}
 
-                        { !token ? <Registerdialog /> : <Userinfodialog /> }
+                        {!token ? <Registerdialog /> : <Userinfodialog />}
 
                         {/* DRAWER FOR MOBILE VIEW */}
 

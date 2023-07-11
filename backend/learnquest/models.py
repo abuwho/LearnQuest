@@ -25,7 +25,7 @@ class Course(models.Model):
     instructor = models.ForeignKey("authentication.User", on_delete = models.CASCADE, related_name = "presiding_courses", null = False, blank = False)
     students = models.ManyToManyField("authentication.User", related_name="enrolled_courses", through='CourseEnrollment')
     image = models.ImageField(upload_to="courses/", default= "default_course.jpg", null = True, blank = True)
-    price = models.FloatField(default=0.00) 
+    price = models.FloatField(default=0.00, null=True) 
     description = models.TextField(blank = True, null= True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

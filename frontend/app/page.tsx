@@ -4,17 +4,22 @@ import Courses from './components/Courses/index';
 import Mentor from './components/Mentor/index';
 import Testimonials from './components/Testimonials/index';
 import Newsletter from './components/Newsletter/Newsletter';
+import { ChakraProvider } from '@chakra-ui/react'
 
 
 export default function Home() {
   return (
-    <main>
-      <Banner />
-      <Companies />
-      <Courses />
-      <Mentor />
-      <Testimonials />
-      <Newsletter />
-    </main>
+
+    <ChakraProvider>
+      <main>
+        <Banner />
+        <Companies />
+        <Courses />
+        <Mentor />
+        <Testimonials />
+        <Newsletter />
+      </main>
+
+    </ChakraProvider>
   )
 }
