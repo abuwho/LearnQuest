@@ -2,7 +2,7 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, FormErrorMessage, Stack, useToast } from "@chakra-ui/react";
 import objectToFormData from '../utils/objectToFormData';
-
+import './createCourse.css'
 type CourseForm = {
     title: string;
     description: string;
@@ -102,18 +102,14 @@ export default function CreateCourse() {
     };
 
     return (
-        <>
-            <h1>Create a Course</h1>
-                    <FormLabel >Course title:</FormLabel>
-                    <input type="text" name="title" onChange={handleInputChange} />
-
-                    <form >Course Description:</form>
-                    <input type="text" name="description" value={form.description} onChange={handleInputChange} />
-           
-                    <form >Course Price:</form>
-                    <input type="number" name="price" value={form.price} onChange={handleInputChange} />
-           
-                <button type="submit" onClick={()=>handleSubmit()}>Submit</button>
-       </>
+        <div className='form-style-8'>
+            <h2>Create a course</h2>
+            <form action="">
+                <input type="text" name="title" placeholder="Course title:" onChange={handleInputChange} />
+                <input type="text" name="description" placeholder='Description' value={form.description} onChange={handleInputChange} />
+                <input type="number" name="price" placeholder="Price" value={form.price} onChange={handleInputChange} />
+                <input  type="button" value="Submit"  onClick={()=>handleSubmit()}/>
+            </form>
+        </div>
     );
 }
