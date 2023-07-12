@@ -17,6 +17,7 @@ export default function Mycourses() {
     }, [])
     const getCourses = async() => {
         if(!token) return
+        console.log(token)
         const fetchedCourses = (await getAllCourses(token)).filter((course)=> {return course.instructor===userId})
         console.log('courses for user',fetchedCourses)
         setCourses(fetchedCourses)

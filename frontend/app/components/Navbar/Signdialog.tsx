@@ -1,6 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, SetStateAction, useState } from 'react'
+import { Fragment, SetStateAction, useContext, useEffect, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { UserContext } from '@/app/layout.tsx'
+
 
 
 const Signin = () => {
@@ -8,7 +10,7 @@ const Signin = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {isLoggingIn,setIsLoggingIn, setToken,token}= useContext(UserContext)!
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string> } }) => {
         setEmail(event.target.value);
@@ -17,6 +19,7 @@ const Signin = () => {
     const handlePasswordChange = (event: { target: { value: SetStateAction<string> } }) => {
         setPassword(event.target.value);
     };
+
 
 
     const closeModal = () => {
@@ -50,21 +53,12 @@ const Signin = () => {
 
             // Check if the registration was successful
             if (response.ok) {
-                window.location.reload();
-                setIsLoggedIn(true);
+                // window.location.reload();
                 console.log('Sign in successful');
-                const data = response.json();
-                console.log(data);
-                data.then(function(result: any) {
-                    console.log(result);
-                    localStorage.setItem('token', result.token);
-                    localStorage.setItem('username', result.username);
-                    localStorage.setItem('email', result.email);
-                    closeModal();
-                }, function(err: any) {
-                    console.log(err);
-                });
-
+                const data = await response.json()
+                console.log(data,'getting token data');
+                setToken(data.token)
+                console.log(data.token)
             } else {
             // Sign in failed, show an error message or handle it differently
             console.error('Sign in failed');
