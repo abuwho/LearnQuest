@@ -6,6 +6,17 @@ from .views_imports import *
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_all_courses(request):
+    """
+    Get all courses.
+
+    This endpoint is used to get all the courses.
+
+    Args:
+        request (Request): The request object.
+    
+    Returns:
+        Response: The response object.
+    """
     courses = Course.objects.all()
     serialized = UnauthorizedViewCourseSerializer(courses, many=True)
     return Response(serialized.data, status=200)
@@ -18,6 +29,17 @@ def get_all_courses(request):
 @parser_classes([FormParser, MultiPartParser])
 @permission_classes([IsAuthenticated])
 def create_course(request):
+    """
+    Create a course.
+
+    This endpoint is used to create a course. The user must be an instructor.
+
+    Args:
+        request (Request): The request object.
+
+    Returns:
+        Response: The response object.
+    """
     data = request.data
     serialized = RequestCreateCourseSerializer(data=data)
     try:
@@ -40,6 +62,19 @@ def create_course(request):
 @parser_classes([FormParser, MultiPartParser])
 @permission_classes([IsAuthenticated])
 def update_course(request, course_id):
+    """
+    Update a course.
+
+    This endpoint is used to update a course. The user must be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+        course_id (int): The ID of the course to update.
+
+    Returns:
+        Response: The response containing the updated course data.
+
+    """
     data = request.data
     serialized = RequestUpdateCourseSerializer(data=data)
     try:
@@ -71,6 +106,19 @@ def update_course(request, course_id):
 @parser_classes([FormParser, MultiPartParser])
 @permission_classes([IsAuthenticated])
 def delete_course(request, course_id):
+    """
+    Delete a course.
+
+    This endpoint is used to delete a course. The user must be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+        course_id (int): The ID of the course to delete.
+
+    Returns:
+        Response: The response indicating the success or failure of the deletion.
+
+    """
     try:
         course = Course.objects.get(id=course_id)
         if course.instructor != request.user:
@@ -86,6 +134,18 @@ def delete_course(request, course_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_enrolled_courses(request):
+    """
+    Get all enrolled courses.
+
+    This endpoint is used to get all the courses enrolled by the current user.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized enrolled courses.
+
+    """
     courses = Course.objects.filter(students=request.user)
     serialized = AuthorizedViewCourseSerializer(courses, many=True)
     return Response(serialized.data, status=200)
@@ -96,6 +156,18 @@ def get_enrolled_courses(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_created_courses(request):
+    """
+    Get all created courses.
+
+    This endpoint is used to get all the courses created by the current user. The user must be an instructor.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized created courses.
+
+    """
     # check if the user is an instructor
     if request.user.role != "instructor":
         return Response({"message": "Unauthorized: You are not an instructor"}, status=401)
@@ -110,6 +182,19 @@ def get_created_courses(request):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def preview_course(request, course_id):
+    """
+    Preview a course.
+
+    This endpoint is used to get the preview of a course. The user does not need to be enrolled in the course or be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object. (NOT used, because preview is allowed for all users)
+        course_id (int): The ID of the course to preview.
+
+    Returns:
+        Response: The response containing the serialized course for preview.
+
+    """
     try:
         course = Course.objects.get(id=course_id)
         serialized = UnauthorizedViewCourseSerializer(course)
@@ -123,6 +208,19 @@ def preview_course(request, course_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def full_view_course(request, course_id):
+    """
+    Full view of a course.
+
+    This endpoint is used to get the full view of a course. The user must be enrolled in the course or be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+        course_id (int): The ID of the course to view.
+
+    Returns:
+        Response: The response containing the serialized course for full view.
+
+    """
     try:
         course = Course.objects.get(id=course_id)
         if course not in request.user.enrolled_courses.all() and request.user != course.instructor:
@@ -131,4 +229,3 @@ def full_view_course(request, course_id):
         return Response(serialized.data, status=200)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
-

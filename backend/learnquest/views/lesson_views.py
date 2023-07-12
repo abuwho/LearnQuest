@@ -6,6 +6,18 @@ from .views_imports import *
 @parser_classes([FormParser, MultiPartParser])
 @permission_classes([IsAuthenticated])
 def create_lesson(request):
+    """
+    Create a lesson.
+
+    This endpoint is used to create a lesson. The user must be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized created lesson.
+
+    """
     data = request.data
     serialized = RequestCreateLessonSerializer(data=data)
     try:
@@ -32,6 +44,18 @@ def create_lesson(request):
 @parser_classes([FormParser, MultiPartParser])
 @permission_classes([IsAuthenticated])
 def update_lesson(request):
+    """
+    Update a lesson.
+
+    This endpoint is used to update a lesson. The user must be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized updated lesson.
+
+    """
     data = request.data
     serialized = RequestUpdateLessonSerializer(data=data)
     try:
@@ -65,6 +89,18 @@ def update_lesson(request):
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_lesson(request, lesson_id):
+    """
+    Delete a lesson.
+
+    This endpoint is used to delete a lesson. The user must be the instructor of the course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized updated lesson.
+
+    """
     try:
         lesson = Lesson.objects.get(id=lesson_id)
         section = lesson.section
@@ -75,5 +111,3 @@ def delete_lesson(request, lesson_id):
         return Response({}, status=200)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
-
-

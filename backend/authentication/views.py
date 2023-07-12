@@ -19,6 +19,21 @@ User = get_user_model()
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def sign_up(request):
+    """
+    Sign up a new user.
+
+    This view function handles the sign-up process for a new user. It creates a new user with the provided email and password,
+    and returns a response with the user details and authentication token upon successful sign-up.
+
+    Request:
+        method: POST
+        body: AuthLoginSerializer
+
+    Responses:
+        - 201: AuthSerializer - The user details and authentication token upon successful sign-up.
+        - 400: An empty response indicating a bad request.
+
+    """
     data = request.data
     serialized = AuthLoginSerializer(data=data)
     try:
@@ -46,12 +61,28 @@ def sign_up(request):
         return Response(
             {}, status=400
         )
-        
+
+
+
 @swagger_auto_schema(methods=['GET'],
                      responses={201: ProfileSerializer(), 400: {}})
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_current_user(request):
+    """
+    Get the details of the current authenticated user.
+
+    This view function retrieves the details of the current authenticated user, including their profile information,
+    and returns a response with the serialized profile data.
+
+    Request:
+        method: GET
+
+    Responses:
+        - 201: ProfileSerializer - The serialized profile data of the current authenticated user.
+        - 400: An empty response indicating a bad request.
+
+    """
     user = request.user
     profile= Profile.objects.get(user= user)
     return Response(ProfileSerializer(profile).data, status=201)
@@ -62,6 +93,21 @@ def get_current_user(request):
 @permission_classes([IsAuthenticated])
 @parser_classes([FormParser, MultiPartParser])
 def update_profile(request):
+    """
+    Update the profile of the current authenticated user.
+
+    This view function updates the profile of the current authenticated user based on the provided data in the request.
+    It uses the ProfileUpdateSerializer for validation and updates the corresponding fields in the user's profile.
+
+    Request:
+        method: PUT
+        body: ProfileUpdateSerializer
+
+    Responses:
+        - 201: ProfileSerializer - The serialized profile data of the updated profile.
+        - 400: An error response indicating a bad request.
+
+    """
     data = request.data
     serialized = ProfileUpdateSerializer(data=data)
     try:
@@ -90,11 +136,28 @@ def update_profile(request):
         return Response(
             {"error": str(e)}, status=400
         )
+    
+
 @swagger_auto_schema(methods=['POST'],request_body=TopUpSerializer,
                      responses={201: ProfileSerializer(), 400: {}})
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def topup(request):
+    """
+    Top up the user's wallet balance.
+
+    This view function handles the top-up process for the user's wallet balance. It validates the provided amount,
+    adds the amount to the user's wallet balance, and returns the updated profile data.
+
+    Request:
+        method: POST
+        body: TopUpSerializer
+
+    Responses:
+        - 201: ProfileSerializer - The serialized profile data of the user after the top-up.
+        - 400: An error response indicating a bad request.
+
+    """
     data = request.data
     serialized = TopUpSerializer(data = data)
     try:
@@ -118,6 +181,21 @@ def topup(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def log_in(request):
+    """
+    Log in a user.
+
+    This view function handles the login process for a user. It authenticates the provided credentials,
+    generates an authentication token, and returns a response with the user details and token upon successful login.
+
+    Request:
+        method: POST
+        body: AuthLoginSerializer
+
+    Responses:
+        - 201: AuthSerializer - The user details and authentication token upon successful login.
+        - 400: An error response indicating a bad request.
+
+    """
     data = request.data
     serialized = AuthLoginSerializer(data=data)
     try:
@@ -142,12 +220,27 @@ def log_in(request):
         return Response(
             {"error": str(e)}, status=400
         )
-        
+
+
 @swagger_auto_schema(methods=['POST'], request_body=ForgotPasswordSerializer,
                      responses={201: {}, 400: {}})
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def forgot_password(request):
+    """
+    Initiate the password reset process.
+
+    This view function initiates the password reset process by sending a reset email to the user's email address.
+
+    Request:
+        method: POST
+        body: ForgotPasswordSerializer
+
+    Responses:
+        - 201: An empty response indicating a successful initiation of the password reset process.
+        - 400: An error response indicating a bad request.
+
+    """
     data = request.data
     serialized = ForgotPasswordSerializer(data=data)
     try:
@@ -162,10 +255,25 @@ def forgot_password(request):
         return Response(
             {"error": str(e)}, status=400
         )
-        
+
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def verify_code(request, code):
+    """
+    Verify the password reset code.
+
+    This view function verifies the provided password reset code and returns the email address associated with the code.
+
+    Request:
+        method: POST
+        path parameter: code - The password reset code.
+
+    Responses:
+        - 200: {"email": str} - The email address associated with the code.
+        - 400: An error response indicating an invalid code.
+
+    """
     try:
         user = validate_code(code)
         if user is None:
@@ -176,12 +284,27 @@ def verify_code(request, code):
         return Response(
             {"error": str(e)}, status=400
         )
-        
+
+
 @swagger_auto_schema(methods=['POST'], request_body=AuthLoginSerializer(),
                      responses={201: {}, 400: {}})
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def set_new_password(request):
+    """
+    Set a new password for the user.
+
+    This view function allows the user to set a new password by providing the email address and the new password.
+
+    Request:
+        method: POST
+        body: AuthLoginSerializer
+
+    Responses:
+        - 201: An empty response indicating a successful password update.
+        - 400: An error response indicating a bad request.
+
+    """
     data = request.data
     serialized = ForgotPasswordSerializer(data=data)
     try:
