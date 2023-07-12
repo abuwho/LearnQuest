@@ -14,7 +14,7 @@ export default async function getAllCourses(token: string) {
             return  await response.json()
         }
     } catch (error) {
-        console.log('errorrrrrrr', error)
+        console.log('error', error)
         alert('request failed')
     }
 }

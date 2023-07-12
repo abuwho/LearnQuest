@@ -1,12 +1,15 @@
+"use client"
+
 import { Disclosure } from '@headlessui/react';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import Signdialog from "./Signdialog";
 import Registerdialog from "./Registerdialog";
 import Userinfodialog from './Userinfodialog';
+import { UserContext } from '@/app/layout.tsx';
 
 
 interface NavigationItem {
@@ -43,16 +46,12 @@ const CustomLink = ({ href, onClick, children }: { href: string; onClick: () => 
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
-
+    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
+    
     const [currentLink, setCurrentLink] = useState('/');
-    const [token, setToken] = useState<string| null>()
     const handleLinkClick = (href: string) => {
         setCurrentLink(href);
     };
-    useEffect(() => {
-        if(!window)return
-        setToken(localStorage.getItem('token'));
-    }, [])
     return (
         <Disclosure as="nav" className="navbar">
             <>

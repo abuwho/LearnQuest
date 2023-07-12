@@ -37,7 +37,6 @@ const Register = () => {
                 email: email,
                 password: password
             };
-            console.log(email,password,'hiiii')
             // Send a POST request to the backend API endpoint
             const response = await fetch('http://127.0.0.1:8080/auth/signup/', {
             method: 'POST',
@@ -55,8 +54,7 @@ const Register = () => {
                 window.location.reload();
                 setIsLoggedIn(true);
                 console.log('Sign up successful');
-                const data = response.json();
-                console.log(data);
+                const data = response.json()
                 data.then(function(result: any) {
                     console.log(result);
                     localStorage.setItem('token', result.token);

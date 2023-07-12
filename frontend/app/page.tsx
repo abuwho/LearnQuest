@@ -7,7 +7,6 @@ import Testimonials from './components/Testimonials/index';
 import Newsletter from './components/Newsletter/Newsletter';
 import { createContext, useState } from 'react'
 import axios from 'axios'
-import Navbar from './components/Navbar/Navbar';
 
 
 export default function Home() {

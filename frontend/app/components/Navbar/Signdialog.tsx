@@ -1,3 +1,5 @@
+"use client"
+
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, SetStateAction, useContext, useEffect, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
@@ -7,10 +9,10 @@ import { UserContext } from '@/app/layout.tsx'
 
 const Signin = () => {
     let [isOpen, setIsOpen] = useState(false)
-
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {isLoggingIn,setIsLoggingIn, setToken,token}= useContext(UserContext)!
+    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string> } }) => {
         setEmail(event.target.value);
@@ -19,8 +21,6 @@ const Signin = () => {
     const handlePasswordChange = (event: { target: { value: SetStateAction<string> } }) => {
         setPassword(event.target.value);
     };
-
-
 
     const closeModal = () => {
         setIsOpen(false)

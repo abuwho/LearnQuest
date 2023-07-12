@@ -1,8 +1,12 @@
 "use client"
 import Navbar from './Navbar';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-const Navbarin: React.FC = () => {
+import { UserContext } from '@/app/layout';
+
+const Navbarin = () => {
+    // const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
+
     useEffect(() => {
         // The debounce function receives our function as a parameter
         const debounce = (fn: Function) => {

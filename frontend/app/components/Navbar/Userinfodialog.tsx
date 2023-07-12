@@ -1,18 +1,17 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, SetStateAction, useState } from 'react'
+import { Fragment, SetStateAction, useContext, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { UserIcon } from '@heroicons/react/24/outline'
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'    
 import Link from 'next/link'
 import './Userinfodialog.css'
+import { UserContext } from '@/app/layout.tsx'
 
 const Userinfodialog = () => {
     let [isOpen, setIsOpen] = useState(false)
-
-    const username = localStorage.getItem('username');
-    const email = localStorage.getItem('email');
-
-
+    
+    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
+    
     const closeModal = () => {
         setIsOpen(false)
     }
@@ -23,11 +22,8 @@ const Userinfodialog = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('email');
         window.location.reload();
     }
-
     return (
         <>
             <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:pr-0">
@@ -36,7 +32,7 @@ const Userinfodialog = () => {
                         {/* insert a user icon here */}
                         <UserIcon className='icon-image'>
                         </UserIcon>
-                        <span className='username-span'>{username}</span>
+                        <span className='username-span'>{userId?.username ?? ''}</span>
                     </button>
                 </div>
             </div>
@@ -77,7 +73,7 @@ const Userinfodialog = () => {
                                                     alt="LearnQuest"
                                                 />
                                                 <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                                                    Hello, {username}!
+                                                    Hello, {userId?.username ?? ''}!
                                                 </h2>
                                             </div>
                                             <div className="mt-8 space-y-6">

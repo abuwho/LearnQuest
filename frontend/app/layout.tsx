@@ -5,9 +5,21 @@ import Footer from './components/Footer/Footer';
 import { useState, createContext, useEffect } from 'react';
 import axios from 'axios'
 import { connect } from 'http2';
+import SignIn from '/Users/alimansour/testdir/LearnQuest/frontend/app/components/Navbar/Signdialog.tsx'
+import { convertToObject } from 'typescript';
+type userIdType = {
+  id: string,
+  username: string,
+  email: string
 
+}
+const emtpyUserId = {
+  id: '',
+  username: '',
+  email: ''
+}
 export const UserContext = createContext<{
-  userId: string,
+  userId: userIdType | undefined,
   token: string,
   setToken: (token: string) => void,
   isLoggingIn: boolean,
@@ -19,7 +31,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [userId, setUserId] = useState<string>('')
+  const [userId, setUserId] = useState<userIdType>()
   const [token, setToken] = useState<string>('')
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
@@ -30,61 +42,64 @@ export default function RootLayout({
       localStorage.setItem('token', newToken)
       setToken(newToken)
     },
-
-   
     isLoggingIn: isLoggingIn,
     setIsLoggingIn: setIsLoggingIn
   }
   useEffect(() => {
     console.log('token', token)
   }, [token])
-  useEffect(() => {
-    console.log('ssssss', userId)
-  }, [])
+
 
   const connectAccount = async () => {
-    console.log(token, 'llllll')
     if (!token || token === '') {
       setIsLoggedIn(false)
-      setUserId('')
+      setUserId({
+        id: '',
+        username: '',
+        email: ''
+      })
       return
     }
-    console.log(token, 'oooooo')
-
     try {
       const response = await axios.get('http://0.0.0.0:8080/auth/get_current_user/', {
         headers: {
           'Authorization': `Token ${token}`
         }
       })
-      console.log('userId', response.data.id)
-      setUserId(response.data.id)
+      const user = response.data.user
+      setUserId({ username: user.username, email: user.email, id: user.id })
     } catch (e) {
-      console.log(e)
+      console.log(e,'userid')
       setIsLoggedIn(false)
-      setUserId('')
+      setUserId(emtpyUserId)
       return
     }
+
   }
-      useEffect(()=>{
-        const storedToken = localStorage.getItem('token')
-        if(!storedToken) return
-        setToken(storedToken)
-    },[])
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token')
+    if (!storedToken) return
+    setToken(storedToken)
+  }, [])
   useEffect(() => {
     connectAccount()
   }, [token])
-
+  useEffect(() => {
+    console.log('userId', userId)
+  }, [userId])
   return (
     <html lang="en">
-      <body>
 
-        <UserContext.Provider value={userContextValue}>
+      <UserContext.Provider value={userContextValue}>
+        <body>
+
           <Navbar />
           {children}
           <Footer />
-        </UserContext.Provider>
-      </body>
+        </body>
+
+      </UserContext.Provider>
     </html>
   )
 }
