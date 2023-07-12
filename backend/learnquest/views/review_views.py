@@ -5,6 +5,18 @@ from .views_imports import *
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def create_review(request):
+    """
+    Create a review.
+
+    This endpoint is used to create a review. The user must be enrolled in the course. The user cannot be the instructor of the course. The user cannot review a course more than once.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized created review.
+
+    """
     data = request.data
     serialized = RequestCreateReviewSerializer(data=data)
     try:

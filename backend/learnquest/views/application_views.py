@@ -6,6 +6,17 @@ from .views_imports import *
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def submit_instructor_application(request):
+    """
+    Submit an instructor application.
+
+    This endpoint is used to submit an instructor application.
+
+    Args:
+        request (Request): The request object.
+    
+    Returns:
+        Response: The response object.
+    """
     data = request.data
     serialized = RequestInstructorApplicationSerializer(data= data)
     try:
