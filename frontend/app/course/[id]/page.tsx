@@ -7,6 +7,7 @@ import { getAuthorizedViewCourse } from "../../utils/getAllCourses.ts";
 import { UserContext } from "../../layout.tsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import Section from "@/app/components/section/page.tsx";
+import './style.css'
 export default function Course({ params }: { params: { id: string } }) {
 
     const [course, setCourse] = useState()
@@ -24,39 +25,29 @@ export default function Course({ params }: { params: { id: string } }) {
     }, [token, userId])
     return (
         <>
-            { course && (<>
-                <h1>
-
-                {
-                    course?.title
-                }
-            </h1>
-            <h1>
-                {course?.description}
-            </h1>
-
-            <h1>
-                {course?.price}
-            </h1>
-            <h1>
-                {course?.rating}
-            </h1>
-            <button
+          {course && (
+            <>
+            <div className="container">
+              <h1 className='text-2xl font-bold pt-6 text-black title'>{course.title}</h1>
+              <p className='text-base font-normal pt-6 opacity-75 description'>{course.description}</p>
+              <p className=' font-medium price'>{course.price}</p>
+              <div className='rating'>
+                <StarIcon className="h-5 w-5 text-gold" />
+                <span className='text-red text-22xl font-medium'>{course.rating}</span>
+              </div>
+              <button
+                className='button'
                 onClick={() => router.push(`/course/${params.id}/section/create`)}
-            >
-                add new section
-            </button>
-            {
-                course?.sections.map((section)=>
-                {
-                    return <Section section = {section}/>
-                }
-                )
-            }
+              >
+                Add New Section
+              </button>
+              {course.sections.map((section) => {
+                return <Section section={section} />;
+              })}
+              </div>
             </>
-            )
-            }
+          )}
         </>
-    )
+      );
 
 }

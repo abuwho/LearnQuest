@@ -22,9 +22,9 @@
     margin-top: 5px;
   }
   
-  .lesson-item a {
+  .lesson-item span {
     text-decoration: none;
-    color: #0070f3;
+    color: black
   }
   
   .lesson-item a:hover {
