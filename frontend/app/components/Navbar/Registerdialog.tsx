@@ -31,15 +31,14 @@ const Register = () => {
     const handleRegistration = async (event: { preventDefault: () => void }) => {
         event.preventDefault(); // Prevent the form from submitting and refreshing the page
         
-        try {
+        // try {
             // Create a request body with the user's email and password
             const requestBody = {
                 email: email,
                 password: password
             };
-
             // Send a POST request to the backend API endpoint
-            const response = await fetch('http://127.0.0.1:8000/auth/signup/', {
+            const response = await fetch('http://127.0.0.1:8080/auth/signup/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,8 +54,7 @@ const Register = () => {
                 window.location.reload();
                 setIsLoggedIn(true);
                 console.log('Sign up successful');
-                const data = response.json();
-                console.log(data);
+                const data = response.json()
                 data.then(function(result: any) {
                     console.log(result);
                     localStorage.setItem('token', result.token);
@@ -71,9 +69,9 @@ const Register = () => {
             // Sign up failed, show an error message or handle it differently
             console.error('Sign up failed');
             }
-        } catch (error) {
-            console.error('Error occurred during sign up: ', error);
-        }
+        // } catch (error) {
+        //     console.error('Error occurred during sign up: ', error);
+        // }
     };
 
     return (

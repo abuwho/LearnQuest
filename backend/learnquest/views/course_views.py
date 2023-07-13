@@ -26,7 +26,6 @@ def get_all_courses(request):
 # Create a course
 @swagger_auto_schema(method='POST', request_body=RequestCreateCourseSerializer, responses={201: ResponseCreateCourseSerializer()})
 @api_view(['POST'])
-@parser_classes([FormParser, MultiPartParser])
 @permission_classes([IsAuthenticated])
 def create_course(request):
     """
@@ -41,6 +40,7 @@ def create_course(request):
         Response: The response object.
     """
     data = request.data
+    print(data, type(data))
     serialized = RequestCreateCourseSerializer(data=data)
     try:
         serialized.is_valid(raise_exception=True)
