@@ -1,5 +1,29 @@
 from .views_imports import *
 
+@swagger_auto_schema(methods=['GET'], responses={200: ViewReviewSerializer(many=True), 400: {}})
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def get_reviews(request, course_id):
+    """
+    Get all reviews in a course.
+
+    This endpoint is used to get all reviews in a course.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+        course_id (int): The id of the course.
+
+    """
+    try:
+        course = Course.objects.get(id=course_id)
+        reviews = course.reviews.all()
+        serialized = ViewReviewSerializer(reviews, many=True)
+        return Response(serialized.data, status=200)
+    except Exception as e:
+        return Response({"message": "Invalid Request", "error": str(e)}, status=400)
+    
+
+
 @swagger_auto_schema(methods=['POST'], request_body=RequestCreateReviewSerializer,
                         responses={201: ResponseCreateReviewSerializer(), 400: {}})
 @api_view(["POST"])
@@ -46,3 +70,4 @@ def create_review(request):
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
         
     
+

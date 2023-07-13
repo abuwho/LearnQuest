@@ -43,13 +43,16 @@ class UnauthorizedViewCourseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Course
-        fields = ["id", "rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections"]
+        fields = ["id", "rating", "title", "instructor", "image", "price", "description", "created_at", "updated_at", "sections", "reviews"]
         
     def get_rating(self, instance):
         return instance.rating
     
     def get_sections(self, instance):
         return UnenrolledViewSectionSerializer(instance= instance.sections, many = True).data
+    
+    def get_reviews(self, instance):
+        return ViewReviewSerializer(instance= instance.reviews, many = True).data
     
 
 
