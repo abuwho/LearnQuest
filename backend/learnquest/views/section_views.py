@@ -5,6 +5,18 @@ from .views_imports import *
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def create_section(request):
+    """
+    Create a section.
+
+    This endpoint is used to create a section. The user must be the instructor of the course. The course cannot contain a section with the same title. 
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized created section.
+
+    """
     data = request.data
     serialized = RequestCreateSectionSerializer(data= data)
     try:
@@ -32,11 +44,24 @@ def create_section(request):
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
 
+
 @swagger_auto_schema(methods=['PUT'], request_body=RequestUpdateSectionSerializer,
                      responses={200: ResponseUpdateSectionSerializer(), 400: {}})
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_section(request):
+    """
+    Update a section.
+
+    This endpoint is used to update a section. The user must be the instructor of the course. 
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized updated section.
+
+    """
     data = request.data
     serialized = RequestUpdateSectionSerializer(data=data)
     try:
@@ -66,6 +91,18 @@ def update_section(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def delete_section(request):
+    """
+    Delete a section.
+
+    This endpoint is used to delete a section. The user must be the instructor of the course. 
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized updated section.
+    
+    """
     data = request.data
     serialized = RequestDeleteSectionSerializer(data=data)
     try:
@@ -91,6 +128,18 @@ def delete_section(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_all_lessons_in_section(request, section_id):
+    """
+    Get all lessons in a section.
+
+    This endpoint is used to get all lessons in a section. The user must be enrolled in the course. 
+    
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        Response: The response containing the serialized lessons in the section.
+        
+    """
     try:
         section = Section.objects.get(id=section_id)
         course = section.course
