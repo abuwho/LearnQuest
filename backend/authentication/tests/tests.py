@@ -42,7 +42,6 @@ class TestCases(TestCase):
             "password": password
         }
         response = self.client.post(url, data)
-        print(response)
         try:
             self.assertEqual(response.status_code, 200) 
             print(f"\033[92m{login_test_type} test passed\033[0m")
