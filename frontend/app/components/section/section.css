@@ -1,0 +1,32 @@
+/* styles/Section.module.css */
+.section {
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .section h3 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .lesson-list {
+    padding: 0;
+    margin: 10px 0 0;
+    list-style: none;
+  }
+  
+  .lesson-item {
+    margin-top: 5px;
+  }
+  
+  .lesson-item a {
+    text-decoration: none;
+    color: #0070f3;
+  }
+  
+  .lesson-item a:hover {
+    text-decoration: underline;
+  }

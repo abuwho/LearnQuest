@@ -11,8 +11,8 @@ const Signin = () => {
     let [isOpen, setIsOpen] = useState(false)
     
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
+        const [password, setPassword] = useState('');
+        const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string> } }) => {
         setEmail(event.target.value);

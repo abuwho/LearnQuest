@@ -1,31 +1,30 @@
 "use client"
 import Slider from "react-slick";
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from '@heroicons/react/24/solid'
 import { get } from "http";
-import getAllCourses from "../utils/getAllCourses";
+import {getAllCreatedCourses} from "../utils/getAllCourses";
+import { UserContext } from "../layout.tsx";
 export default function Mycourses() {
 
-    const [token, setToken] = useState<string | null>()
+    // const [token, setToken] = useState<string | null>()
     const [courses, setCourses] = useState<any[]>([])
-    const userId = 'e2f1851f-32e2-4003-b4b8-12ae0f8a22f2'
-    useEffect(() => {
-        if (!window) return
-        setToken(localStorage.getItem('token'))
-    }, [])
+
+    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
     const getCourses = async() => {
-        if(!token) return
-        console.log(token)
-        const fetchedCourses = (await getAllCourses(token)).filter((course)=> {return course.instructor===userId})
+        if(!token || !userId?.id) return
+        
+        const fetchedCourses = (await getAllCreatedCourses(token)).filter((course)=> {return course.instructor===userId.id})
         console.log('courses for user',fetchedCourses)
         setCourses(fetchedCourses)
     }
     useEffect(() => {
         if(!token) return
         getCourses()
-    }, [token])
+    }, [token,userId])
+
     const settings = {
         dots: false,
         infinite: true,
