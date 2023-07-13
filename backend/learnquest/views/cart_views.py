@@ -62,8 +62,9 @@ def delete_course_from_cart(request):
         if CartCourse.objects.filter(cart=cart, course=course_object).exists():
             cart_course_object = CartCourse.objects.get(cart=cart, course=course_object)
             cart_course_object.delete()
-
-        return Response(DisplayCartSerializer(cart).data, 201)
+            return Response(DisplayCartSerializer(cart).data, 201)
+        else: 
+            return Response({"message": "Course is not in cart"}, status=401)        
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
     

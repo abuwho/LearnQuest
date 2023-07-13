@@ -131,6 +131,15 @@ class TestCases(TestCase):
                 print(f"\033[92madded course {i+1} to the cart\033[0m")
             except AssertionError:
                 print(f"\033[91merror adding course {i+1} to the cart\033[91m")
+            
+        # Check that the number of course matches the number in get cart 
+        url = reverse('get-cart')
+        response = self.client.get(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        try: 
+            self.assertEqual(response.data['item_count'], len(courses))
+            print(f"\033[92mNumber of courses matches item count in the cart\033[0m")
+        except AssertionError:
+            print(f"\033[91mNumber of courses doesn't match item count in the cart\033[91m")  
 
         # Check that the price sum matches the total from get cart 
         url = reverse('get-cart')
@@ -139,9 +148,57 @@ class TestCases(TestCase):
             self.assertEqual(response.data['total_price'], price_sum)
             print(f"\033[92mSum of prices matches the total in the cart\033[0m")
         except AssertionError:
-            print(f"\033[91mSum of prices doesn't match the total in the cart\033[91m")        
+            print(f"\033[91mSum of prices doesn't match the total in the cart\033[91m")  
+
+    def Test_cart_remove_and_get_cart(self):
+        courses = Course.objects.all()
+
+        for i, course in enumerate(courses):
+            temp = course.id
+            url = reverse('delete-course-from-cart')
+            data = {
+                "course": course.id
+            }
+            response = self.client.delete(url, data, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+            try: 
+                self.assertEqual(response.status_code, 201)
+                print(f"\033[92mDeleted course {i+1} from the cart\033[0m")
+            except AssertionError:
+                print(f"\033[91mError deleting course {i+1} from the cart\033[91m")
+            
+        # Check that the number of course in the cart is 0
+        url = reverse('get-cart')
+        response = self.client.get(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        try: 
+            self.assertEqual(response.data['item_count'], 0)
+            print(f"\033[92mNumber of courses in the cart 0\033[0m")
+        except AssertionError:
+            print(f"\033[91mNumber of courses in the cart is not 0\033[91m")  
+
+        # Check that the price sum is 0 
+        url = reverse('get-cart')
+        response = self.client.get(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        try: 
+            self.assertEqual(response.data['total_price'], float('0'))
+            print(f"\033[92mSum of prices in the cart is 0\033[0m")
+        except AssertionError:
+            print(f"\033[91mSum of prices in the cart is not 0\033[91m")  
+
+        # Try to delete a non existent course 
+        print(temp)
+        data = {
+            "course": temp
+        }
+        url = reverse('delete-course-from-cart')
+        response = self.client.delete(url, data, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        try: 
+            self.assertEqual(response.status_code, 401)
+            print(f"\n\033[92mCourse doesn't exist in cart\033[0m")
+        except AssertionError:
+            print(f"\n\033[91mError, course shouldn't exist\033[91m")
 
     def test_runner(self):
         self.Test_apply()
         self.Test_create_course()
         self.Test_cart_add_and_get_cart()
+        self.Test_cart_remove_and_get_cart()
