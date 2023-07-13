@@ -11,7 +11,7 @@ inflection==0.5.1
 Markdown==3.4.3
 packaging==23.1
 Pillow==10.0.0
-psycopg2==2.9.6
+psycopg2-binary==2.9.6
 pycparser==2.21
 python-decouple==3.8
 pytube==15.0.0

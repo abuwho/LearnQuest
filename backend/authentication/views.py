@@ -177,13 +177,13 @@ def verify_code(request, code):
             {"error": str(e)}, status=400
         )
         
-@swagger_auto_schema(methods=['POST'], request_body=AuthLoginSerializer(),
+@swagger_auto_schema(methods=['POST'], request_body=AuthLoginSerializer,
                      responses={201: {}, 400: {}})
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def set_new_password(request):
     data = request.data
-    serialized = ForgotPasswordSerializer(data=data)
+    serialized = AuthLoginSerializer(data=data)
     try:
         serialized.is_valid(raise_exception=True)
         email = serialized.data.get("email")
@@ -194,7 +194,10 @@ def set_new_password(request):
         else:
             user.set_password(password)
             user.save()
-            return Response({}, status = 200)
+            return Response({
+                "username": user.username,
+                "email": user.email,
+            }, status=200)
     except Exception as e:
         return Response(
             {"error": str(e)}, status=400
