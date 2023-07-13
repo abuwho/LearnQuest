@@ -46,19 +46,19 @@ const CreateLesson = ({ params }: { params: { sectionId: string } }) => {
 		<div className="form-style-8">
 			<h2>Create your own lesson</h2>
 			<form action="">
-				<label htmlFor="title">Course name:</label>
 				<input
 					id="title"
 					type="text"
 					name="title"
-					placeholder="The best course"
+					placeholder="Course Name"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 				
-				<label htmlFor="options">Lesson type:</label>
+
 				<select
 					id="options"
+					placeholder="Lesson type"
 					value={type}
 					onChange={(e) => setType(e.target.value)}
 				>
@@ -68,17 +68,17 @@ const CreateLesson = ({ params }: { params: { sectionId: string } }) => {
 
 				{type === "pdf" ? (
 					<>
-						<label htmlFor="pdfFile">Select a PDF file:</label>
 						<input
 							type="file"
 							id="pdfFile"
+							placeholder="Select a PDF file:"
 							accept=".pdf"
 							onChange={handleFileChange}
 						/>
 					</>
 				) : (
 					<>
-						<label htmlFor="videoLink">Type the video link:</label>
+						
 						<input
 							id="videoLink"
 							type="url"

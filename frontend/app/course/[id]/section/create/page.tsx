@@ -2,7 +2,7 @@
 import { useContext, useState } from "react";
 import axios from 'axios'
 import { UserContext } from "@/app/layout.tsx";
-
+import './style.css'
 type SectionForm = {
     title: string;
     course:string
