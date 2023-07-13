@@ -104,17 +104,44 @@ class TestCases(TestCase):
         except AssertionError:
             print("\033[91mCourse creation failed\033[91m")
 
-    def Test_cart_add(self):
+    def populate_courses(self):
+        courses_count = random.randint(1, 5)
+        print(f"populating db with {courses_count} more courses")
+
+        for i in range(courses_count):
+            print(f"adding {i+1}")
+            self.Test_create_course()            
+
+        print("\033[92mpopulation successful\033[0m")
+
+    def Test_cart_add_and_get_cart(self):
+        self.populate_courses()
         courses = Course.objects.all()
 
-        for course in courses: 
+        price_sum = 0
+        for i, course in enumerate(courses):
+            price_sum += course.price 
             url = reverse('add-course-to-cart')
             data = {
                 "course": course.id
             }
             response = self.client.post(url, data, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
-            print(response)
+            try: 
+                self.assertEqual(response.status_code, 201)
+                print(f"\033[92madded course {i+1} to the cart\033[0m")
+            except AssertionError:
+                print(f"\033[91merror adding course {i+1} to the cart\033[91m")
+
+        # Check that the price sum matches the total from get cart 
+        url = reverse('get-cart')
+        response = self.client.get(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        try: 
+            self.assertEqual(response.data['total_price'], price_sum)
+            print(f"\033[92mSum of prices matches the total in the cart\033[0m")
+        except AssertionError:
+            print(f"\033[91mSum of prices doesn't match the total in the cart\033[91m")        
 
     def test_runner(self):
         self.Test_apply()
         self.Test_create_course()
+        self.Test_cart_add_and_get_cart()
