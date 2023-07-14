@@ -23,6 +23,7 @@ urlpatterns = [
     path("courses/create_lesson", views.create_lesson, name="create-lesson"),
     path("courses/update_lesson", views.update_lesson, name="update-lesson"),
     path("courses/delete_lesson", views.delete_lesson, name="delete-lesson"),
-    path("courses/review", views.create_review, name="create-review")
+    path("courses/review", views.create_review, name="create-review"),
+    path("courses/<str:course_id>/reviews", views.get_reviews, name="get-reviews")
 ]
 

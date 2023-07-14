@@ -6,6 +6,17 @@ from .views_imports import *
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def add_course_to_cart(request):
+    """
+    Add a course to the cart.
+
+    This endpoint is used to add a course to the cart.
+
+    Args:
+        request (Request): The request object.
+
+    Returns:
+        Response: The response object.
+    """
     data = request.data
     serialized = AddToCartSerializer(data=data)
     try:
@@ -35,6 +46,17 @@ def add_course_to_cart(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_cart(request):
+    """
+    Get the cart of the current user.
+
+    This endpoint is used to get the cart of the current user.
+
+    Args:
+        request (Request): The request object.
+
+    Returns:
+        Response: The response object.
+    """
     try:
         user = request.user 
         cart = Cart.objects.get(user=user)
@@ -49,6 +71,18 @@ def get_cart(request):
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def delete_course_from_cart(request):
+    """
+    Delete a course from the cart.
+
+    This endpoint is used to delete a course from the cart.
+
+    Args:
+        request (Request): The request object.
+
+    Returns:
+        Response: The response object.
+
+    """
     data = request.data
     serialized = RemoveFromCartSerializer(data=data)
     try:
@@ -62,16 +96,30 @@ def delete_course_from_cart(request):
         if CartCourse.objects.filter(cart=cart, course=course_object).exists():
             cart_course_object = CartCourse.objects.get(cart=cart, course=course_object)
             cart_course_object.delete()
-
-        return Response(DisplayCartSerializer(cart).data, 201)
+            return Response(DisplayCartSerializer(cart).data, 201)
+        else: 
+            return Response({"message": "Course is not in cart"}, status=401)        
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
     
+
+
 @swagger_auto_schema(methods=['POST'],
                      responses={201: DisplayCartSerializer(), 400: {}, 500 : {}})
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def checkout(request):
+    """
+    Checkout the cart.
+
+    This endpoint is used to checkout the cart.
+
+    Args:
+        request (Request): The request object.
+
+    Returns:
+        Response: The response object.
+    """
     try:
         user = request.user
         cart = user.cart
