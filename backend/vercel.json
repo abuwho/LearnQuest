@@ -1,7 +1,7 @@
 {
     "version": 2,
     "builds": [
-      { "src": "/backend", "use": "@vercel/python", "config": { "maxLambdaSize": "15mb" }, "env": { "VERCEL_DEV_ENTRYPOINT": "pip3 install -r requirements.txt && python3 manage.py makemigrations && python3 manage.py migrate &&  python3 manage.py runserver" }}
+      { "src": "/backend", "use": "@vercel/python", "config": { "maxLambdaSize": "15mb" }, "env": { "VERCEL_DEV_ENTRYPOINT": "pip3 install -r requirements.txt && python3 manage.py makemigrations && python3 manage.py migrate &&  python3 manage.py runserver 0.0.0.0:8080" }}
     ],
     "routes": [
       {
