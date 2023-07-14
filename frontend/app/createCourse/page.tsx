@@ -63,7 +63,7 @@ export default function CreateCourse() {
 
         // If no errors, we can submit the form
         try {
-            const response = await fetch('http://0.0.0.0:8080/app/courses/create', {
+            const response = await fetch('http://127.0.0.1:8080/app/courses/create', {
                 method: 'POST',
                 headers: {
                     // 'accept': 'application/json',
