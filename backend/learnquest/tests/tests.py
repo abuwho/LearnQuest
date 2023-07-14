@@ -79,11 +79,20 @@ class TestCases(TestCase):
         # get the user object
         self.user = User.objects.get(email=self.email)
 
-    def instructor_request(self, url, data):
+    def instructor_post_request(self, url, data):
         # make the user an instructor so the request is successful
         self.user.role = 'instructor'
         self.user.save()
         response = self.client.post(url, data, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        self.user.role = 'student'
+        self.user.save()
+        return response
+
+    def instructor_delete_request(self, url):
+        # make the user an instructor so the request is successful
+        self.user.role = 'instructor'
+        self.user.save()
+        response = self.client.delete(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
         self.user.role = 'student'
         self.user.save()
         return response
@@ -97,7 +106,7 @@ class TestCases(TestCase):
             "description": self.generate_random_text(20)
         }
 
-        response = self.instructor_request(url, data)
+        response = self.instructor_post_request(url, data)
         try: 
             self.assertEqual(response.status_code, 201)
             print("\033[92mCourse creation successful\033[0m")
@@ -197,8 +206,46 @@ class TestCases(TestCase):
         except AssertionError:
             print(f"\n\033[91mError, course shouldn't exist\033[91m")
 
+    def Test_delete_courses(self):
+        courses = Course.objects.all()
+
+        for i, course in enumerate(courses):
+            url = reverse('delete-course', kwargs={'course_id': course.id})
+            response = self.instructor_delete_request(url)
+            try: 
+                self.assertEqual(response.status_code, 200)
+                print(f"\033[92mCourse {i+1} deleted successfully\033[0m")
+            except AssertionError:
+                print(f"\033[91mCourse {i+1} delete failed\033[91m")
+
+        courses = Course.objects.all()
+        try: 
+            self.assertEqual(len(courses), 0)
+            print(f"\n\033[92mAll courses deleted\033[0m")
+        except AssertionError: 
+            print(f"\n\033[91mAll courses not deleted\033[91m")
+
+    def Test_create_course_section(self):
+        self.populate_courses()
+        courses = Course.objects.all()
+
+        for i, course in enumerate(courses):
+            url = reverse('create-section')
+            data = {
+                "title": self.generate_random_text(10),
+                "course": course.id
+            }
+            response = self.instructor_post_request(url, data)
+            try: 
+                self.assertEqual(response.status_code, 201)
+                print(f"\033[92mAdded a section to course {i+1}\033[0m")
+            except AssertionError:
+                print(f"\033[91mUnable to add a section to course {i+1}\033[91m")
+
     def test_runner(self):
         self.Test_apply()
         self.Test_create_course()
         self.Test_cart_add_and_get_cart()
         self.Test_cart_remove_and_get_cart()
+        self.Test_delete_courses()
+        self.Test_create_course_section()
