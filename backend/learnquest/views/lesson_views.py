@@ -84,30 +84,41 @@ def update_lesson(request):
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
 
 
+
 # Delete a lesson
-@swagger_auto_schema(method='DELETE', responses={200: {}})
+@swagger_auto_schema(methods=['DELETE'], request_body=RequestDeleteLessonSerializer,
+                     responses={200: {}, 400: {}})
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def delete_lesson(request, lesson_id):
+def delete_lesson(request):
     """
     Delete a lesson.
 
-    This endpoint is used to delete a lesson. The user must be the instructor of the course.
+    This endpoint is used to delete a lesson. The user must be the instructor of the course. 
 
     Parameters:
         request (HttpRequest): The HTTP request object.
 
     Returns:
-        Response: The response containing the serialized updated lesson.
-
+        Response: The response containing confirmation of deleting the lesson.
+    
     """
+    data = request.data
+    serialized = RequestDeleteLessonSerializer(data=data)
     try:
-        lesson = Lesson.objects.get(id=lesson_id)
-        section = lesson.section
-        course = section.course
-        if course.instructor != request.user:
-            return Response({"message": "Unauthorized: You are not the instructor of this course"}, status=401)
-        lesson.delete()
-        return Response({}, status=200)
+        serialized.is_valid(raise_exception=True)
+
+        user = request.user
+        lesson_id = serialized.data.get("lesson")
+
+        lesson_object = Lesson.objects.get(id=lesson_id)
+        section_object = lesson_object.section
+
+        if user != section_object.course.instructor:
+            raise ValueError("You are not the instructor of this course")
+
+        lesson_object.delete()
+
+        return Response({"message": "The lesson has been deleted"}, 200)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
