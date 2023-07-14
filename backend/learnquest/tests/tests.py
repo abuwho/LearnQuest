@@ -218,6 +218,7 @@ class TestCases(TestCase):
             except AssertionError:
                 print(f"\033[91mCourse {i+1} delete failed\033[91m")
 
+        # Checking that all the courses are actually deleted 
         courses = Course.objects.all()
         try: 
             self.assertEqual(len(courses), 0)

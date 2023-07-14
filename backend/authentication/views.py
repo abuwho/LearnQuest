@@ -40,7 +40,6 @@ def sign_up(request):
         serialized.is_valid(raise_exception=True)
         email = serialized.data.get("email")
         password = serialized.data.get("password")
-        print(password)
         if User.objects.filter(email=email).exists():
             created_user = User.objects.get(email=email)
             if created_user.is_active:
@@ -204,7 +203,7 @@ def log_in(request):
         email = serialized.data.get("email")
         password = serialized.data.get("password")
         user = authenticate(username=email, password=password)
-        print(f'email: {email}, password: {password}')
+        print(f'email: {email}')
         print(user)
         if user is None:
             raise ValueError("Either user does not exist or the credentials are incorrect")

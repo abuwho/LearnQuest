@@ -342,7 +342,11 @@ class Cart(models.Model):
 
         """
         course_prices = list(self.courses.values_list('price', flat=True))
-        return sum(course_prices)
+        price_sum = 0
+        for course_price in course_prices:
+            if course_price != None: 
+                price_sum += course_price
+        return price_sum
 
 
 class CartCourse(models.Model):
