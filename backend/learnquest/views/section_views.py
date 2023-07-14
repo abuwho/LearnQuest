@@ -86,9 +86,9 @@ def update_section(request):
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
 
 
-@swagger_auto_schema(methods=['POST'], request_body=RequestDeleteSectionSerializer,
+@swagger_auto_schema(methods=['DELETE'], request_body=RequestDeleteSectionSerializer,
                      responses={200: {}, 400: {}})
-@api_view(["POST"])
+@api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def delete_section(request):
     """
@@ -118,7 +118,7 @@ def delete_section(request):
 
         section_object.delete()
 
-        return Response({}, 200)
+        return Response({"message": "The section has been deleted."}, 200)
     except Exception as e:
         return Response({"message": "Invalid Request", "error": str(e)}, status=400)
 

@@ -120,3 +120,14 @@ class ResponseUpdateLessonSerializer(serializers.ModelSerializer):
         
     def get_duration(self, instance):
         return instance.duration
+    
+
+class RequestDeleteLessonSerializer(serializers.Serializer):
+    """
+    Serializer for deleting a lesson.
+
+    Fields:
+        lesson (UUIDField): The UUID of the lesson to delete.
+
+    """
+    lesson = serializers.UUIDField()
