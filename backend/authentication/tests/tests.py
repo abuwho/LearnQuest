@@ -67,9 +67,10 @@ class TestCases(TestCase):
 
     def Test_set_new_password(self):
         url = reverse('set_new_password')
+        new_password = self.generate_password()
         data = {
             "email": self.email,
-            "password": self.generate_password()
+            "password": new_password
         }
         response = self.client.post(url, data)
         try: 
@@ -79,7 +80,7 @@ class TestCases(TestCase):
             print("\033[91mSet new password test failed\033[91m")
 
         # Check that it's possible to login with the new password 
-        self.Test_login('newpass', login_test_type='Relogin')
+        self.Test_login(new_password, login_test_type='Relogin')
 
     def test_runner(self):
         self.Test_signup()

@@ -11,13 +11,14 @@ const Section = ({ section }) => {
 
   return (
     <div onClick={handleExpandClick} className="section">
-      <h3>{section.title}</h3>
+      {section.title}
       {isExpanded && (
         <ul className="lesson-list">
           {section.lessons.map((lesson) => (
             <li key={lesson.id} className="lesson-item">
+               {/*TODO:  fix routing here */}
               <Link href={`/lessons/${lesson.id}`}>
-                <a>{lesson.title}</a>
+                <span>{lesson.title}</span>
               </Link>
             </li>
           ))}
