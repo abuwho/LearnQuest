@@ -3,6 +3,8 @@ import { useState, FormEvent, useEffect } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, FormErrorMessage, Stack, useToast } from "@chakra-ui/react";
 import objectToFormData from '../utils/objectToFormData';
 import './createCourse.css'
+import { getBaseURL } from '../utils/getBaseURL';
+
 type CourseForm = {
     title: string;
     description: string;
@@ -62,8 +64,9 @@ export default function CreateCourse() {
         }
 
         // If no errors, we can submit the form
+        const url = `${getBaseURL()}/app/courses/create`
         try {
-            const response = await fetch('http://0.0.0.0:8080/app/courses/create', {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     // 'accept': 'application/json',

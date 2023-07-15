@@ -41,7 +41,8 @@ const Register = () => {
                 password: password
             };
             // Send a POST request to the backend API endpoint
-            const response = await fetch('http://127.0.0.1:8080/auth/signup/', {
+            let url = `${getBaseURL()}/app/auth/signup/`
+            const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

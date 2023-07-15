@@ -4,6 +4,7 @@ import Image from "next/image";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { UserContext } from "../layout.tsx";
 import { useRouter } from "next/navigation";
+import { getBaseURL } from "../utils/getBaseURL.ts";
 
 // CAROUSEL DATA
 
@@ -99,8 +100,9 @@ export default function MultipleItems() {
 	const router = useRouter();
 	const [courses, setCourses] = useState<Course[]>([]);
 	useEffect(() => {
+		const url = `${getBaseURL()}/app/courses/`;
 		const fetchCourses = async () => {
-			const data = await fetch("http://127.0.0.1:8080/app/courses/");
+			const data = await fetch(url);
 			let parsed = await data.json();
 			setCourses(parsed);
 		};

@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "@/app/layout.tsx";
 import { useRouter } from "next/navigation";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 type SectionForm = {
 	title: string;
@@ -27,9 +28,10 @@ export default function Create({ params }: { params: { id: string } }) {
 			return;
 		}
 		console.log("sssss", form);
+		const url = `${getBaseURL()}/app/courses/create_section`;
 		try {
 			const response = await axios.post(
-				"http://0.0.0.0:8080/app/courses/create_section",
+				url,
 				{
 					...form,
 				},

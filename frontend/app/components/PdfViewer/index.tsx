@@ -20,6 +20,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   ).toString();
 
 const PdfViewer = ({ pdfFile }: Props) => {
+	
 	console.log({pdfFile})
 	const file = useMemo(() => {
 		if (!pdfFile) return null;

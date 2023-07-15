@@ -5,6 +5,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import "./updateLesson.css";
 import Spinner from "@/app/components/Spinner";
 import { useRouter } from "next/navigation";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 interface Lesson {
 	id: string;
@@ -52,10 +53,11 @@ const UpdateLesson = ({
 	};
 
 	useEffect(() => {
+		const url = `${getBaseURL()}/app/courses/get_lessons_in_section/${params.sectionId}`;
 		if (!token) return;
 		const fetchData = async () => {
 			const response = await axios.get<IResponseGetLessons>(
-				`http://0.0.0.0:8080/app/courses/get_lessons_in_section/${params.sectionId}`,
+				url,
 				{
 					// responseType: "arraybuffer",
 					headers: {
@@ -86,6 +88,7 @@ const UpdateLesson = ({
 	}, [params.lessonId, params.sectionId, token]);
 
 	const handleSubmit = async () => {
+		const url = `${getBaseURL()}/app/courses/update_lesson`;
 		try {
 			if (type === "video" && !videoLink) return;
 			if (type === "pdf" && !selectedFile) return;
@@ -96,7 +99,7 @@ const UpdateLesson = ({
 					: { pdf: selectedFile };
 
 			await axios.put(
-				`http://0.0.0.0:8080/app/courses/update_lesson`,
+				url,
 				{
 					title,
 					id: params.lessonId,

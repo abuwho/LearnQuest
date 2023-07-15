@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Section from "@/app/components/section";
 import axios from "axios";
 import './style.css'
+import { getBaseURL } from "@/app/utils/getBaseURL.ts";
 interface Lesson {
     id: string;
     duration: string;
@@ -50,8 +51,9 @@ export default function Course({ params }: { params: { id: string } }) {
         const updatedSections = await Promise.all(
             fetchedCourse.sections.map(async (curSection: any) => {
                 try {
+                    const url = `${getBaseURL()}/app/courses/get_lessons_in_section/${curSection.id}`;
                     const response = await axios.get<IResponseGetLessons>(
-                        `http://0.0.0.0:8080/app/courses/get_lessons_in_section/${curSection.id}`,
+                        url,
                         {
                             // responseType: "arraybuffer",
                             headers: {
