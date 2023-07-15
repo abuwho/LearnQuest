@@ -13,12 +13,14 @@ export async function getAllCreatedCourses(token: string) {
 
         if (!response.ok) {
             console.log('error', response)
+            return []
             alert('request failed')
         } else {
             return await response.json()
         }
     } catch (error) {
         console.log('error', error)
+        return []
         alert('request failed')
     }
 }

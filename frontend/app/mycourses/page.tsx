@@ -18,8 +18,9 @@ export default function Mycourses() {
     const { isLoggingIn, setIsLoggingIn, setToken, token, userId } = useContext(UserContext)!
     const getCourses = async () => {
         if (!token || !userId?.id) return
-        const enrolledCourses = (await getEnrolledCourses(token)).filter((course: { instructor: string; }) => { return course.instructor === userId.id })
+        const enrolledCourses = (await getEnrolledCourses(token))
         const fetchedCourses = (await getAllCreatedCourses(token)).filter((course: { instructor: string; }) => { return course.instructor === userId.id })
+        console.log(enrolledCourses)
         setCourses(fetchedCourses)
         setEnrolled(enrolledCourses)
     }
@@ -93,10 +94,6 @@ export default function Mycourses() {
                                             <div className="flex gap-4">
                                                 <Image src={'/assets/courses/book-open.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
                                                 <h3 className="text-base font-medium text-black opacity-75">{items.sections.length} Sections</h3>
-                                            </div>
-                                            <div className="flex gap-4">
-                                                <Image src={'/assets/courses/users.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
-                                                <h3 className="text-base font-medium text-black opacity-75">{items.students.length} students</h3>
                                             </div>
                                         </div>
                                         <hr style={{ color: "#C4C4C4" }} />
