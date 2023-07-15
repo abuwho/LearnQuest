@@ -15,14 +15,16 @@ const Banner = () => {
                         <h1 className='text-midnightblue text-4xl sm:text-5xl font-semibold text-center lg:text-start lh-120 pt-5 lg:pt-0'>Learn. Teach. Excel.</h1>
                         <h3 className='text-charcoal text-lg font-normal text-center lg:text-start opacity-75 pt-5 lg:pt-0'>Unlock your potential with LearnQuest, your gateway to modern education</h3>
 
-                        <div className="relative text-white focus-within:text-white flex flex-row-reverse input-shadow rounded-full pt-5 lg:pt-0">
-                            <input type="Email address" name="q" className="py-6 lg:py-8 text-lg w-full text-black opacity-75 rounded-full pl-8 focus:outline-none focus:text-black" placeholder="search courses..." autoComplete="off" />
-                            <div className="absolute inset-y-0 right-0 flex items-center pr-2 pt-5 lg:pt-0">
-                                <button type="submit" className="p-3 lg:p-5 focus:outline-none focus:shadow-outline bg-ultramarine hover:bg-midnightblue duration-150 ease-in-out rounded-full">
-                                    <Image src={'/assets/banner/search.svg'} alt="inputicon" width={30} height={30} />
-                                </button>
+                        <form action="/courses" method="get">
+                            <div className="relative text-white focus-within:text-white flex flex-row-reverse input-shadow rounded-full pt-5 lg:pt-0">
+                                <input type="text" name="q" className="py-6 lg:py-8 text-lg w-full text-black opacity-75 rounded-full pl-8 focus:outline-none focus:text-black" placeholder="search courses..." autoComplete="off" />
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pt-5 lg:pt-0">
+                                    <button type="submit" className="p-3 lg:p-5 focus:outline-none focus:shadow-outline bg-ultramarine hover:bg-midnightblue duration-150 ease-in-out rounded-full">
+                                        <Image src={'/assets/banner/search.svg'} alt="inputicon" width={30} height={30} />
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
 
                         <div className='flex items-center justify-between pt-10 lg:pt-4'>
                             <div className='flex gap-2'>

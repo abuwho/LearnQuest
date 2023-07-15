@@ -82,8 +82,19 @@ const postData: DataType[] = [
 	},
 ];
 
-// CAROUSEL SETTINGS
+const filterCourses = (courses, query) => {
+  	if (!query) {
+    	return courses; // Return all courses if query is empty or undefined
+  	}
 
+  	const filteredCourses = courses.filter((course) =>
+    	course.title.toLowerCase().includes(query.toLowerCase())
+  	);
+
+ 	return filteredCourses;
+};
+
+// CAROUSEL SETTINGS
 export default function MultipleItems() {
 	type Course = {
 		id: string;
@@ -102,8 +113,12 @@ export default function MultipleItems() {
 	useEffect(() => {
 		const url = `${getBaseURL()}/app/courses/`;
 		const fetchCourses = async () => {
+			const search = window.location.search;
+			const params = new URLSearchParams(search);
+			const query = params.get('q');
 			const data = await fetch(url);
 			let parsed = await data.json();
+			parsed = filterCourses(parsed, query);
 			setCourses(parsed);
 		};
 		fetchCourses();
