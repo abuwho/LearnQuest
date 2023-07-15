@@ -28,7 +28,7 @@ Contribute to the project by following some rules:
 
 ### Instructions
 
-- Both backend and frontend should have a `README.md` file in the directory, which will include important notes and instructions about that scope of the project. 
+- Both backend and frontend should have a `README.md` file in the directory, which include important notes and instructions about that scope of the project and how to run the application. 
 
 ### License 
 To be added soon

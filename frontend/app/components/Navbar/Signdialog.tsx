@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, SetStateAction, useContext, useEffect, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { UserContext } from '@/app/layout.tsx'
-
+import { getBaseUrl } from '@/app/utils/getBaseUrl'
 
 
 const Signin = () => {
@@ -41,7 +41,8 @@ const Signin = () => {
             };
 
             // Send a POST request to the backend API endpoint
-            const response = await fetch('http://127.0.0.1:8080/auth/login/', {
+            const fetchUrl = getBaseUrl() + '/auth/login/'
+            const response = await fetch(fetchUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
