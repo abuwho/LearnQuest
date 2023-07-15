@@ -6,16 +6,16 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set the working directory in the container
-WORKDIR /code
+WORKDIR /backend
 
 # Copy the requirements file to the working directory
-COPY requirements.txt /code/
+COPY requirements.txt /backend/
 
 # Install the project dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project files to the working directory
-COPY . /code/
+COPY . /backend/
 
 # Run the Django migrations and collect static files
 RUN python manage.py makemigrations
