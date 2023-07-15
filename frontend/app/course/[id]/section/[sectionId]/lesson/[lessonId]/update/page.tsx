@@ -5,7 +5,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import "./updateLesson.css";
 import Spinner from "@/app/components/Spinner";
 import { useRouter } from "next/navigation";
-import { getBaseURL } from "@/app/utils/getBaseURL2";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 interface Lesson {
 	id: string;

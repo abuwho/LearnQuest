@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getBaseURL } from './getBaseURL2'
+import { getBaseURL } from './getBaseURL'
 
 export async function getAllCreatedCourses(token: string) {
     const url = `${getBaseURL()}/app/courses/created`
