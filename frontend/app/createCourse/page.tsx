@@ -3,7 +3,7 @@ import { useState, FormEvent, useEffect } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, FormErrorMessage, Stack, useToast } from "@chakra-ui/react";
 import objectToFormData from '../utils/objectToFormData';
 import './createCourse.css'
-import { getBaseURL } from '../utils/getBaseURL';
+import { getBaseURL } from '../utils/getBaseURL2';
 
 type CourseForm = {
     title: string;

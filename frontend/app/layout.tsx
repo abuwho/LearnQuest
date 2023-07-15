@@ -5,7 +5,7 @@ import Footer from "./components/Footer/Footer";
 import { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import React from "react";
-import { getBaseURL } from "./utils/getBaseURL";
+import { getBaseURL } from "./utils/getBaseURL2";
 
 type userIdType = {
 	id: string;

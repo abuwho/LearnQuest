@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Section from "@/app/components/section";
 import axios from "axios";
 import './style.css'
-import { getBaseURL } from "@/app/utils/getBaseURL.ts";
+import { getBaseURL } from "@/app/utils/getBaseURL2.ts";
 interface Lesson {
     id: string;
     duration: string;

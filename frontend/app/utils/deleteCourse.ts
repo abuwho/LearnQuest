@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getBaseURL } from './getBaseURL'
+import { getBaseURL } from './getBaseURL2'
 
 export async function deleteCourse (courseId:string, token:string){
     const url = `${getBaseURL()}/app/courses/${courseId}/delete`
