@@ -154,7 +154,7 @@ class TestCases(TestCase):
         url = reverse('get-cart')
         response = self.client.get(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
         try: 
-            self.assertEqual(response.data['total_price'], price_sum)
+            self.assertAlmostEqual(response.data['total_price'], price_sum) # Due to precision issues
             print(f"\033[92mSum of prices matches the total in the cart\033[0m")
         except AssertionError:
             print(f"\033[91mSum of prices doesn't match the total in the cart\033[91m")  
@@ -188,7 +188,7 @@ class TestCases(TestCase):
         url = reverse('get-cart')
         response = self.client.get(url, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
         try: 
-            self.assertEqual(response.data['total_price'], float('0'))
+            self.assertAlmostEqual(response.data['total_price'], float('0')) # Due to precision issues
             print(f"\033[92mSum of prices in the cart is 0\033[0m")
         except AssertionError:
             print(f"\033[91mSum of prices in the cart is not 0\033[91m")  

@@ -42,6 +42,7 @@ class TestCases(TestCase):
             "password": password
         }
         response = self.client.post(url, data)
+        self.token = response.data['token']
         try:
             self.assertEqual(response.status_code, 200) 
             print(f"\033[92m{login_test_type} test passed\033[0m")
@@ -82,9 +83,26 @@ class TestCases(TestCase):
         # Check that it's possible to login with the new password 
         self.Test_login(new_password, login_test_type='Relogin')
 
+    def Test_topup(self):
+        url = reverse('topup')
+        topup_amount = random.uniform(50.0, 100.0)
+        data = {
+            "amount": topup_amount
+        }
+        response = self.client.post(url, data, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        
+        print(f"topup amount: {topup_amount}")
+        print(f"wallet balance: {response.data['wallet']['balance']}")
+        try: 
+            self.assertAlmostEqual(response.data['wallet']['balance'], topup_amount) # Due to precision issues
+            print("\033[92mAccount topup successful\033[0m")
+        except AssertionError:
+            print("\033[91mAccount topup failed\033[91m")
+
     def test_runner(self):
         self.Test_signup()
         self.Test_login(self.password)
         self.Test_forgot_password()
         self.Test_verify_forgot_password_code()
         self.Test_set_new_password()
+        self.Test_topup()
