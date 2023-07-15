@@ -97,6 +97,16 @@ class TestCases(TestCase):
         self.user.save()
         return response
 
+
+    def instructor_put_request(self, url, data):
+        # make the user an instructor so the request is successful
+        self.user.role = 'instructor'
+        self.user.save()
+        response = self.client.put(url, data, content_type='application/json', **{'HTTP_AUTHORIZATION': f'Token {self.token}'})
+        self.user.role = 'student'
+        self.user.save()
+        return response
+
     def Test_create_course(self):
         url = reverse('create-course')
 
@@ -243,6 +253,25 @@ class TestCases(TestCase):
             except AssertionError:
                 print(f"\033[91mUnable to add a section to course {i+1}\033[91m")
 
+    def Test_update_course_section(self):
+        courses = Course.objects.all()
+
+        for course in courses: 
+            course_sections = Section.objects.filter(course=course)
+            for section in course_sections:
+                url = reverse('update-section')
+                new_title = self.generate_random_text(10)
+                data = {
+                    "title": new_title,
+                    "section": section.id
+                }
+                response = self.instructor_put_request(url, data)
+                try: 
+                    self.assertEqual(response.data['title'], new_title)
+                    print(f"\033[92mUpdated section title for course {course}\033[0m")
+                except AssertionError:
+                    print(f"\033[91mUpdate section for course {course} failed\033[91m")
+
     def test_runner(self):
         self.Test_apply()
         self.Test_create_course()
@@ -250,3 +279,4 @@ class TestCases(TestCase):
         self.Test_cart_remove_and_get_cart()
         self.Test_delete_courses()
         self.Test_create_course_section()
+        self.Test_update_course_section()
