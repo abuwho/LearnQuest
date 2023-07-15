@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "@/app/layout.tsx";
 import { useRouter } from "next/navigation";
-import { getBaseURL } from "@/app/utils/getBaseURL2";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 type SectionForm = {
 	title: string;

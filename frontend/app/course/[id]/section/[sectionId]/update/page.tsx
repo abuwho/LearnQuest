@@ -5,7 +5,7 @@ import { UserContext } from "@/app/layout.tsx";
 import "./styles.css";
 import Spinner from "@/app/components/Spinner";
 import { useRouter } from "next/navigation";
-import { getBaseURL } from "@/app/utils/getBaseURL2";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 type SectionForm = {
 	title: string;
