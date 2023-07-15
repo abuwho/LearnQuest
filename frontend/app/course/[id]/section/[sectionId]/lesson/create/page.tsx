@@ -4,7 +4,7 @@ import axios from "axios";
 import { ChangeEvent, useContext, useState } from "react";
 import "./styles.css";
 import { useRouter } from "next/navigation";
-import { getBaseURL } from "@/app/utils/getBaseURL";
+import { getBaseURL } from "@/app/utils/getBaseURL2";
 
 const CreateLesson = ({
 	params,

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { UserContext } from "../layout.tsx";
 import { useRouter } from "next/navigation";
-import { getBaseURL } from "../utils/getBaseURL.ts";
+import { getBaseURL } from "../utils/getBaseURL2.ts";
 
 // CAROUSEL DATA
 

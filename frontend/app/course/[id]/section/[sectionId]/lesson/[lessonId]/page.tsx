@@ -6,7 +6,7 @@ import VideoViewer from "@/app/components/VideoViewer";
 import "./lesson.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { getBaseURL } from "@/app/utils/getBaseURL";
+import { getBaseURL } from "@/app/utils/getBaseURL2";
 
 const PdfViewer = dynamic(() => import("@/app/components/PdfViewer"), {
 	ssr: false,
