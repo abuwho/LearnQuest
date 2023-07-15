@@ -63,7 +63,7 @@ export default function CreateCourse() {
 
         // If no errors, we can submit the form
         try {
-            const response = await fetch('http://127.0.0.1:8080/app/courses/create', {
+            const response = await fetch('http://0.0.0.0:8080/app/courses/create', {
                 method: 'POST',
                 headers: {
                     // 'accept': 'application/json',
@@ -104,7 +104,7 @@ export default function CreateCourse() {
         <div className='form-style-8'>
             <h2>Create a course</h2>
             <form action="">
-                <input type="text" name="title" placeholder="Course title" value = {form.title} onChange={handleInputChange} />
+                <input type="text" name="title" placeholder="Course title:" value = {form.title} onChange={handleInputChange} />
                 <input type="text" name="description" placeholder='Description' value={form.description} onChange={handleInputChange} />
                 <input type="number" name="price" placeholder="Price" value={form.price} onChange={handleInputChange} />
                 <input  type="button" value="Submit"  onClick={()=>handleSubmit()}/>

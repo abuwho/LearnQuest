@@ -1,0 +1,12 @@
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+  }
+  
+  .video {
+    width: 100%;
+    height: auto;
+  }
+  

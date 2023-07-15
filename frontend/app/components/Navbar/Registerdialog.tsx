@@ -1,9 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, SetStateAction, useState } from 'react'
+import { Fragment, SetStateAction, useContext, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { UserContext } from '@/app/layout.tsx';
 
 
 const Register = () => {
+    const { setToken } = useContext(UserContext)!;
+
     let [isOpen, setIsOpen] = useState(false)
 
     const [email, setEmail] = useState('');
@@ -60,6 +63,7 @@ const Register = () => {
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', result.username);
                     localStorage.setItem('email', result.email);
+                    setToken(result.token)
                     closeModal();
                 }, function(err: any) {
                     console.log(err);

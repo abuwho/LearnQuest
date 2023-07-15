@@ -173,3 +173,7 @@ hr {
     background-size: cover;
     border-radius: 20px;
 }
+
+.logo:hover{
+    cursor: pointer;
+}

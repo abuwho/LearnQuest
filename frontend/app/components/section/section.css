@@ -1,10 +1,14 @@
 /* styles/Section.module.css */
 .section {
-    cursor: pointer;
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+  }
+
+  .clickable {
+    cursor: pointer;
+    border: thick double #32a1ce;
   }
   
   .section h3 {
@@ -22,11 +26,47 @@
     margin-top: 5px;
   }
   
-  .lesson-item span {
+  .lesson-item a {
     text-decoration: none;
-    color: black
+    color: #0070f3;
   }
   
   .lesson-item a:hover {
     text-decoration: underline;
   }
+
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+    /* Styled Update Button */
+    .update-button {
+      margin: 15px;
+      
+      margin-left: auto;
+      background-color: #4caf50;
+      color: white;
+    }
+    
+    .update-button:hover {
+      background-color: #45a049;
+    }
+
+    .create-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 8px 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .create-button:hover {
+      background-color: #45a049;
+    }
+    

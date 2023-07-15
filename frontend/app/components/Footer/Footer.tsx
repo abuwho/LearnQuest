@@ -16,17 +16,17 @@ interface socialLinks {
 const socialLinks: socialLinks[] = [
     {
         imgSrc: '/assets/footer/facebook.svg',
-        link: 'https://facebook.com',
+        link: 'www.facebook.com',
         width: 10
     },
     {
         imgSrc: '/assets/footer/insta.svg',
-        link: 'https://instagram.com',
+        link: 'www.instagram.com',
         width: 14
     },
     {
         imgSrc: '/assets/footer/twitter.svg',
-        link: 'https://twitter.com',
+        link: 'www.twitter.com',
         width: 14
     },
 
@@ -66,7 +66,7 @@ const footer = () => {
                     <div className='flex gap-4'>
 
                         {socialLinks.map((items, i) => (
-                        <Link href={items.link} key={i} target="_blank">
+                        <Link href={items.link} key={i}>
                             <div className="bg-white h-12 w-12 shadow-xl text-base rounded-full flex items-center justify-center footer-icons hover:bg-ultramarine">
                                 <Image src={items.imgSrc} alt={items.imgSrc} width={items.width} height={2} className="sepiaa" />
                             </div>
@@ -85,8 +85,7 @@ const footer = () => {
                         <ul>
                             {product.link.map((link: string, index: number) => (
                                 <li key={index} className='mb-5'>
-                                    <Link href={link.toLowerCase()} className="text-darkgray text-base font-normal mb-6 space-links">{link}</Link>                                    
-
+                                    <Link href="/" className="text-darkgray text-base font-normal mb-6 space-links">{link}</Link>
                                 </li>
                             ))}
                         </ul>
