@@ -10,6 +10,7 @@ import Signdialog from "./Signdialog";
 import Registerdialog from "./Registerdialog";
 import Userinfodialog from './Userinfodialog';
 import { UserContext } from '@/app/layout.tsx';
+import { useRouter } from 'next/navigation';
 
 
 interface NavigationItem {
@@ -20,10 +21,11 @@ interface NavigationItem {
 
 const navigation: NavigationItem[] = [
     { name: 'Home', href: '/', current: true },
-    { name: 'Courses', href: '#courses', current: false },
-    { name: 'Mentor', href: '#mentor', current: false },
-    { name: 'Group', href: '#/', current: false },
-    { name: 'Testimonial', href: '#testimonial', current: false },
+    { name: 'Courses', href: 'courses', current: false },
+    { name: 'My Courses', href: 'mycourses', current: false },
+    { name: 'Create Course', href: 'createCourse', current: false },
+    // { name: 'Mentor', href: '#mentor', current: false },
+    { name: 'Cart', href: 'cart', current: false }
 ];
 
 function classNames(...classes: string[]) {
@@ -46,12 +48,13 @@ const CustomLink = ({ href, onClick, children }: { href: string; onClick: () => 
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
-    
+    const { isLoggingIn, setIsLoggingIn, setToken, token, userId } = useContext(UserContext)!
+
     const [currentLink, setCurrentLink] = useState('/');
     const handleLinkClick = (href: string) => {
         setCurrentLink(href);
     };
+    const router = useRouter()
     return (
         <Disclosure as="nav" className="navbar">
             <>
@@ -61,19 +64,17 @@ const Navbar = () => {
 
                             {/* LOGO */}
 
-                            <div className="flex flex-shrink-0 items-center">
-                                <a href='/'>
-                                    <img
-                                        className="block h-12 w-40 lg:hidden"
-                                        src={'/assets/logo/logo.svg'}
-                                        alt="dsign-logo"
-                                    />
-                                    <img
-                                        className="hidden h-full w-full lg:block"
-                                        src={'/assets/logo/logo.svg'}
-                                        alt="dsign-logo"
-                                    />
-                                </a>
+                            <div onClick={() => { router.push(`/`) }} className="flex flex-shrink-0 items-center logo">
+                                <img
+                                    className="block h-12 w-40 lg:hidden"
+                                    src={'/assets/logo/logo.svg'}
+                                    alt="dsign-logo"
+                                />
+                                <img
+                                    className="hidden h-full w-full lg:block"
+                                    src={'/assets/logo/logo.svg'}
+                                    alt="dsign-logo"
+                                />
                             </div>
 
                             {/* LINKS */}

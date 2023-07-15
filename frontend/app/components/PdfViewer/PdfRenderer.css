@@ -1,0 +1,33 @@
+.pdfContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .pageNavigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .pageNavigation button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+  }
+  
+  .pageNavigation button:hover {
+    background-color: #45a049;
+  }
+  

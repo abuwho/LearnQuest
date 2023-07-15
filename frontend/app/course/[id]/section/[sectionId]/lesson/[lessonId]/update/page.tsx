@@ -1,14 +1,38 @@
 "use client";
 import { UserContext } from "@/app/layout.tsx";
 import axios from "axios";
-import { ChangeEvent, useContext, useState } from "react";
-import "./styles.css";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import "./updateLesson.css";
+import Spinner from "@/app/components/Spinner";
 import { useRouter } from "next/navigation";
 
-const CreateLesson = ({
+interface Lesson {
+	id: string;
+	duration: string;
+	title: string;
+	type: string;
+	pdf?: string;
+	video_url?: string;
+	summary: string;
+	created_at: string;
+	updated_at: string;
+	section: string;
+}
+
+interface IResponseGetLessons {
+	id: string;
+	duration: string;
+	lessons: Lesson[];
+	course: string;
+	title: string;
+	created_at: string;
+	updated_at: string;
+}
+
+const UpdateLesson = ({
 	params,
 }: {
-	params: { sectionId: string; id: string; lessonId: string };
+	params: { sectionId: string; lessonId: string; id: string };
 }) => {
 	const router = useRouter();
 	const { token } = useContext(UserContext)!;
@@ -16,6 +40,8 @@ const CreateLesson = ({
 	const [type, setType] = useState("video");
 	const [videoLink, setVideoLink] = useState("");
 	const [summary, setSummary] = useState("");
+	const [file, setFile] = useState<string>();
+	const [didFetch, setDidFetch] = useState<boolean>();
 
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -24,6 +50,40 @@ const CreateLesson = ({
 		if (!file) return;
 		setSelectedFile(file);
 	};
+
+	useEffect(() => {
+		if (!token) return;
+		const fetchData = async () => {
+			const response = await axios.get<IResponseGetLessons>(
+				`http://0.0.0.0:8080/app/courses/get_lessons_in_section/${params.sectionId}`,
+				{
+					// responseType: "arraybuffer",
+					headers: {
+						Authorization: `Token ${token}`,
+						"Content-Type": "multipart/form-data",
+					},
+				}
+			);
+
+			const thisLesson = response.data.lessons.find(
+				(lesson) => params.lessonId === lesson.id
+			);
+
+			if (!thisLesson) return;
+
+			setSummary(thisLesson.summary);
+			setTitle(thisLesson.title);
+			setTitle(thisLesson.type);
+			if (thisLesson.type === "pdf") {
+				setFile(thisLesson.pdf!);
+			} else {
+				setVideoLink(thisLesson.video_url!);
+			}
+			setDidFetch(true);
+		};
+
+		fetchData();
+	}, [params.lessonId, params.sectionId, token]);
 
 	const handleSubmit = async () => {
 		try {
@@ -35,10 +95,11 @@ const CreateLesson = ({
 					? { video_url: videoLink }
 					: { pdf: selectedFile };
 
-			await axios.post(
-				`http://0.0.0.0:8080/app/courses/create_lesson`,
+			await axios.put(
+				`http://0.0.0.0:8080/app/courses/update_lesson`,
 				{
 					title,
+					id: params.lessonId,
 					section: params.sectionId,
 					type,
 					summary,
@@ -52,18 +113,20 @@ const CreateLesson = ({
 				}
 			);
 			router.push(
-				`/course/${params.id}}`
+				`/course/${params.id}/section/${params.sectionId}/lesson/${params.lessonId}`
 			);
 		} catch {
 			// todo: Laith implement the toast
 		}
 	};
 
+	if (!didFetch) return <Spinner />;
+
 	return (
 		<div className="form-style-8">
-			<h2>Create your own lesson</h2>
+			<h2>Update your lesson</h2>
 			<form action="">
-				<label htmlFor="title">Lesson name:</label>
+				<label htmlFor="title">Lesson new name:</label>
 				<input
 					id="title"
 					type="text"
@@ -73,7 +136,7 @@ const CreateLesson = ({
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 
-				<label htmlFor="summary">Lesson summary:</label>
+				<label htmlFor="summary">Lesson new summary:</label>
 				<input
 					id="summary"
 					type="text"
@@ -119,7 +182,7 @@ const CreateLesson = ({
 
 				<input
 					type="button"
-					value="Upload your lesson!"
+					value="Update your lesson!"
 					onClick={() => handleSubmit()}
 				/>
 			</form>
@@ -127,4 +190,4 @@ const CreateLesson = ({
 	);
 };
 
-export default CreateLesson;
+export default UpdateLesson;
