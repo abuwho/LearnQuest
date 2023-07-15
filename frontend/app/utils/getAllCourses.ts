@@ -1,7 +1,10 @@
 import axios from 'axios'
+import { getBaseURL } from './getBaseURL'
+
 export async function getAllCreatedCourses(token: string) {
+    const url = `${getBaseURL()}/app/courses/created`
     try {
-        const response = (await fetch('http://0.0.0.0:8080/app/courses/created', {
+        const response = (await fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
@@ -20,8 +23,9 @@ export async function getAllCreatedCourses(token: string) {
     }
 }
 export async function getAuthorizedViewCourse(courseId: string, token: string) {
+    const url = `${getBaseURL()}/app/courses/${courseId}/preview`
     try {
-        const response = await axios.get(`http://0.0.0.0:8080/app/courses/${courseId}/preview`, {
+        const response = await axios.get(url, {
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
             },
@@ -40,8 +44,9 @@ export async function getAuthorizedViewCourse(courseId: string, token: string) {
 }
 export async function getCart(token: string) {
     console.log('wwwwwwwww',token)
+    const url = `${getBaseURL()}/app/cart/get`
     try {
-        const response = await axios.get(`http://0.0.0.0:8080/app/cart/get`, {
+        const response = await axios.get(url, {
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
             },
@@ -59,8 +64,9 @@ export async function getCart(token: string) {
     }
 }
 export async function addCourseToCart(courseId: string, token: string) {
+    const url = `${getBaseURL()}/app/cart/add`
     try {
-        const response = await axios.post(`http://0.0.0.0:8080/app/cart/add`,{
+        const response = await axios.post(url, {
         course:courseId
         }, {
             headers: {
@@ -79,10 +85,10 @@ export async function addCourseToCart(courseId: string, token: string) {
         alert('request failed')
     }
 }
-export async function removeCourseFromCart (courseId:string,token:string)
-{
+export async function removeCourseFromCart (courseId:string,token:string) {
+    const url = `${getBaseURL()}/app/cart/remove`
     try {
-        const response = await axios.delete(`http://0.0.0.0:8080/app/cart/remove`,{
+        const response = await axios.delete(url, {
         data : {course:courseId},
         headers: {
             'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
@@ -101,8 +107,9 @@ export async function removeCourseFromCart (courseId:string,token:string)
     }
 }
 export async function getEnrolledCourses (token:string){
+    const url = `${getBaseURL()}/app/courses/enrolled`
     try {
-        const response = (await fetch('http://0.0.0.0:8080/app/courses/enrolled', {
+        const response = (await fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
@@ -121,8 +128,9 @@ export async function getEnrolledCourses (token:string){
     }  
 }
 export async function cartCheckout (token:string){
+    const url = `${getBaseURL()}/app/cart/checkout`
     try {
-        const response = await axios.post(`http://0.0.0.0:8080/app/cart/checkout`,{
+        const response = await axios.post(url, {
         }, {
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
@@ -141,8 +149,9 @@ export async function cartCheckout (token:string){
     }
 }
 export async function isUserEnrolled (courseId:string,token:string){
+    const url = `${getBaseURL()}/app/courses/enrolled`
     try {
-        const response = await axios.get(`http://0.0.0.0:8080/app/courses/enrolled`, {
+        const response = await axios.get(url, {
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
             },

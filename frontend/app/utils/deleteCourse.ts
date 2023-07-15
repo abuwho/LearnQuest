@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { getBaseURL } from './getBaseURL'
 
 export async function deleteCourse (courseId:string, token:string){
+    const url = `${getBaseURL()}/app/courses/${courseId}/delete`
     try {
-        const response =await  axios.delete(`http://0.0.0.0:8080/app/courses/${courseId}/delete`, {
+        const response =await  axios.delete(url, {
             headers: {
                 'Authorization': `Token ${token}`,  // Assuming `token` is in the scope
             },
