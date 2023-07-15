@@ -8,7 +8,7 @@ import { UserContext } from "../../layout.tsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import Section from "@/app/components/section";
 import axios from "axios";
-
+import './style.css'
 interface Lesson {
     id: string;
     duration: string;
@@ -95,10 +95,12 @@ export default function Course({ params }: { params: { id: string } }) {
         <>
             {course && (
                 <>
-                    <h1>{course?.title}</h1>
+                 <div className="containers">
+                    <h1 className='text-2xl font-bold pt-6 text-black title'>{course?.title}</h1>
                     {
                         (!isInCart && !isCreator) && (
                             <button
+                            className="cart-button"
                                 onClick={() => { addCourseToCart(params.id, token) 
                                 setIsInCart(true)}}
                             >
@@ -109,6 +111,7 @@ export default function Course({ params }: { params: { id: string } }) {
                      {
                         (isInCart && !isCreator) && (
                             <button
+                            className="cart-button"
                                 onClick={() => { removeCourseFromCart(params.id, token) 
                                 setIsInCart(false)}}
                             >
@@ -116,13 +119,18 @@ export default function Course({ params }: { params: { id: string } }) {
                             </button>
                         )
                     }
-                    <h1>{course?.description}</h1>
+                    <p className='text-base font-normal pt-6 opacity-75 description'>{course?.description}</p>
 
-                    <h1>{course?.price}</h1>
-                    <h1>{course?.rating}</h1>
+                    <p className=' font-medium price'>{course?.price}$</p>
+                    <div className='rating'>
+                        <StarIcon className="h-5 w-5 text-gold" />
+                        <span className='text-red text-22xl font-medium'>{course.rating}</span>
+                    </div>
+                   
                     {
                         isCreator &&
                         <button
+                        className='text-red-500 font-medium  button'
                             onClick={() =>
                                 router.push(`/course/${params.id}/section/create`)
                             }
@@ -137,6 +145,7 @@ export default function Course({ params }: { params: { id: string } }) {
                             isCreator = {isCreator}
                         />;
                     })}
+                    </div>
                 </>
             )}
         </>

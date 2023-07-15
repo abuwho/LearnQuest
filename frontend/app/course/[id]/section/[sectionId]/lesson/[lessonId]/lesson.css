@@ -27,12 +27,12 @@ button {
   
   /* Styled Update Button */
   .update-button {
-    background-color: #4caf50;
+    background-color: rgb(59 130 246 / 0.5);
     color: white;
   }
   
   .update-button:hover {
-    background-color: #45a049;
+    background-color: rgb(59 130 246 / 0.5);
   }
   
   /* Styled Delete Button */

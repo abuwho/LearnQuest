@@ -8,10 +8,11 @@
 
   .clickable {
     cursor: pointer;
-    border: thick double #32a1ce;
+    padding-left: 11px;
+    border-bottom: 1px solid;
   }
   
-  .section h3 {
+  .section  {
     margin: 0;
     color: #333;
   }
@@ -24,14 +25,15 @@
   
   .lesson-item {
     margin-top: 5px;
+    padding-left: 10px;
   }
   
-  .lesson-item a {
+  .lesson-item span{
     text-decoration: none;
-    color: #0070f3;
+    color: black
   }
   
-  .lesson-item a:hover {
+  .lesson-item span:hover {
     text-decoration: underline;
   }
 
@@ -48,25 +50,17 @@
       margin: 15px;
       
       margin-left: auto;
-      background-color: #4caf50;
+      background-color: rgb(59 130 246 / 0.5) ;
       color: white;
     }
     
-    .update-button:hover {
-      background-color: #45a049;
-    }
 
     .create-button {
-      background-color: #4caf50;
+      background-color: rgb(59 130 246 / 0.5);
       color: white;
       padding: 8px 16px;
-      font-weight: bold;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-    }
-    
-    .create-button:hover {
-      background-color: #45a049;
     }
     

@@ -110,37 +110,7 @@ export default function MultipleItems() {
 		if (!courses) return;
 		console.log("ahhhhhhhh", courses);
 	}, [courses]);
-	const settings = {
-		dots: false,
-		infinite: true,
-		slidesToShow: 3,
-		// centerMode: true,
-		slidesToScroll: 2,
-		arrows: false,
-		autoplay: false,
-		speed: 500,
-		cssEase: "linear",
-		responsive: [
-			{
-				breakpoint: 1200,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 1,
-					infinite: true,
-					dots: false,
-				},
-			},
-			{
-				breakpoint: 600,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-					infinite: true,
-					dots: false,
-				},
-			},
-		],
-	};
+	
 
 	const handleViewClick = async (id: string) => {
 		// const course = await getAuthorizedViewCourse(id, token)/
@@ -150,6 +120,12 @@ export default function MultipleItems() {
     if(!courses.length){
         return <></>
     }
+	const coursesGroups = [];
+	for (let i = 0; i < courses.length; i += 3) {
+	  const coursesGroup = courses.slice(i, i + 3);
+	  coursesGroups.push(coursesGroup);
+	}
+  
     return (
         <div id="courses">
             <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
@@ -157,13 +133,14 @@ export default function MultipleItems() {
                 <div className="sm:flex justify-between items-center">
                     <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">All courses.</h3>
                 </div>
-                        {courses.map((items, i) => {
-                            return(
-                            <div key={items.id}>
 
-                                <div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
+				{coursesGroups.map((group, index) => (
+          <div className="flex justify-between space-x-4" key={index}>
+            {group.map((items) => (
+              <div key={items.id}>
+              <div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
                                     <div className="relative rounded-3xl">
-                                        <Image src={items.image} alt="gaby" width={389} height={262} className="m-auto clipPath" />
+                                        <Image src='/assets/courses/coursetwo.png' alt="gaby" width={389} height={262} className="m-auto clipPath" />
                                         <div className="absolute right-5 -bottom-2 bg-ultramarine rounded-full p-6">
                                             <h3 className="text-white uppercase text-center text-sm font-medium">best <br /> seller</h3>
                                         </div>
@@ -203,7 +180,9 @@ export default function MultipleItems() {
 												handleViewClick(items.id)
 											}
 											className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded"
+										style={{color:'rgb(59 130 246 / 0.5);'}}
 										>
+
 											view course
 										</button>
 									</div>
@@ -228,6 +207,15 @@ export default function MultipleItems() {
                                         </div> */}
                                     </div>
                                 </div>
+              </div>
+            ))}
+          </div>
+        ))}
+                        {courses.map((items, i) => {
+                            return(
+                            <div key={items.id}>
+
+                               
                             </div>
                         )})}
             </div>
