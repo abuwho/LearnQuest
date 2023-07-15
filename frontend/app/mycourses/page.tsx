@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Slider from "react-slick";
 import React, { Component, useContext, useEffect, useState } from "react";
 import Link from "next/link";
@@ -42,23 +42,27 @@ export default function Mycourses() {
         if (!token) return
         getCourses()
     }, [token, userId])
-    return (
-        <div id="courses">
-            {courses.length && (
-                < div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
 
-                    <div className="sm:flex justify-between items-center">
-                        <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Created Courses.</h3>
-                    </div>
+    const renderCourses = (courses: any[]) => {
+        if (courses.length === 0) {
+            return null;
+        }
 
+        const coursesGroups = [];
+        for (let i = 0; i < courses.length; i += 3) {
+            const coursesGroup = courses.slice(i, i + 3);
+            coursesGroups.push(coursesGroup);
+        }
 
-                    {courses.map((items, i) => {
-                        return (
-                            <div key={items.id}>
-
+        return (
+            <div>
+                {coursesGroups.map((group, index) => (
+                    <div className="flex justify-between space-x-4" key={index}>
+                        {group.map((items) => (
+                            <div className="w-full sm:w-1/3" key={items.id}>
                                 <div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
                                     <div className="relative rounded-3xl">
-                                        <Image src={items.imgSrc} alt="gaby" width={389} height={262} className="m-auto clipPath" />
+                                        <Image src='/assets/courses/coursethree.png' alt="gaby" width={389} height={262} className="m-auto clipPath" />
                                         <div className="absolute right-5 -bottom-2 bg-ultramarine rounded-full p-6">
                                             <h3 className="text-white uppercase text-center text-sm font-medium">best <br /> seller</h3>
                                         </div>
@@ -71,7 +75,6 @@ export default function Mycourses() {
                                             <div className="flex gap-4">
                                                 <h3 className="text-red text-22xl font-medium">{items.rating}</h3>
                                                 <div className="flex">
-
                                                     <StarIcon className="h-5 w-5 text-gold" />
                                                     <StarIcon className="h-5 w-5 text-gold" />
                                                     <StarIcon className="h-5 w-5 text-gold" />
@@ -86,7 +89,7 @@ export default function Mycourses() {
 
                                         <hr style={{ color: "#C4C4C4" }} />
 
-                                        <div className="flex justify-between pt-6">
+                                        <div className="flex justify-between pt-6" style={{ marginBottom: '19px' }}>
                                             <div className="flex gap-4">
                                                 <Image src={'/assets/courses/book-open.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
                                                 <h3 className="text-base font-medium text-black opacity-75">{items.sections.length} Sections</h3>
@@ -99,17 +102,17 @@ export default function Mycourses() {
                                         <hr style={{ color: "#C4C4C4" }} />
                                         <div className="flex justify-between pt-6">
                                             <div>
-                                                <button type="submit" onClick={() => handleViewClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleViewClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
                                                     view course
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
                                                     edit course
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
                                                     delete course
                                                 </button>
                                             </div>
@@ -117,88 +120,32 @@ export default function Mycourses() {
                                     </div>
                                 </div>
                             </div>
-                        )
-                    })}
-                </div>)
-            }
-            {enrolled.length && (<div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
-
-                <div className="sm:flex justify-between items-center">
-                    <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Enrolled courses.</h3>
-                </div>
-
-
-                {enrolled.map((items, i) => {
-                    return (
-                        <div key={items.id}>
-
-                            <div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
-                                <div className="relative rounded-3xl">
-                                    <Image src={items.imgSrc} alt="gaby" width={389} height={262} className="m-auto clipPath" />
-                                    <div className="absolute right-5 -bottom-2 bg-ultramarine rounded-full p-6">
-                                        <h3 className="text-white uppercase text-center text-sm font-medium">best <br /> seller</h3>
-                                    </div>
-                                </div>
-
-                                <div className="px-3">
-                                    <h4 className='text-2xl font-bold pt-6 text-black'>{items.title}</h4>
-
-                                    <div className="flex justify-between items-center py-6">
-                                        <div className="flex gap-4">
-                                            <h3 className="text-red text-22xl font-medium">{items.rating}</h3>
-                                            <div className="flex">
-
-                                                <StarIcon className="h-5 w-5 text-gold" />
-                                                <StarIcon className="h-5 w-5 text-gold" />
-                                                <StarIcon className="h-5 w-5 text-gold" />
-                                                <StarIcon className="h-5 w-5 text-gold" />
-                                                <StarIcon className="h-5 w-5 text-gold" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h3 className="text-3xl font-medium">${items.price}</h3>
-                                        </div>
-                                    </div>
-
-                                    <hr style={{ color: "#C4C4C4" }} />
-
-                                    <div className="flex justify-between pt-6">
-                                        <div className="flex gap-4">
-                                            <Image src={'/assets/courses/book-open.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
-                                            <h3 className="text-base font-medium text-black opacity-75">{items.sections.length} Sections</h3>
-                                        </div>
-                                        <div className="flex gap-4">
-                                            <Image src={'/assets/courses/users.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
-                                            <h3 className="text-base font-medium text-black opacity-75">{items.students.length} students</h3>
-                                        </div>
-                                    </div>
-                                    <hr style={{ color: "#C4C4C4" }} />
-                                    <div className="flex justify-between pt-6">
-                                        <div>
-                                            <button type="submit" onClick={() => handleViewClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                view course
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                edit course
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                delete course
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
+                        ))}
+                    </div>
+                ))}
             </div>
+        );
+    };
+
+    return (
+        <div id="courses">
+            {renderCourses(courses) && (
+                <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
+                    <div className="sm:flex justify-between items-center">
+                        <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Created Courses.</h3>
+                    </div>
+                    {renderCourses(courses)}
+                </div>
             )}
 
+            {renderCourses(enrolled) && (
+                <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
+                    <div className="sm:flex justify-between items-center">
+                        <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Enrolled courses.</h3>
+                    </div>
+                    {renderCourses(enrolled)}
+                </div>
+            )}
         </div >
-
     )
 }

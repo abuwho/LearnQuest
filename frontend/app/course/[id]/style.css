@@ -1,0 +1,78 @@
+.containers{
+    width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .title{
+    margin-left: 30%;
+  }
+  /* Style for the description */
+  .description {
+    margin-bottom: 23px;
+  }
+
+  /* Style for the price */
+  .price {
+    font-size: 1.4rem;
+  }
+
+  /* Style for the rating */
+  .rating {
+    position: relative;
+    margin-left: 42rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 9px;
+    width: 66px;
+    padding-bottom: 12px;
+    bottom: 23px;
+  }
+
+  .rating-text {
+    margin-left: 5px;
+  }
+
+  /* Style for the add section button */
+  .button {
+    background-color: white;
+    border: 1px solid rgb(59 130 246 / 0.5);
+    display: inline-block;
+    cursor: pointer;
+    color: rgb(59 130 246 / 0.5);
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+
+  .button:hover {
+    background-color:rgb(59 130 246 / 0.5);
+	color:white
+  }
+
+  /* Style for the sections */
+  .section {
+    background-color: white;
+    border: 1px solid rgb(59 130 246 / 0.5);
+    color: rgb(59 130 246 / 0.5);
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+.cart-button{
+        background-color: rgb(59 130 246 / 0.5) ;
+        color: white;  
+}

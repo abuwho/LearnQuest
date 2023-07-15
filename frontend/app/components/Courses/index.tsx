@@ -180,7 +180,7 @@ export default function MultipleItems() {
 
                                         <hr style={{ color: "#C4C4C4" }} />
 
-                                        <div className="flex justify-between pt-6">
+                                        <div className="flex justify-between pt-6" style={{marginBottom:'19px'}}>
                                             <div className="flex gap-4">
                                                 <Image src={'/assets/courses/book-open.svg'} alt="users" width={24} height={24} className="inline-block m-auto" />
                                                 <h3 className="text-base font-medium text-black opacity-75">{items.classes} classes</h3>
