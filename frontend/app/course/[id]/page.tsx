@@ -75,7 +75,7 @@ export default function Course({ params }: { params: { id: string } }) {
         );
 
         console.log({ updatedSections });
-        const t = (userCart.courses.map(e => e.id)).indexOf(params.id) !== -1
+        const t = (userCart.courses.map((e: { id: any; }) => e.id)).indexOf(params.id) !== -1
         setIsInCart(t)
         setCourse({
             ...fetchedCourse,
