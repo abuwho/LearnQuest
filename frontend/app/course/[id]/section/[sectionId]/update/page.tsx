@@ -5,6 +5,7 @@ import { UserContext } from "@/app/layout.tsx";
 import "./styles.css";
 import Spinner from "@/app/components/Spinner";
 import { useRouter } from "next/navigation";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 type SectionForm = {
 	title: string;
@@ -51,9 +52,10 @@ export default function Create({
 
 	useEffect(() => {
 		if (!token) return;
+		const url = `${getBaseURL()}/app/courses/get_lessons_in_section/${params.sectionId}`;
 		const fetchData = async () => {
 			const response = await axios.get<IResponseGetLessons>(
-				`http://0.0.0.0:8080/app/courses/get_lessons_in_section/${params.sectionId}`,
+				url,
 				{
 					// responseType: "arraybuffer",
 					headers: {
@@ -80,9 +82,10 @@ export default function Create({
 			return;
 		}
 		console.log("sssss", form);
+		const url = `${getBaseURL()}/app/courses/update_section`;
 		try {
 			const response = await axios.put(
-				"http://0.0.0.0:8080/app/courses/update_section",
+				url,
 				{
 					title: form.title,
 					section: params.sectionId,

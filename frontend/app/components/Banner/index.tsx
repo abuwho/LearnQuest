@@ -12,8 +12,8 @@ const Banner = () => {
                             <Image src="/assets/banner/check.svg" alt="check-image" width={20} height={20} />
                             <h3 className='text-kellygreen text-sm font-semibold text-center lg:text-start'>Get 30% off on first enroll</h3>
                         </div>
-                        <h1 className='text-midnightblue text-4xl sm:text-5xl font-semibold text-center lg:text-start lh-120 pt-5 lg:pt-0'>Advance your engineering skills with us.</h1>
-                        <h3 className='text-charcoal text-lg font-normal text-center lg:text-start opacity-75 pt-5 lg:pt-0'>Build skills with our courses and mentor from world-class companies.</h3>
+                        <h1 className='text-midnightblue text-4xl sm:text-5xl font-semibold text-center lg:text-start lh-120 pt-5 lg:pt-0'>Learn. Teach. Excel.</h1>
+                        <h3 className='text-charcoal text-lg font-normal text-center lg:text-start opacity-75 pt-5 lg:pt-0'>Unlock your potential with LearnQuest, your gateway to modern education</h3>
 
                         <div className="relative text-white focus-within:text-white flex flex-row-reverse input-shadow rounded-full pt-5 lg:pt-0">
                             <input type="Email address" name="q" className="py-6 lg:py-8 text-lg w-full text-black opacity-75 rounded-full pl-8 focus:outline-none focus:text-black" placeholder="search courses..." autoComplete="off" />
@@ -27,15 +27,15 @@ const Banner = () => {
                         <div className='flex items-center justify-between pt-10 lg:pt-4'>
                             <div className='flex gap-2'>
                                 <Image src="/assets/banner/check-circle.svg" alt="check-image" width={30} height={30} className='smallImage'/>
-                                <p className='text-sm sm:text-lg font-normal text-black'>Flexible</p>
+                                <p className='text-sm sm:text-lg font-normal text-black'>High-quality</p>
                             </div>
                             <div className='flex gap-2'>
                                 <Image src="/assets/banner/check-circle.svg" alt="check-image" width={30} height={30} className='smallImage'/>
-                                <p className='text-sm sm:text-lg font-normal text-black'>Learning path</p>
+                                <p className='text-sm sm:text-lg font-normal text-black'>Experienced instructors</p>
                             </div>
                             <div className='flex gap-2'>
                                 <Image src="/assets/banner/check-circle.svg" alt="check-image" width={30} height={30} className='smallImage'/>
-                                <p className='text-sm sm:text-lg font-normal text-black'>Community</p>
+                                <p className='text-sm sm:text-lg font-normal text-black'>Instant help</p>
                             </div>
                         </div>
                     </div>

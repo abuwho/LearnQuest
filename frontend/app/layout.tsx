@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer";
 import { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import React from "react";
+import { getBaseURL } from "./utils/getBaseURL";
 
 type userIdType = {
 	id: string;
@@ -62,8 +63,9 @@ export default function RootLayout({
 			return;
 		}
 		try {
+			const url = `${getBaseURL()}/auth/get_current_user/`
 			const response = await axios.get(
-				"http://0.0.0.0:8080/auth/get_current_user/",
+				url,
 				{
 					headers: {
 						Authorization: `Token ${token}`,

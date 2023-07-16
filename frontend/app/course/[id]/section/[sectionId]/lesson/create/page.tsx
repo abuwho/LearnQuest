@@ -4,6 +4,7 @@ import axios from "axios";
 import { ChangeEvent, useContext, useState } from "react";
 import "./styles.css";
 import { useRouter } from "next/navigation";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 const CreateLesson = ({
 	params,
@@ -26,6 +27,7 @@ const CreateLesson = ({
 	};
 
 	const handleSubmit = async () => {
+		const url = `${getBaseURL()}/app/courses/create_lesson`;
 		try {
 			if (type === "video" && !videoLink) return;
 			if (type === "pdf" && !selectedFile) return;
@@ -34,9 +36,8 @@ const CreateLesson = ({
 				type === "video"
 					? { video_url: videoLink }
 					: { pdf: selectedFile };
-
 			await axios.post(
-				`http://0.0.0.0:8080/app/courses/create_lesson`,
+				url,
 				{
 					title,
 					section: params.sectionId,

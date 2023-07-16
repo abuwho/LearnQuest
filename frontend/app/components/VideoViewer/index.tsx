@@ -12,6 +12,7 @@ const VideoViewer = ({ videoLink }: Props) => {
 		const regex1 =
 			/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
 		const regex2 = /^.*((m\.)?youtube\.com)\/.*((\?v=)|(\/v\/))([^\/]+)/;
+		console.log({ url });
 		let match = url.match(regex1);
 		if (match && match[2].length == 11) {
 			return match[2];

@@ -13,8 +13,9 @@ const RequestToInstructPage = () => {
 
 	const handleSubmit = async () => {
 		try {
+			const url = `${getBaseURL()}/app/apply/`
 			await axios.post(
-				`http://0.0.0.0:8080/app/apply/`,
+				url,
 				{ reason },
 				{
 					headers: {

@@ -6,6 +6,7 @@ import VideoViewer from "@/app/components/VideoViewer";
 import "./lesson.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 const PdfViewer = dynamic(() => import("@/app/components/PdfViewer"), {
 	ssr: false,
@@ -50,9 +51,10 @@ const LessonPage = ({
 	const [videoLink, setVideoLink] = useState<string>();
 
 	useEffect(() => {
+		const url = `${getBaseURL()}/app/courses/get_lessons_in_section/${sectionId}`;
 		const fetchData = async () => {
 			const response = await axios.get<IResponseGetLessons>(
-				`http://0.0.0.0:8080/app/courses/get_lessons_in_section/${sectionId}`,
+				url,
 				{
 					// responseType: "arraybuffer",
 					headers: {
@@ -75,10 +77,10 @@ const LessonPage = ({
 					type: "application/pdf",
 				});
 				setFile(URL.createObjectURL(blob));
-			} else if (thisLesson.type === "video") {
+			} else if (thisLesson.type === "link") {
 				setVideoLink(thisLesson.video_url!);
 			}
-		};
+		};	
 
 		fetchData();
 	}, [lessonId, sectionId, token]);
