@@ -32,9 +32,19 @@ interface IResponseGetLessons {
     created_at: string;
     updated_at: string;
 }
+interface Section {
+    
+}
+interface CourseType {
+    title:string,
+    description:string,
+    price:number,
+    rating:string,
+    sections : IResponseGetLessons[]
 
+}
 export default function Course({ params }: { params: { id: string } }) {
-    const [course, setCourse] = useState();
+    const [course, setCourse] = useState<CourseType>();
     const [isCreator, setIsCreator] = useState(false)
     const [isEnrolled, setIsEnrolled] = useState(false)
     const [isInCart, setIsInCart] = useState<boolean>()

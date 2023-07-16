@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import "./styles.css";
 import { UserContext } from "../layout.tsx";
 import { useRouter } from "next/navigation";
+import { getBaseURL } from "../utils/getBaseURL.ts";
 
 const RequestToInstructPage = () => {
 	const router = useRouter();
