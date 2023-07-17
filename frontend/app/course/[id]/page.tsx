@@ -141,7 +141,7 @@ export default function Course({ params }: { params: { id: string } }) {
 
                         <p className=' font-medium price'>{course?.price}$</p>
                         <div className='rating'>
-                            {Array(Math.floor(parseInt(course.rating))).fill(1).map((e: any) => <StarIcon className="h-5 w-5 text-gold" />)}
+                            {Array(Math.floor(parseInt(course.rating))).fill(1).map((e: any,index) => <StarIcon key = {index} className="h-5 w-5 text-gold" />)}
 
                             <span className='text-red text-22xl font-medium'>{course.rating}</span>
                         </div>

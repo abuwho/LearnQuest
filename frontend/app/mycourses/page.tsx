@@ -32,7 +32,7 @@ export default function Mycourses() {
     }
 
     const handleEditClick = async (id: string) => {
-        router.push(`/course/${id}/edit`)
+        router.push(`/course/${id}/update`)
     }
 
     const handleDeleteClick = async (id: string) => {
@@ -77,7 +77,7 @@ export default function Mycourses() {
                                             <div className="flex gap-4">
                                                 <h3 className="text-red text-22xl font-medium">{items.rating}</h3>
                                                 <div className="flex">
-                                                    {Array(Math.floor(items.rating)).fill(1).map((e:any)=><StarIcon className="h-5 w-5 text-gold" />)}
+                                                    {Array(Math.floor(items.rating)).fill(1).map((e: any,index) => <StarIcon key = {index} className="h-5 w-5 text-gold" />)}
                                                     
                                                 </div>
                                             </div>

@@ -170,7 +170,7 @@ export default function MultipleItems() {
 													{items.rating}
 												</h3>
 												<div className="flex">
-													{Array(Math.floor(parseInt(items.rating))).fill(1).map((e: any) => <StarIcon className="h-5 w-5 text-gold" />)}
+													{Array(Math.floor(parseInt(items.rating))).fill(1).map((e: any,index) => <StarIcon key = {index} className="h-5 w-5 text-gold" />)}
 
 												</div>
 											</div>
