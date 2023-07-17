@@ -82,7 +82,7 @@ const postData: DataType[] = [
 	},
 ];
 
-const filterCourses = (courses, query) => {
+const filterCourses = (courses : any, query) => {
   	if (!query) {
     	return courses; // Return all courses if query is empty or undefined
   	}
