@@ -127,7 +127,6 @@ export default function Mycourses() {
         );
     };
     console.log('jjjjjj',courses)
-    if(!courses || !courses.length)return <Spinner/>;
     return (
         <div id="courses">
             {renderCourses(courses, true) && (
