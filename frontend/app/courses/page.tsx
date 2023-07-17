@@ -82,12 +82,12 @@ const postData: DataType[] = [
 	},
 ];
 
-const filterCourses = (courses, query) => {
+const filterCourses = (courses : any, query : any) => {
   	if (!query) {
     	return courses; // Return all courses if query is empty or undefined
   	}
 
-  	const filteredCourses = courses.filter((course) =>
+  	const filteredCourses = courses.filter((course : any) =>
     	course.title.toLowerCase().includes(query.toLowerCase())
   	);
 
