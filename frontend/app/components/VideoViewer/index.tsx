@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import YouTube from "react-youtube";
 import "./VideoViewer.css";
+import QuestBot from "../QuestBot";
 import Spinner from "../Spinner";
 
 interface Props {
@@ -60,9 +61,17 @@ const VideoViewer = ({ videoLink }: Props) => {
 	if (!videoIdFunc) return <Spinner />
 
 	return (
-		<div className="video-container">
-			<YouTube videoId={videoIdFunc} opts={opts} onReady={onReady} />
-		</div>
+		<>
+			<div className="video-container">
+				<YouTube videoId={videoId} opts={opts} onReady={onReady} />
+
+			</div>
+
+			<div className="chat-container">
+				<QuestBot />
+			</div>
+		</>
+
 	);
 };
 

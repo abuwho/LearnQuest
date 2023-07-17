@@ -1,9 +1,9 @@
 "use client"
 
-import MessageForm from '@/app/components/MessageForm'
-import MessagesList from '@/app/components/MessagesList'
+import MessageForm from './MessageForm'
+import MessagesList from './MessagesList'
 import { NextPage } from 'next'
-import { MessagesProvider } from '@/app/components/useMessages'
+import { MessagesProvider } from './useMessages'
 
 export default function QuestBot() {
 
