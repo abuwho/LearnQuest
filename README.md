@@ -4,8 +4,18 @@ Welcome to LearnQuest, an open-source project aimed at creating a comprehensive 
 ### Introduction
 LearnQuest aims to provide a platform for sharing educational materials, including lecture notes, assignments, and projects. The project's goal is to foster collaboration and knowledge exchange, enabling students and educators to access a wide range of high-quality resources.
 
+### The Application in Action
 
-### Instructions
+- View the deployed application on [Vercel](https://learnquest.vercel.app)
+
+![Homepage screenshot](https://i.ibb.co/4N06RyW/image.png)
+
+- View the API specification on [Vercel](https://learnquest-backend.vercel.app/)
+
+![API screenshot](https://i.ibb.co/rxLH3y4/image.png)
+
+
+### Instructions to Run on Your Local Machine
 
 1. Clone the repository: 
     ```
