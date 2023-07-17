@@ -7,6 +7,8 @@ import "./lesson.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getBaseURL } from "@/app/utils/getBaseURL";
+import { getAuthorizedViewCourse, getCart } from "@/app/utils/getAllCourses";
+import Spinner from "@/app/components/Spinner";
 
 const PdfViewer = dynamic(() => import("@/app/components/PdfViewer"), {
 	ssr: false,
@@ -45,11 +47,18 @@ const LessonPage = ({
 	};
 }) => {
 	const router = useRouter();
-	const { token } = useContext(UserContext)!;
+	const [isCreator, setIsCreator] = useState(false)
+	const { token, userId } = useContext(UserContext)!;
 	const [lessonDetails, setLessonDetails] = useState<Lesson>();
 	const [file, setFile] = useState<string>();
 	const [videoLink, setVideoLink] = useState<string>();
-
+	const getCourse = async () => {
+		if (!token || !userId?.id) return;
+		await new Promise((resolve) => setTimeout(resolve, 1000))
+		const fetchedCourse = await getAuthorizedViewCourse(courseId, token);
+		console.log(fetchedCourse);
+		setIsCreator(fetchedCourse.instructor === userId.id)
+	}
 	useEffect(() => {
 		const url = `${getBaseURL()}/app/courses/get_lessons_in_section/${sectionId}`;
 		const fetchData = async () => {
@@ -77,13 +86,17 @@ const LessonPage = ({
 					type: "application/pdf",
 				});
 				setFile(URL.createObjectURL(blob));
-			} else if (thisLesson.type === "link") {
+			} else if (thisLesson.type === "link" || thisLesson.type === 'video') {
 				setVideoLink(thisLesson.video_url!);
 			}
-		};	
+		};
 
 		fetchData();
 	}, [lessonId, sectionId, token]);
+	useEffect(() => {
+		if (!token) return;
+		getCourse();
+	}, [token, userId]);
 
 	const onUpdate = () => {
 		router.push(
@@ -91,14 +104,18 @@ const LessonPage = ({
 		);
 	};
 
-	if (!lessonDetails) return;
+	if (!lessonDetails) return <Spinner/>;;
 
 	return (
 		<div className="container">
 			<div className="buttons">
-				<button className="update-button" onClick={() => onUpdate()}>
-					Update
-				</button>
+				{
+					isCreator && (
+					<button className="update-button" onClick={() => onUpdate()}>
+						Update
+					</button>
+					)
+				}
 				{/* <button className="delete-button">Delete</button> */}
 			</div>
 			<div className="info">

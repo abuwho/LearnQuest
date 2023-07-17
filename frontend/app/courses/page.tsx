@@ -5,6 +5,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import { UserContext } from "../layout.tsx";
 import { useRouter } from "next/navigation";
 import { getBaseURL } from "../utils/getBaseURL.ts";
+import Spinner from "../components/Spinner/index.tsx";
 
 // CAROUSEL DATA
 
@@ -82,16 +83,16 @@ const postData: DataType[] = [
 	},
 ];
 
-const filterCourses = (courses : any, query : any) => {
-  	if (!query) {
-    	return courses; // Return all courses if query is empty or undefined
-  	}
+const filterCourses = (courses: any, query: any) => {
+	if (!query) {
+		return courses; // Return all courses if query is empty or undefined
+	}
 
-  	const filteredCourses = courses.filter((course : any) =>
-    	course.title.toLowerCase().includes(query.toLowerCase())
-  	);
+	const filteredCourses = courses.filter((course: any) =>
+		course.title.toLowerCase().includes(query.toLowerCase())
+	);
 
- 	return filteredCourses;
+	return filteredCourses;
 };
 
 // CAROUSEL SETTINGS
@@ -123,89 +124,81 @@ export default function MultipleItems() {
 		};
 		fetchCourses();
 	}, []);
-	useEffect(() => {
-		if (!courses) return;
-		console.log("ahhhhhhhh", courses);
-	}, [courses]);
-	
 
 	const handleViewClick = async (id: string) => {
 		// const course = await getAuthorizedViewCourse(id, token)/
 		router.push(`/course/${id}`);
 	};
 
-    if(!courses.length){
-        return <></>
-    }
+	if (!courses.length) {
+		return <></>
+	}
 	const coursesGroups = [];
 	for (let i = 0; i < courses.length; i += 3) {
-	  const coursesGroup = courses.slice(i, i + 3);
-	  coursesGroups.push(coursesGroup);
+		const coursesGroup = courses.slice(i, i + 3);
+		coursesGroups.push(coursesGroup);
 	}
-  
-    return (
-        <div id="courses">
-            <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
+	if(!courses || !courses.length)return <Spinner/>;
+	return (
+		<div id="courses">
+			<div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
 
-                <div className="sm:flex justify-between items-center">
-                    <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">All courses.</h3>
-                </div>
+				<div className="sm:flex justify-between items-center">
+					<h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">All courses.</h3>
+				</div>
 
 				{coursesGroups.map((group, index) => (
-          <div className="flex justify-between space-x-4" key={index}>
-            {group.map((items) => (
-              <div key={items.id}>
-              <div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
-                                    <div className="relative rounded-3xl">
-                                        <Image src='/assets/courses/coursetwo.png' alt="gaby" width={389} height={262} className="m-auto clipPath" />
-                                        <div className="absolute right-5 -bottom-2 bg-ultramarine rounded-full p-6">
-                                            <h3 className="text-white uppercase text-center text-sm font-medium">best <br /> seller</h3>
-                                        </div>
-                                    </div>
+					<div className="flex justify-between space-x-4" key={index}>
+						{group.map((items) => (
+							<div key={items.id}>
+								<div className='bg-white m-3 px-3 pt-3 pb-12 my-20 shadow-courses rounded-2xl'>
+									<div className="relative rounded-3xl">
+										<Image src='/assets/courses/coursetwo.png' alt="gaby" width={389} height={262} className="m-auto clipPath" />
+										<div className="absolute right-5 -bottom-2 bg-ultramarine rounded-full p-6">
+											<h3 className="text-white uppercase text-center text-sm font-medium">best <br /> seller</h3>
+										</div>
+									</div>
 
-								<div className="px-3">
-									<h4 className="text-2xl font-bold pt-6 text-black">
-										{items.title}
-									</h4>
+									<div className="px-3">
+										<h4 className="text-2xl font-bold pt-6 text-black">
+											{items.title}
+										</h4>
 
-									<div className="flex justify-between items-center py-6">
-										<div className="flex gap-4">
-											<h3 className="text-red text-22xl font-medium">
-												{items.rating}
-											</h3>
-											<div className="flex">
-												<StarIcon className="h-5 w-5 text-gold" />
-												<StarIcon className="h-5 w-5 text-gold" />
-												<StarIcon className="h-5 w-5 text-gold" />
-												<StarIcon className="h-5 w-5 text-gold" />
-												<StarIcon className="h-5 w-5 text-gold" />
+										<div className="flex justify-between items-center py-6">
+											<div className="flex gap-4">
+												<h3 className="text-red text-22xl font-medium">
+													{items.rating}
+												</h3>
+												<div className="flex">
+													{Array(Math.floor(parseInt(items.rating))).fill(1).map((e: any,index) => <StarIcon key = {index} className="h-5 w-5 text-gold" />)}
+
+												</div>
+											</div>
+											<div>
+												<h3 className="text-3xl font-medium">
+													${items.price}
+												</h3>
 											</div>
 										</div>
+
+										<hr style={{ color: "#C4C4C4" }} />
+
 										<div>
-											<h3 className="text-3xl font-medium">
-												${items.price}
-											</h3>
+											<button
+												type="submit"
+												onClick={() =>
+													handleViewClick(items.id)
+												}
+												className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded"
+												style={{ color: 'rgb(59 130 246 / 0.5);' }}
+											>
+
+												view course
+											</button>
 										</div>
-									</div>
 
-									<hr style={{ color: "#C4C4C4" }} />
-
-									<div>
-										<button
-											type="submit"
-											onClick={() =>
-												handleViewClick(items.id)
-											}
-											className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded"
-										style={{color:'rgb(59 130 246 / 0.5);'}}
-										>
-
-											view course
-										</button>
-									</div>
-
-									<hr style={{ color: "#C4C4C4" }} />
-									{/* <div className="flex justify-between pt-6">
+										<hr style={{ color: "#C4C4C4" }} />
+										{/* <div className="flex justify-between pt-6">
                                             <div>
                                             <button type="submit" onClick={() => handleViewClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
                                                     view course
@@ -222,22 +215,23 @@ export default function MultipleItems() {
                                                 </button>
                                             </div>
                                         </div> */}
-                                    </div>
-                                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-                        {courses.map((items, i) => {
-                            return(
-                            <div key={items.id}>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				))}
+				{courses.map((items, i) => {
+					return (
+						<div key={items.id}>
 
-                               
-                            </div>
-                        )})}
-            </div>
-        </div>
 
-    )
-							
+						</div>
+					)
+				})}
+			</div>
+		</div>
+
+	)
+
 }

@@ -10,6 +10,7 @@ import Section from "@/app/components/section";
 import axios from "axios";
 import './style.css'
 import { getBaseURL } from "@/app/utils/getBaseURL.ts";
+import Spinner from "@/app/components/Spinner/index.tsx";
 interface Lesson {
     id: string;
     duration: string;
@@ -33,24 +34,25 @@ interface IResponseGetLessons {
     updated_at: string;
 }
 interface Section {
-    
+
 }
 interface CourseType {
-    title:string,
-    description:string,
-    price:number,
-    rating:string,
-    sections : IResponseGetLessons[]
+    title: string,
+    description: string,
+    price: number,
+    rating: string,
+    sections: IResponseGetLessons[]
 
 }
 export default function Course({ params }: { params: { id: string } }) {
-    const [course, setCourse] = useState<CourseType>();
+    const [course, setCourse] = useState<CourseType>()
     const [isCreator, setIsCreator] = useState(false)
     const [isEnrolled, setIsEnrolled] = useState(false)
     const [isInCart, setIsInCart] = useState<boolean>()
     const { isLoggingIn, setIsLoggingIn, setToken, token, userId } =
         useContext(UserContext)!;
     const router = useRouter();
+
     const getCourse = async () => {
         if (!token || !userId?.id) return;
         await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -94,69 +96,74 @@ export default function Course({ params }: { params: { id: string } }) {
             sections: updatedSections,
         });
     };
-    const checkIsEnrolled =async () => {
-        setIsEnrolled(await isUserEnrolled(params.id,token))
+    const checkIsEnrolled = async () => {
+        setIsEnrolled(await isUserEnrolled(params.id, token))
     }
     useEffect(() => {
         if (!token) return;
         getCourse();
         checkIsEnrolled()
     }, [token, userId]);
-
+    if(!course) return <Spinner/>;
     return (
         <>
             {course && (
                 <>
-                 <div className="containers">
-                    <h1 className='text-2xl font-bold pt-6 text-black title'>{course?.title}</h1>
-                    {
-                        (!isInCart && !isCreator) && (
-                            <button
-                            className="cart-button"
-                                onClick={() => { addCourseToCart(params.id, token) 
-                                setIsInCart(true)}}
-                            >
-                                add to cart
-                            </button>
-                        )
-                    }
-                     {
-                        (isInCart && !isCreator) && (
-                            <button
-                            className="cart-button"
-                                onClick={() => { removeCourseFromCart(params.id, token) 
-                                setIsInCart(false)}}
-                            >
-                                remove from cart
-                            </button>
-                        )
-                    }
-                    <p className='text-base font-normal pt-6 opacity-75 description'>{course?.description}</p>
+                    <div className="containers">
+                        <h1 className='text-2xl font-bold pt-6 text-black title'>{course?.title}</h1>
+                        {
+                            (!isInCart && !isCreator && !isEnrolled) && (
+                                <button
+                                    className="cart-button"
+                                    onClick={() => {
+                                        addCourseToCart(params.id, token)
+                                        setIsInCart(true)
+                                    }}
+                                >
+                                    add to cart
+                                </button>
+                            )
+                        }
+                        {
+                            (isInCart && !isCreator) && (
+                                <button
+                                    className="cart-button"
+                                    onClick={() => {
+                                        removeCourseFromCart(params.id, token)
+                                        setIsInCart(false)
+                                    }}
+                                >
+                                    remove from cart
+                                </button>
+                            )
+                        }
+                        <p className='text-base font-normal pt-6 opacity-75 description'>{course?.description}</p>
 
-                    <p className=' font-medium price'>{course?.price}$</p>
-                    <div className='rating'>
-                        <StarIcon className="h-5 w-5 text-gold" />
-                        <span className='text-red text-22xl font-medium'>{course.rating}</span>
-                    </div>
-                   
-                    {
-                        isCreator &&
-                        <button
-                        className='text-red-500 font-medium  button'
-                            onClick={() =>
-                                router.push(`/course/${params.id}/section/create`)
-                            }
-                        >
-                            add new section
-                        </button>
-                    }
+                        <p className=' font-medium price'>{course?.price}$</p>
+                        <div className='rating'>
+                            {Array(Math.floor(parseInt(course.rating))).fill(1).map((e: any,index) => <StarIcon key = {index} className="h-5 w-5 text-gold" />)}
 
-                    {course.sections.map((section: any) => {
-                        return <Section key={section.id} section={section} 
-                            isAuthorized = {isCreator||isEnrolled}
-                            isCreator = {isCreator}
-                        />;
-                    })}
+                            <span className='text-red text-22xl font-medium'>{course.rating}</span>
+                        </div>
+
+                        {
+                            isCreator &&
+                            <button
+                                className='text-red-500 font-medium  button'
+                                onClick={() =>
+                                    router.push(`/course/${params.id}/section/create`)
+                                }
+                            >
+                                add new section
+                            </button>
+                        }
+
+                        {course.sections.map((section: any) => {
+                            return <Section key={section.id} section={section}
+                                isAuthorized={isCreator || isEnrolled}
+                                isCreator={isCreator}
+                            />;
+                        })}
                     </div>
                 </>
             )}
