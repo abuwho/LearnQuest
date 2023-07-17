@@ -6,6 +6,12 @@ import { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import { getBaseURL } from "./utils/getBaseURL";
+import Banner from "./components/Banner/index";
+import Courses from "./components/Courses/index";
+import Companies from "./components/Companies/Companies";
+import Mentor from "./components/Mentor/index";
+import Testimonials from "./components/Testimonials/index";
+import Newsletter from "./components/Newsletter/Newsletter";
 
 type userIdType = {
 	id: string;
@@ -105,7 +111,23 @@ export default function RootLayout({
 				<body>
 					<Navbar />
 					{!token ? (
-						<div className="flex justify-center items-center h-screen">Please log in or sign up</div>
+						<>
+							<Banner />
+
+							<Companies />
+
+							<Courses />
+
+							<Mentor />
+
+							<Newsletter />
+
+							<Testimonials />
+
+							
+
+						</>
+
 					) : (
 						<React.Fragment>{children}</React.Fragment>
 					)}

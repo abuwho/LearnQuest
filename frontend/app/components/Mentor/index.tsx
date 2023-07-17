@@ -13,18 +13,18 @@ interface DataType {
 
 const postData: DataType[] = [
     {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
+        profession: 'Senior Software Engineer',
+        name: 'Johnathan Purcell',
         imgSrc: '/assets/mentor/user3.png',
     },
     {
         profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
+        name: 'Tanya Sinclair',
         imgSrc: '/assets/mentor/user2.png',
     },
     {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
+        profession: 'Product Manager',
+        name: 'Jeremy Robson',
         imgSrc: '/assets/mentor/user1.png',
     },
     {
