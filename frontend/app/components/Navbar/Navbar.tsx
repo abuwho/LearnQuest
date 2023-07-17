@@ -8,6 +8,7 @@ import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import Signdialog from "./Signdialog";
 import Registerdialog from "./Registerdialog";
+import TopupDialog from './TopupDialog';
 import Userinfodialog from './Userinfodialog';
 import { UserContext } from '@/app/layout.tsx';
 import { useRouter } from 'next/navigation';
@@ -104,12 +105,13 @@ const Navbar = () => {
 
                         {/* SIGNIN DIALOG */}
 
-                        {!token ? <Signdialog /> : null}
+                        {!token ? <Signdialog /> : <TopupDialog />}
 
 
                         {/* REGISTER DIALOG */}
 
                         {!token ? <Registerdialog /> : <Userinfodialog />}
+
 
                         {/* DRAWER FOR MOBILE VIEW */}
 

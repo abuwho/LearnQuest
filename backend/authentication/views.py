@@ -171,7 +171,7 @@ def topup(request):
         return Response(ProfileSerializer(profile).data, status = 200)
     except Exception as e:
         return Response(
-            {"message": "Something went wrong","error": str(e)}, status=400
+            {"message": "Something went wrong", "error": str(e)}, status=400
         )
 
 

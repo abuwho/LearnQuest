@@ -165,8 +165,8 @@ export async function isUserEnrolled (courseId:string,token:string){
             alert('request failed')
             return false
         } else {
-            const check = (response.data.map((e)=>e.id)).indexOf(courseId)
-            console.log((response.data.map((e)=>e.id)).indexOf(courseId),'sssssss')
+            const check = (response.data.map((e:any)=>e.id)).indexOf(courseId)
+            console.log((response.data.map((e:any)=>e.id)).indexOf(courseId),'sssssss')
             return check !==-1
         }
     } catch (error) {
