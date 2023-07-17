@@ -1,4 +1,4 @@
-import { useMessages } from '@/app/components/useMessages'
+import { useMessages } from './useMessages'
 
 const MessagesList = () => {
   const { messages, isLoadingAnswer } = useMessages()
