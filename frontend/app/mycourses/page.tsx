@@ -9,6 +9,7 @@ import { getAllCreatedCourses, getAuthorizedViewCourse, getEnrolledCourses } fro
 import { deleteCourse } from "../utils/deleteCourse.ts";
 import { UserContext } from "../layout.tsx";
 import { useRouter } from 'next/navigation';
+import Spinner from "../components/Spinner/index.tsx";
 
 export default function Mycourses() {
     const router = useRouter()
@@ -31,7 +32,7 @@ export default function Mycourses() {
     }
 
     const handleEditClick = async (id: string) => {
-        router.push(`/course/${id}/edit`)
+        router.push(`/course/${id}/update`)
     }
 
     const handleDeleteClick = async (id: string) => {
@@ -44,7 +45,7 @@ export default function Mycourses() {
         getCourses()
     }, [token, userId])
 
-    const renderCourses = (courses: any[]) => {
+    const renderCourses = (courses: any[], isCreator: boolean) => {
         if (courses.length === 0) {
             return null;
         }
@@ -76,11 +77,8 @@ export default function Mycourses() {
                                             <div className="flex gap-4">
                                                 <h3 className="text-red text-22xl font-medium">{items.rating}</h3>
                                                 <div className="flex">
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
+                                                    {Array(Math.floor(items.rating)).fill(1).map((e: any,index) => <StarIcon key = {index} className="h-5 w-5 text-gold" />)}
+                                                    
                                                 </div>
                                             </div>
                                             <div>
@@ -103,16 +101,21 @@ export default function Mycourses() {
                                                     view course
                                                 </button>
                                             </div>
-                                            <div>
-                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                    edit course
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                    delete course
-                                                </button>
-                                            </div>
+                                            {isCreator &&
+                                                (<div>
+                                                    <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                        edit course
+                                                    </button>
+                                                </div>
+                                                )
+                                            }
+                                            {isCreator &&
+                                                (<div>
+                                                    <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                        delete course
+                                                    </button>
+                                                </div>)
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -123,24 +126,25 @@ export default function Mycourses() {
             </div>
         );
     };
-
+    console.log('jjjjjj',courses)
+    if(!courses || !courses.length)return <Spinner/>;
     return (
         <div id="courses">
-            {renderCourses(courses) && (
+            {renderCourses(courses, true) && (
                 <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
                     <div className="sm:flex justify-between items-center">
                         <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Created Courses.</h3>
                     </div>
-                    {renderCourses(courses)}
+                    {renderCourses(courses, true)}
                 </div>
             )}
 
-            {renderCourses(enrolled) && (
+            {renderCourses(enrolled, false) && (
                 <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
                     <div className="sm:flex justify-between items-center">
                         <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Enrolled courses.</h3>
                     </div>
-                    {renderCourses(enrolled)}
+                    {renderCourses(enrolled, false)}
                 </div>
             )}
         </div >

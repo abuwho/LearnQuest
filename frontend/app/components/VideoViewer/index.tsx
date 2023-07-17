@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import YouTube from "react-youtube";
 import "./VideoViewer.css";
 import QuestBot from "../QuestBot";
+import Spinner from "../Spinner";
 
 interface Props {
 	videoLink: string;
@@ -13,8 +14,9 @@ const VideoViewer = ({ videoLink }: Props) => {
 		const regex1 =
 			/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
 		const regex2 = /^.*((m\.)?youtube\.com)\/.*((\?v=)|(\/v\/))([^\/]+)/;
-		console.log({ url });
-		let match = url.match(regex1);
+		console.log('videoViewer url : ',{ url });
+		if (!url) return null;
+ 		let match = url.match(regex1);
 		if (match && match[2].length == 11) {
 			return match[2];
 		} else {
@@ -28,19 +30,19 @@ const VideoViewer = ({ videoLink }: Props) => {
 
 	const videoIdFunc = extractYouTubeId(videoLink);
 
-	const videoId = useMemo(() => {
-		const splitWithWatch = videoLink?.split("/watch?");
-		if (splitWithWatch?.length === 2) {
-			const vParamSemi = splitWithWatch[1]
-				.split("&")
-				.find((elem) => elem.startsWith("v="));
-			if (vParamSemi) {
-				const vParamDone = vParamSemi.split("v=")[1];
-				return vParamDone;
-			}
-		} else {
-		}
-	}, [videoLink]);
+	// const videoId = useMemo(() => {
+	// 	const splitWithWatch = videoLink?.split("/watch?");
+	// 	if (splitWithWatch?.length === 2) {
+	// 		const vParamSemi = splitWithWatch[1]
+	// 			.split("&")
+	// 			.find((elem) => elem.startsWith("v="));
+	// 		if (vParamSemi) {
+	// 			const vParamDone = vParamSemi.split("v=")[1];
+	// 			return vParamDone;
+	// 		}
+	// 	} else {
+	// 	}
+	// }, [videoLink]);
 
 	const opts = {
 		height: "390",
@@ -56,6 +58,8 @@ const VideoViewer = ({ videoLink }: Props) => {
 		event.target.pauseVideo();
 	};
 
+	if (!videoIdFunc) return <Spinner />
+
 	return (
 		<>
 			<div className="video-container">
@@ -67,6 +71,7 @@ const VideoViewer = ({ videoLink }: Props) => {
 				<QuestBot />
 			</div>
 		</>
+
 	);
 };
 

@@ -14,7 +14,7 @@ const CreateLesson = ({
 	const router = useRouter();
 	const { token } = useContext(UserContext)!;
 	const [title, setTitle] = useState("");
-	const [type, setType] = useState("video");
+	const [type, setType] = useState("link");
 	const [videoLink, setVideoLink] = useState("");
 	const [summary, setSummary] = useState("");
 
@@ -29,11 +29,11 @@ const CreateLesson = ({
 	const handleSubmit = async () => {
 		const url = `${getBaseURL()}/app/courses/create_lesson`;
 		try {
-			if (type === "video" && !videoLink) return;
+			if (type === "link" && !videoLink) return;
 			if (type === "pdf" && !selectedFile) return;
 
 			const videoOrPdf =
-				type === "video"
+				type === "link"
 					? { video_url: videoLink }
 					: { pdf: selectedFile };
 			await axios.post(
@@ -90,7 +90,7 @@ const CreateLesson = ({
 					value={type}
 					onChange={(e) => setType(e.target.value)}
 				>
-					<option value="video">Video</option>
+					<option value="link">Video</option>
 					<option value="pdf">PDF file</option>
 				</select>
 

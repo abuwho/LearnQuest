@@ -66,6 +66,7 @@ export default function RootLayout({
 	}, [token]);
 
 	const connectAccount = async () => {
+		console.log('tokennnnnn',token)
 		if (!token || token === "") {
 			setIsLoggedIn(false);
 			try {
@@ -78,6 +79,7 @@ export default function RootLayout({
 			});
 			return;
 		}
+		console.log('9999999999999')
 		try {
 			const url = `${getBaseURL()}/auth/get_current_user/`
 			const response = await axios.get(
@@ -124,9 +126,9 @@ export default function RootLayout({
 		console.log("userId", userId);
 	}, [userId]);
 
-	useEffect(() => {
-		connectAccount();
-	}, [wallet]);
+	// useEffect(() => {
+	// 	connectAccount();
+	// }, [wallet]);
 
 	return (
 		<html lang="en">
