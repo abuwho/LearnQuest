@@ -6,6 +6,7 @@ import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import './Userinfodialog.css'
 import { UserContext } from '@/app/layout.tsx'
+import TopupDialog from './TopupDialog'
 
 const Userinfodialog = () => {
     let [isOpen, setIsOpen] = useState(false)
@@ -85,7 +86,13 @@ const Userinfodialog = () => {
                                                         </Link>
                                                     </div>
                                                 </div>
-
+                                                
+                                                <span 
+                                                style={{color:'white',height:'34px'}}
+                                                className=" relative flex w-full justify-center rounded-md border border-transparent bg-Blueviolet py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                    <TopupDialog />
+                                                </span>
+                                                    
                                                 <div>
                                                     <button
                                                         type="submit"

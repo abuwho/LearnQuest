@@ -105,7 +105,7 @@ const Navbar = () => {
 
                         {/* SIGNIN DIALOG */}
 
-                        {!token ? <Signdialog /> : <TopupDialog />}
+                        {!token ? <Signdialog /> : <></>}
 
 
                         {/* REGISTER DIALOG */}

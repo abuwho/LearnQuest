@@ -3,10 +3,10 @@ import { Document as MyDocument, Page as MyPage } from "react-pdf";
 
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-
-
 import "./PdfRenderer.css";
 import Spinner from "../Spinner";
+
+import { getBaseURL } from "../../utils/getBaseURL";
 
 import { pdfjs } from "react-pdf";
 
@@ -24,7 +24,8 @@ const PdfViewer = ({ pdfFile }: Props) => {
 	console.log({pdfFile})
 	const file = useMemo(() => {
 		if (!pdfFile) return null;
-		return `http://localhost:8080/${pdfFile}`
+		const url = getBaseURL();
+		return `${url}/${pdfFile}`;
 		// const blob = new Blob([pdfFile], {
 		// 	type: "application/pdf",
 		// });
