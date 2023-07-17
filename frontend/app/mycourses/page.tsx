@@ -44,7 +44,7 @@ export default function Mycourses() {
         getCourses()
     }, [token, userId])
 
-    const renderCourses = (courses: any[]) => {
+    const renderCourses = (courses: any[], isCreator: boolean) => {
         if (courses.length === 0) {
             return null;
         }
@@ -103,16 +103,21 @@ export default function Mycourses() {
                                                     view course
                                                 </button>
                                             </div>
-                                            <div>
-                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                    edit course
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
-                                                    delete course
-                                                </button>
-                                            </div>
+                                            {isCreator &&
+                                                (<div>
+                                                    <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleEditClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                        edit course
+                                                    </button>
+                                                </div>
+                                                )
+                                            }
+                                            {isCreator &&
+                                                (<div>
+                                                    <button style={{ color: '#3B82F6' }} type="submit" onClick={() => handleDeleteClick(items.id)} className="bg-white w-full text-Blueviolet border border-semiblueviolet font-medium py-2 px-4 rounded">
+                                                        delete course
+                                                    </button>
+                                                </div>)
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -126,21 +131,21 @@ export default function Mycourses() {
 
     return (
         <div id="courses">
-            {renderCourses(courses) && (
+            {renderCourses(courses, true) && (
                 <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
                     <div className="sm:flex justify-between items-center">
                         <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Created Courses.</h3>
                     </div>
-                    {renderCourses(courses)}
+                    {renderCourses(courses, true)}
                 </div>
             )}
 
-            {renderCourses(enrolled) && (
+            {renderCourses(enrolled, false) && (
                 <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
                     <div className="sm:flex justify-between items-center">
                         <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Enrolled courses.</h3>
                     </div>
-                    {renderCourses(enrolled)}
+                    {renderCourses(enrolled, false)}
                 </div>
             )}
         </div >

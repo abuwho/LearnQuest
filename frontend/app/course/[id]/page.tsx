@@ -110,7 +110,7 @@ export default function Course({ params }: { params: { id: string } }) {
                  <div className="containers">
                     <h1 className='text-2xl font-bold pt-6 text-black title'>{course?.title}</h1>
                     {
-                        (!isInCart && !isCreator) && (
+                        (!isInCart && !isCreator && !isEnrolled) && (
                             <button
                             className="cart-button"
                                 onClick={() => { addCourseToCart(params.id, token) 

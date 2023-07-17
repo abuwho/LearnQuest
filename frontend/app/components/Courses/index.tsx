@@ -128,7 +128,7 @@ export default function MultipleItems() {
         return
         const fetchCourses = async () => {
             const url = `${getBaseURL()}/+'courses/all'`
-            const data = await fetch('http://127.0.0.1:8000/courses/all');
+            const data = await fetch(url);
             console.log(data,'uououo')
         }
         fetchCourses()

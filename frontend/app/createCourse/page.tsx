@@ -1,9 +1,11 @@
 "use client"
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent, useEffect, useContext } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, FormErrorMessage, Stack, useToast } from "@chakra-ui/react";
 import objectToFormData from '../utils/objectToFormData';
 import './createCourse.css'
 import { getBaseURL } from '../utils/getBaseURL';
+import { UserContext } from '../layout.tsx';
+import { useRouter } from 'next/navigation';
 
 type CourseForm = {
     title: string;
@@ -19,25 +21,16 @@ const initialFormState: CourseForm = {
 
 export default function CreateCourse() {
     const [form, setForm] = useState<CourseForm>(initialFormState);
-    const [token, setToken] = useState<string | null>()
-    const toast = useToast();
-    useEffect(() => {
-        if (!window) return
-        setToken(localStorage.getItem('token'))
-    }, [])
+    const { isLoggingIn, setIsLoggingIn, setToken, token, userId } = useContext(UserContext)!
+    const router = useRouter()
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [event.target.name]: event.target.value });
     };
 
     const validateForm = () => {
         if (!form.title) {
-            toast({
-                title: "An error occurred.",
-                description: "title cannot be empty",
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            }); return true
+            return true
         }
         return false
     };
@@ -48,13 +41,8 @@ export default function CreateCourse() {
             return
         }
         if (token === null) {
-            toast({
-                title: "Sign in to create a course",
-                description: "Your course could not be created.",
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            });
+            router.push('/')
+           return
         }
 
         // If no errors, we can submit the form
@@ -74,26 +62,15 @@ export default function CreateCourse() {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
-                toast({
-                    title: "Course Created.",
-                    description: "Your course was successfully created.",
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                });
-
+               alert('created!')
                 // Then reset the form
+                router.push('/mycourses')
                 setForm(initialFormState);
+                
             }
         } catch (error) {
             console.error('An error occurred while submitting the form:', error);
-            toast({
-                title: "An error occurred.",
-                description: "Your course could not be created.",
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            });
+            return
         }
     };
 

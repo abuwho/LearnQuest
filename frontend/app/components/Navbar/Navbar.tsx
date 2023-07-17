@@ -26,7 +26,8 @@ const navigation: NavigationItem[] = [
     { name: 'My Courses', href: 'mycourses', current: false },
     { name: 'Create Course', href: 'createCourse', current: false },
     // { name: 'Mentor', href: '#mentor', current: false },
-    { name: 'Cart', href: 'cart', current: false }
+    { name: 'Cart', href: 'cart', current: false },
+    {name : 'Apply', href:'applyInstructor',current:false}
 ];
 
 function classNames(...classes: string[]) {
