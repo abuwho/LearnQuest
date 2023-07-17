@@ -55,6 +55,11 @@ const Section = ({
     <div className="section">
       <div onClick={handleExpandClick} className="clickable">
         {section.title}
+        {isCreator && (
+            <span className="text-red-500 font-medium" style={{float:'right',color:'black'}}>
+              {section.duration}
+            </span>
+          )}
       </div>
 
       {isExpanded && (
@@ -71,11 +76,14 @@ const Section = ({
             </button>
           )}
 
+
+
           <ul className="lesson-list">
             {section.lessons.map((lesson: Lesson, index: number) => (
               <li key={lesson.id} className="lesson-item">
                 <Link href={`/course/${section.course}/section/${section.id}/lesson/${lesson.id}`}>
                   <span style={{color:'#57595F'}}>{`${index + 1}. ${lesson.title}`}</span>
+                  <span style={{float:'right'}}>{lesson.duration}</span>
                 </Link>
               </li>
             ))}
