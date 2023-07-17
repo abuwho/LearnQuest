@@ -16,7 +16,7 @@ interface ContextProps {
 
 const ChatsContext = createContext<Partial<ContextProps>>({})
 
-const apiKey = process.env.OPENAI_API_KEY
+const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
 // console.log(apiKey)
 const url = 'https://api.openai.com/v1/chat/completions'
 
