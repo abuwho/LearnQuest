@@ -126,9 +126,9 @@ export default function RootLayout({
 		console.log("userId", userId);
 	}, [userId]);
 
-	// useEffect(() => {
-	// 	connectAccount();
-	// }, [wallet]);
+	useEffect(() => {
+		connectAccount();
+	}, [wallet]);
 
 	return (
 		<html lang="en">
