@@ -25,15 +25,14 @@ const MessagesList = () => {
               />
             )}
             <div
-              style={{ maxWidth: 'calc(100% - 45px)' }}
-              style={{ color: "black" }}
+              style={{color: "black"}}
               className={`group relative rounded-lg px-3 py-2 ${
                 isUser
                   ? 'from-primary-700 to-primary-600 mr-2 bg-gradient-to-br text-white'
                   : 'ml-2 bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-200'
               }`}
             >
-              {message.content.trim()}
+              {message?.content?.trim()}
             </div>
             {isUser && (
               <img
