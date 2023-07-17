@@ -88,7 +88,7 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
 
   return (
     <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }}>
-      {children}
+        {children}
     </ChatsContext.Provider>
   )
 }
