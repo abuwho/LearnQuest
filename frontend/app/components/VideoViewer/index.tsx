@@ -63,7 +63,7 @@ const VideoViewer = ({ videoLink }: Props) => {
 	return (
 		<>
 			<div className="video-container">
-				<YouTube videoId={videoId} opts={opts} onReady={onReady} />
+				<YouTube videoId={videoIdFunc} opts={opts} onReady={onReady} />
 
 			</div>
 
