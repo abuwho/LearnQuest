@@ -28,18 +28,18 @@ const postData: DataType[] = [
         imgSrc: '/assets/mentor/user1.png',
     },
     {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
+        profession: 'Researcher',
+        name: 'Devon Lane',
         imgSrc: '/assets/mentor/user3.png',
     },
     {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
+        profession: 'Tech Entrepreneur',
+        name: 'Xavier Martin',
         imgSrc: '/assets/mentor/user2.png',
     },
     {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
+        profession: 'eCommerce Specialist',
+        name: 'Portia Kellar',
         imgSrc: '/assets/mentor/user1.png',
     },
 ]

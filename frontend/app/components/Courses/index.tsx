@@ -4,6 +4,7 @@ import React, { Component, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from '@heroicons/react/24/solid'
+import { getBaseURL } from "@/app/utils/getBaseURL";
 
 // CAROUSEL DATA
 
@@ -20,63 +21,63 @@ interface DataType {
 
 const postData: DataType[] = [
     {
-        heading: 'Full stack modern',
-        heading2: 'javascript',
-        name: "Colt stelle",
+        heading: 'Full Stack Modern',
+        heading2: 'JavaScript',
+        name: "Colt Steele",
         imgSrc: '/assets/courses/courseone.png',
-        students: 150,
-        classes: 12,
-        price: 20,
-        rating: 4.7,
+        students: 122,
+        classes: 20,
+        price: 9.99,
+        rating: 4.9,
     },
     {
-        heading: 'Design system',
-        heading2: 'with React programme',
-        name: "Colt stelle",
+        heading: 'Designing Applications',
+        heading2: 'with Next.js',
+        name: "Helen Milner",
         imgSrc: '/assets/courses/coursetwo.png',
         students: 130,
         classes: 12,
-        price: 20,
-        rating: 4.7,
+        price: 9.99,
+        rating: 4.8,
     },
     {
-        heading: 'Design banner',
-        heading2: 'with Figma',
-        name: "Colt stelle",
+        heading: 'Object Oriented Programming',
+        heading2: 'with Java',
+        name: "Polina Kozlova",
         imgSrc: '/assets/courses/coursethree.png',
-        students: 120,
-        classes: 12,
-        price: 20,
+        students: 101,
+        classes: 22,
+        price: 9.99,
         rating: 4.7,
     },
     {
-        heading: 'We Launch Delia',
-        heading2: 'Webflow this Week!',
-        name: "Colt stelle",
+        heading: 'Test Driven Development',
+        heading2: 'for Software Engineers',
+        name: "Kevin Nielsen",
         imgSrc: '/assets/courses/courseone.png',
-        students: 150,
-        classes: 12,
-        price: 20,
-        rating: 4.7,
+        students: 90,
+        classes: 10,
+        price: 9.99,
+        rating: 4.9,
     },
     {
-        heading: 'We Launch Delia',
-        heading2: 'Webflow this Week!',
-        name: "Colt stelle",
+        heading: 'Quality Assurance and Testing',
+        heading2: 'with Selenium',
+        name: "Brenda Miller",
         imgSrc: '/assets/courses/coursetwo.png',
-        students: 150,
-        classes: 12,
-        price: 20,
-        rating: 4.7,
+        students: 55,
+        classes: 10,
+        price: 9.99,
+        rating: 4.6,
     },
     {
-        heading: 'We Launch Delia',
-        heading2: 'Webflow this Week!',
-        name: "Colt stelle",
+        heading: 'User Experience Design Essentials',
+        heading2: 'for Mobile',
+        name: "Noah Smith",
         imgSrc: '/assets/courses/coursethree.png',
-        students: 150,
-        classes: 12,
-        price: 20,
+        students: 86,
+        classes: 16,
+        price: 9.99,
         rating: 4.7,
     },
 ]
@@ -126,6 +127,7 @@ export default function MultipleItems() {
     useEffect(()=>{
         return
         const fetchCourses = async () => {
+            const url = `${getBaseURL()}/+'courses/all'`
             const data = await fetch('http://127.0.0.1:8000/courses/all');
             console.log(data,'uououo')
         }
@@ -137,7 +139,7 @@ export default function MultipleItems() {
                 <div className='mx-auto max-w-7xl sm:py-8 px-4 lg:px-8 '>
 
                     <div className="sm:flex justify-between items-center">
-                        <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Popular courses.</h3>
+                        <h3 className="text-midnightblue text-4xl lg:text-55xl font-semibold mb-5 sm:mb-0">Popular courses</h3>
                         <Link href={'/'} className="text-Blueviolet text-lg font-medium space-links">Explore courses&nbsp;&gt;&nbsp;</Link>
                     </div>
 

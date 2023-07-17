@@ -19,6 +19,13 @@ type userIdType = {
 	email: string;
 };
 
+type walletType = {
+	id: string;
+	currncy: string;
+	balance: number;
+};
+
+
 const emtpyUserId = {
 	id: "",
 	username: "",
@@ -26,6 +33,7 @@ const emtpyUserId = {
 };
 export const UserContext = createContext<{
 	userId: userIdType | undefined;
+	wallet: walletType | undefined;
 	token: string;
 	setToken: (token: string) => void;
 	isLoggingIn: boolean;
@@ -41,6 +49,7 @@ export default function RootLayout({
 	const [token, setToken] = useState<string>("");
 	const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+	const [wallet, setWallet] = useState<walletType>();
 	const userContextValue = {
 		userId: userId,
 		token: token,
@@ -50,6 +59,7 @@ export default function RootLayout({
 		},
 		isLoggingIn: isLoggingIn,
 		setIsLoggingIn: setIsLoggingIn,
+		wallet: wallet,
 	};
 	useEffect(() => {
 		console.log("token", token);
@@ -79,11 +89,19 @@ export default function RootLayout({
 				}
 			);
 			const user = response.data.user;
+			const wallet = response.data.wallet;
 			setUserId({
 				username: user.username,
 				email: user.email,
 				id: user.id,
 			});
+
+			setWallet({
+				id: wallet.id,
+				currncy: wallet.currency,
+				balance: wallet.balance,
+			});
+			
 		} catch (e) {
 			console.log(e, "userid");
 			setIsLoggedIn(false);
@@ -105,6 +123,11 @@ export default function RootLayout({
 	useEffect(() => {
 		console.log("userId", userId);
 	}, [userId]);
+
+	useEffect(() => {
+		connectAccount();
+	}, [wallet]);
+
 	return (
 		<html lang="en">
 			<UserContext.Provider value={userContextValue}>
@@ -112,6 +135,8 @@ export default function RootLayout({
 					<Navbar />
 					{!token ? (
 						<>
+							<link rel="icon" href="/learnquest_favicon.ico" type="image/x-icon" sizes="any"></link>
+							<title> LearnQuest </title>
 							<Banner />
 
 							<Companies />
@@ -129,7 +154,14 @@ export default function RootLayout({
 						</>
 
 					) : (
-						<React.Fragment>{children}</React.Fragment>
+						<>
+						<link rel="icon" href="/learnquest_favicon.ico" type="image/x-icon" sizes="any"></link>
+							<title> LearnQuest </title>
+							<React.Fragment>
+								{children}
+							</React.Fragment>
+						</>
+						
 					)}
 					<Footer />
 				</body>

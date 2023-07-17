@@ -11,7 +11,7 @@ import { border } from '@chakra-ui/react'
 const TopupDialog = () => {
     let [isOpen, setIsOpen] = useState(false)
 
-    const {isLoggingIn,setIsLoggingIn, setToken,token,userId}= useContext(UserContext)!
+    const {isLoggingIn,setIsLoggingIn, setToken,token, wallet, userId}= useContext(UserContext)!
 
     const [cardHolder, setCardHolder] = useState('');
     const [cardNumber, setCardNumber] = useState('');
@@ -19,19 +19,15 @@ const TopupDialog = () => {
     const [cvv, setCvv] = useState('');
     const [amount, setAmount] = useState('');
 
-    const [currentBalance, setCurrentBalance] = useState('...loading');
-    const [userName, setUserName] = useState('...loading');
+    const [userName, setUserName] = useState(userId?.username);
+    const [currentBalance, setCurrentBalance] = useState(wallet?.balance);
 
     useEffect(() => {
-        getCurrentUser().then((data) => {
-            setCurrentBalance(data.wallet.balance);
-        });
+        setCurrentBalance(wallet?.balance);
     });
 
     useEffect(() => {
-        getCurrentUser().then((data) => {
-            setUserName(data.user.username);
-        });
+        setUserName(userId?.username);
     });
 
     const closeModal = () => {
@@ -40,35 +36,6 @@ const TopupDialog = () => {
 
     const openModal = () => {
         setIsOpen(true)
-    }
-
-    const getCurrentUser = async () => {
-        try {
-            const token = localStorage.getItem('token')
-
-            const url = getBaseURL() + '/auth/get_current_user/';
-
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Token ${token}`,
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            console.log(response);
-
-            if (response.ok) {
-                console.log('Current user fetched successfully');
-                const data = await response.json()
-                console.log(data);
-                return data;
-            } else {
-                console.error('Failed to fetch current user while getting balance');
-            }
-        } catch (error) {
-            console.error('Error occurred while getting balance:', error);
-        }
     }
 
     const topupHandler = async (event: { preventDefault: () => void }) => {
@@ -228,6 +195,7 @@ const TopupDialog = () => {
                                                             Amount
                                                         </label>
                                                         <input
+                                                            required
                                                             type="number"
                                                             name="amount"
                                                             id="cvv"
