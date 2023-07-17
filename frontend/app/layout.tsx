@@ -33,7 +33,7 @@ const emtpyUserId = {
 };
 export const UserContext = createContext<{
 	userId: userIdType | undefined;
-	wallet: walletType;
+	wallet: walletType | undefined;
 	token: string;
 	setToken: (token: string) => void;
 	isLoggingIn: boolean;
