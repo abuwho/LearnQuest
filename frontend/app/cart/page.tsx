@@ -4,6 +4,7 @@ import { UserContext } from "../layout.tsx";
 import { useRouter } from "next/navigation";
 import { cartCheckout, getAllCreatedCourses, getCart, removeCourseFromCart } from "../utils/getAllCourses.ts";
 import "./style.css";
+import Spinner from "../components/Spinner/index.tsx";
 
 export default function Course({ params }: { params: { id: string } }) {
   const [cart, setCart] = useState<any>();
@@ -31,7 +32,7 @@ export default function Course({ params }: { params: { id: string } }) {
   };
 
   if (!cart) {
-    return null;
+    return <Spinner/>;
   }
 
   return (

@@ -9,6 +9,7 @@ import { getAllCreatedCourses, getAuthorizedViewCourse, getEnrolledCourses } fro
 import { deleteCourse } from "../utils/deleteCourse.ts";
 import { UserContext } from "../layout.tsx";
 import { useRouter } from 'next/navigation';
+import Spinner from "../components/Spinner/index.tsx";
 
 export default function Mycourses() {
     const router = useRouter()
@@ -125,7 +126,8 @@ export default function Mycourses() {
             </div>
         );
     };
-
+    console.log('jjjjjj',courses)
+    if(!courses || !courses.length)return <Spinner/>;
     return (
         <div id="courses">
             {renderCourses(courses, true) && (

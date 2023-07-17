@@ -10,6 +10,7 @@ import Section from "@/app/components/section";
 import axios from "axios";
 import './style.css'
 import { getBaseURL } from "@/app/utils/getBaseURL.ts";
+import Spinner from "@/app/components/Spinner/index.tsx";
 interface Lesson {
     id: string;
     duration: string;
@@ -44,13 +45,14 @@ interface CourseType {
 
 }
 export default function Course({ params }: { params: { id: string } }) {
-    const [course, setCourse] = useState<CourseType>();
+    const [course, setCourse] = useState<CourseType>()
     const [isCreator, setIsCreator] = useState(false)
     const [isEnrolled, setIsEnrolled] = useState(false)
     const [isInCart, setIsInCart] = useState<boolean>()
     const { isLoggingIn, setIsLoggingIn, setToken, token, userId } =
         useContext(UserContext)!;
     const router = useRouter();
+
     const getCourse = async () => {
         if (!token || !userId?.id) return;
         await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -102,7 +104,7 @@ export default function Course({ params }: { params: { id: string } }) {
         getCourse();
         checkIsEnrolled()
     }, [token, userId]);
-
+    if(!course) return <Spinner/>;
     return (
         <>
             {course && (
