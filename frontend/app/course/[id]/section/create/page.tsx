@@ -4,7 +4,7 @@ import axios from "axios";
 import { UserContext } from "@/app/layout.tsx";
 import { useRouter } from "next/navigation";
 import { getBaseURL } from "@/app/utils/getBaseURL";
-
+import './style.css'
 type SectionForm = {
 	title: string;
 	course: string;
