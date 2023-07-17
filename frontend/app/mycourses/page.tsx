@@ -76,11 +76,8 @@ export default function Mycourses() {
                                             <div className="flex gap-4">
                                                 <h3 className="text-red text-22xl font-medium">{items.rating}</h3>
                                                 <div className="flex">
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
-                                                    <StarIcon className="h-5 w-5 text-gold" />
+                                                    {Array(Math.floor(items.rating)).fill(1).map((e:any)=><StarIcon className="h-5 w-5 text-gold" />)}
+                                                    
                                                 </div>
                                             </div>
                                             <div>

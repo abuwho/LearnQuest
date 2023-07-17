@@ -33,14 +33,14 @@ interface IResponseGetLessons {
     updated_at: string;
 }
 interface Section {
-    
+
 }
 interface CourseType {
-    title:string,
-    description:string,
-    price:number,
-    rating:string,
-    sections : IResponseGetLessons[]
+    title: string,
+    description: string,
+    price: number,
+    rating: string,
+    sections: IResponseGetLessons[]
 
 }
 export default function Course({ params }: { params: { id: string } }) {
@@ -94,8 +94,8 @@ export default function Course({ params }: { params: { id: string } }) {
             sections: updatedSections,
         });
     };
-    const checkIsEnrolled =async () => {
-        setIsEnrolled(await isUserEnrolled(params.id,token))
+    const checkIsEnrolled = async () => {
+        setIsEnrolled(await isUserEnrolled(params.id, token))
     }
     useEffect(() => {
         if (!token) return;
@@ -107,56 +107,61 @@ export default function Course({ params }: { params: { id: string } }) {
         <>
             {course && (
                 <>
-                 <div className="containers">
-                    <h1 className='text-2xl font-bold pt-6 text-black title'>{course?.title}</h1>
-                    {
-                        (!isInCart && !isCreator && !isEnrolled) && (
-                            <button
-                            className="cart-button"
-                                onClick={() => { addCourseToCart(params.id, token) 
-                                setIsInCart(true)}}
-                            >
-                                add to cart
-                            </button>
-                        )
-                    }
-                     {
-                        (isInCart && !isCreator) && (
-                            <button
-                            className="cart-button"
-                                onClick={() => { removeCourseFromCart(params.id, token) 
-                                setIsInCart(false)}}
-                            >
-                                remove from cart
-                            </button>
-                        )
-                    }
-                    <p className='text-base font-normal pt-6 opacity-75 description'>{course?.description}</p>
+                    <div className="containers">
+                        <h1 className='text-2xl font-bold pt-6 text-black title'>{course?.title}</h1>
+                        {
+                            (!isInCart && !isCreator && !isEnrolled) && (
+                                <button
+                                    className="cart-button"
+                                    onClick={() => {
+                                        addCourseToCart(params.id, token)
+                                        setIsInCart(true)
+                                    }}
+                                >
+                                    add to cart
+                                </button>
+                            )
+                        }
+                        {
+                            (isInCart && !isCreator) && (
+                                <button
+                                    className="cart-button"
+                                    onClick={() => {
+                                        removeCourseFromCart(params.id, token)
+                                        setIsInCart(false)
+                                    }}
+                                >
+                                    remove from cart
+                                </button>
+                            )
+                        }
+                        <p className='text-base font-normal pt-6 opacity-75 description'>{course?.description}</p>
 
-                    <p className=' font-medium price'>{course?.price}$</p>
-                    <div className='rating'>
-                        <StarIcon className="h-5 w-5 text-gold" />
-                        <span className='text-red text-22xl font-medium'>{course.rating}</span>
-                    </div>
-                   
-                    {
-                        isCreator &&
-                        <button
-                        className='text-red-500 font-medium  button'
-                            onClick={() =>
-                                router.push(`/course/${params.id}/section/create`)
-                            }
-                        >
-                            add new section
-                        </button>
-                    }
+                        <p className=' font-medium price'>{course?.price}$</p>
+                        <div className='rating'>
+                            {Array(Math.floor(parseInt(course.rating))).fill(1).map((e: any) => <StarIcon className="h-5 w-5 text-gold" />)}
 
-                    {course.sections.map((section: any) => {
-                        return <Section key={section.id} section={section} 
-                            isAuthorized = {isCreator||isEnrolled}
-                            isCreator = {isCreator}
-                        />;
-                    })}
+                            <span className='text-red text-22xl font-medium'>{course.rating}</span>
+                        </div>
+
+                        {
+                            isCreator &&
+                            <button
+                                className='text-red-500 font-medium  button'
+                                onClick={() =>
+                                    router.push(`/course/${params.id}/section/create`)
+                                }
+                            >
+                                add new section
+                            </button>
+                        }
+
+                        {course.sections.map((section: any) => {
+                            return <Section key={section.id} section={section}
+                                isAuthorized={isCreator || isEnrolled}
+                                isCreator={isCreator}
+                            />;
+                        })}
                     </div>
                 </>
             )}

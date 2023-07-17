@@ -77,7 +77,7 @@ const LessonPage = ({
 					type: "application/pdf",
 				});
 				setFile(URL.createObjectURL(blob));
-			} else if (thisLesson.type === "link") {
+			} else if (thisLesson.type === "link" || thisLesson.type === 'video') {
 				setVideoLink(thisLesson.video_url!);
 			}
 		};	
