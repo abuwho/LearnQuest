@@ -62,9 +62,3 @@ Contribute to the project by following some rules:
     git push origin feature/<feature-name>
     ```
 - Open a pull request on the main repository's `main` branch.
-
-### License 
-To be added soon
-
-### Acknowledgements
-To be added soon
